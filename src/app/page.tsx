@@ -49,8 +49,6 @@ export default function Home() {
             <Cell>ქირავდება დღიურად</Cell>
           </Section>
         </Modal>
-      </Section>
-      <Section>
         <Cell
           onClick={() => {
             setPropertyType(!propertyType);
