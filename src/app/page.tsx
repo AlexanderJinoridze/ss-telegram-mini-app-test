@@ -15,6 +15,7 @@ import {
   Text,
   Input,
   Badge,
+  ButtonCell,
 } from "@telegram-apps/telegram-ui";
 
 import { Link } from "@/components/Link/Link";
@@ -48,7 +49,9 @@ export default function Home() {
             <Cell>გირავდება</Cell>
             <Cell>ქირავდება დღიურად</Cell>
           </Section>
+          <Button>ZAZA</Button>
         </Modal>
+
         <Cell
           onClick={() => {
             setPropertyType(!propertyType);
@@ -61,15 +64,18 @@ export default function Home() {
           <Text>ქონების ტიპი</Text>
           <IconButton>გასუფთავება</IconButton>
           <Section>
-            <Cell>კერძო სახლი</Cell>
-            <Cell>ბინა</Cell>
-            <Cell>მიწა</Cell>
-            <Cell>კომერციული</Cell>
-            <Cell>სასტუმრო</Cell>
-            <Cell>აგარაკი</Cell>
+            <ButtonCell>კერძო სახლი</ButtonCell>
+            <ButtonCell>ბინა</ButtonCell>
+            <ButtonCell>მიწა</ButtonCell>
+            <ButtonCell>კომერციული</ButtonCell>
+            <ButtonCell>სასტუმრო</ButtonCell>
+            <ButtonCell>აგარაკი</ButtonCell>
           </Section>
         </Modal>
       </Section>
+      <Button size="l" mode="filled" stretched>
+        ძიება
+      </Button>
     </List>
   );
 }
