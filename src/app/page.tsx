@@ -44,7 +44,7 @@ export default function Home() {
   const mainButton = useMainButton();
   const miniApp = useMiniApp();
 
-  miniApp.setHeaderColor(miniApp.bgColor);
+  miniApp.setHeaderColor("#f00");
 
   mainButton.show();
   mainButton.setText("გაგზავნა");
