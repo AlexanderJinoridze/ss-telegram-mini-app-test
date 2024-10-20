@@ -30,64 +30,73 @@ import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Head from "next/head";
 import Script from "next/script";
+import { useTelegramMock } from "@/hooks/useTelegramMock";
+import {
+  SDKProvider,
+  useLaunchParams,
+  useMainButton,
+} from "@telegram-apps/sdk-react";
 
 export default function Home() {
   const [dealType, setDealType] = useState(false);
   const [propertyType, setPropertyType] = useState(false);
+  const zaza = useMainButton();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log((window as any).Telegram.WebApp);
-    }
+    console.log(zaza.show());
   }, []);
 
-  return (
-    <Fragment>
-      <Script src="https://telegram.org/js/telegram-web-app.js" />
-      {typeof window !== "undefined" ? (
-        <pre>{(window as any).Telegram.BottomButton}</pre>
-      ) : null}
-      <List>
-        <SectionHeader large>SS.GE</SectionHeader>
-        <Section>
-          <Cell onClick={() => setDealType(!dealType)}>გარიგების ტიპი</Cell>
-          <Cell onClick={() => setPropertyType(!propertyType)}>
-            ქონების ტიპი
-          </Cell>
-        </Section>
-        <FixedLayout>
-          <Button mode="filled" stretched>
-            ძიება
-          </Button>
-        </FixedLayout>
-      </List>
+  const debug = useLaunchParams().startParam === "debug";
 
-      <Modal open={dealType} modal>
-        <ModalHeader />
-        <SectionHeader>
-          <Text>გარიგების ტიპი</Text>
-          <IconButton>გასუფთავება</IconButton>
-        </SectionHeader>
-        <Cell>ქირავდება</Cell>
-        <Cell>იყიდება</Cell>
-        <Cell>გირავდება</Cell>
-        <Cell>ქირავდება დღიურად</Cell>
-      </Modal>
-      <Modal open={propertyType} modal>
-        <ModalHeader />
-        <SectionHeader>
-          <Text>ქონების ტიპი</Text>
-          <IconButton>გასუფთავება</IconButton>
-        </SectionHeader>
-        <Section>
-          <ButtonCell>კერძო სახლი</ButtonCell>
-          <ButtonCell>ბინა</ButtonCell>
-          <ButtonCell>მიწა</ButtonCell>
-          <ButtonCell>კომერციული</ButtonCell>
-          <ButtonCell>სასტუმრო</ButtonCell>
-          <ButtonCell>აგარაკი</ButtonCell>
-        </Section>
-      </Modal>
-    </Fragment>
+  return (
+    <SDKProvider acceptCustomStyles debug={debug}>
+      <Fragment>
+        <Script src="https://telegram.org/js/telegram-web-app.js" />
+        {typeof window !== "undefined" ? (
+          <pre>{(window as any).Telegram.BottomButton}</pre>
+        ) : null}
+        <List>
+          <SectionHeader large>SS.GE</SectionHeader>
+          <Section>
+            <Cell onClick={() => setDealType(!dealType)}>გარიგების ტიპი</Cell>
+            <Cell onClick={() => setPropertyType(!propertyType)}>
+              ქონების ტიპი
+            </Cell>
+          </Section>
+          {/* <FixedLayout>
+            <Button mode="filled" stretched>
+              ძიება
+            </Button>
+          </FixedLayout> */}
+        </List>
+
+        <Modal open={dealType} modal>
+          <ModalHeader />
+          <SectionHeader>
+            <Text>გარიგების ტიპი</Text>
+            <IconButton>გასუფთავება</IconButton>
+          </SectionHeader>
+          <Cell>ქირავდება</Cell>
+          <Cell>იყიდება</Cell>
+          <Cell>გირავდება</Cell>
+          <Cell>ქირავდება დღიურად</Cell>
+        </Modal>
+        <Modal open={propertyType} modal>
+          <ModalHeader />
+          <SectionHeader>
+            <Text>ქონების ტიპი</Text>
+            <IconButton>გასუფთავება</IconButton>
+          </SectionHeader>
+          <Section>
+            <ButtonCell>კერძო სახლი</ButtonCell>
+            <ButtonCell>ბინა</ButtonCell>
+            <ButtonCell>მიწა</ButtonCell>
+            <ButtonCell>კომერციული</ButtonCell>
+            <ButtonCell>სასტუმრო</ButtonCell>
+            <ButtonCell>აგარაკი</ButtonCell>
+          </Section>
+        </Modal>
+      </Fragment>
+    </SDKProvider>
   );
 }
