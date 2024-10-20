@@ -35,17 +35,19 @@ import {
   SDKProvider,
   useLaunchParams,
   useMainButton,
+  useMiniApp,
 } from "@telegram-apps/sdk-react";
 
 export default function Home() {
   const [dealType, setDealType] = useState(false);
   const [propertyType, setPropertyType] = useState(false);
-  const zaza = useMainButton();
+  const mainButton = useMainButton();
+  const miniApp = useMiniApp();
 
-  zaza.show();
-  zaza.enable();
-  zaza.setText("ZAZA");
-  console.log(zaza.bgColor);
+  miniApp.setHeaderColor(miniApp.bgColor);
+
+  mainButton.show();
+  mainButton.setText("გაგზავნა");
 
   useEffect(() => {}, []);
 
