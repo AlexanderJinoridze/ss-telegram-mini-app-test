@@ -28,6 +28,8 @@ import { ModalClose } from "@telegram-apps/telegram-ui/dist/components/Overlays/
 import { ModalHeader } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
+import Head from "next/head";
+import Script from "next/script";
 
 export default function Home() {
   const [dealType, setDealType] = useState(false);
@@ -41,8 +43,9 @@ export default function Home() {
 
   return (
     <Fragment>
+      <Script src="https://telegram.org/js/telegram-web-app.js" />
       {typeof window !== "undefined" ? (
-        <pre>{(window as any).Telegram.WebApp}</pre>
+        <pre>{(window as any).Telegram.BottomButton}</pre>
       ) : null}
       <List>
         <SectionHeader large>SS.GE</SectionHeader>
