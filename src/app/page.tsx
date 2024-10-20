@@ -24,6 +24,8 @@ import tonSvg from "./_assets/ton.svg";
 import { Fragment, useState } from "react";
 import { ModalClose } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalClose/ModalClose";
 import { ModalHeader } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
+import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
+import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 
 export default function Home() {
   const [dealType, setDealType] = useState(false);
@@ -32,23 +34,26 @@ export default function Home() {
   return (
     <Fragment>
       <List>
+        <SectionHeader large>SS.GE</SectionHeader>
         <Section>
           <Cell onClick={() => setDealType(!dealType)}>გარიგების ტიპი</Cell>
           <Cell onClick={() => setPropertyType(!propertyType)}>
             ქონების ტიპი
           </Cell>
         </Section>
-        <Section>
+        <SectionFooter>
           <Button mode="filled" stretched>
             ძიება
           </Button>
-        </Section>
+        </SectionFooter>
       </List>
 
       <Modal open={dealType} modal>
         <ModalHeader />
-        <Text>გარიგების ტიპი</Text>
-        <IconButton>გასუფთავება</IconButton>
+        <SectionHeader>
+          <Text>გარიგების ტიპი</Text>
+          <IconButton>გასუფთავება</IconButton>
+        </SectionHeader>
         <Section>
           <Cell>ქირავდება</Cell>
           <Cell>იყიდება</Cell>
@@ -58,8 +63,10 @@ export default function Home() {
       </Modal>
       <Modal open={propertyType} modal>
         <ModalHeader />
-        <Text>ქონების ტიპი</Text>
-        <IconButton>გასუფთავება</IconButton>
+        <SectionHeader>
+          <Text>ქონების ტიპი</Text>
+          <IconButton>გასუფთავება</IconButton>
+        </SectionHeader>
         <Section>
           <ButtonCell>კერძო სახლი</ButtonCell>
           <ButtonCell>ბინა</ButtonCell>
