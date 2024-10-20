@@ -41,11 +41,11 @@ export default function Home() {
             ქონების ტიპი
           </Cell>
         </Section>
-        <SectionFooter>
+        <Section>
           <Button mode="filled" stretched>
             ძიება
           </Button>
-        </SectionFooter>
+        </Section>
       </List>
 
       <Modal open={dealType} modal>
