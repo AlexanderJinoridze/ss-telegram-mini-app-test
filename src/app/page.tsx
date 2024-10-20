@@ -16,6 +16,8 @@ import {
   Input,
   Badge,
   ButtonCell,
+  FixedLayout,
+  Divider,
 } from "@telegram-apps/telegram-ui";
 
 import { Link } from "@/components/Link/Link";
@@ -41,11 +43,11 @@ export default function Home() {
             ქონების ტიპი
           </Cell>
         </Section>
-        <Section>
+        <FixedLayout>
           <Button mode="filled" stretched>
             ძიება
           </Button>
-        </Section>
+        </FixedLayout>
       </List>
 
       <Modal open={dealType} modal>
