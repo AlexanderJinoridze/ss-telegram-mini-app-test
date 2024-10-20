@@ -23,7 +23,7 @@ import {
 import { Link } from "@/components/Link/Link";
 
 import tonSvg from "./_assets/ton.svg";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ModalClose } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalClose/ModalClose";
 import { ModalHeader } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
@@ -33,8 +33,17 @@ export default function Home() {
   const [dealType, setDealType] = useState(false);
   const [propertyType, setPropertyType] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log((window as any).Telegram.WebApp);
+    }
+  }, []);
+
   return (
     <Fragment>
+      {typeof window !== "undefined" ? (
+        <pre>{(window as any).Telegram.WebApp}</pre>
+      ) : null}
       <List>
         <SectionHeader large>SS.GE</SectionHeader>
         <Section>
