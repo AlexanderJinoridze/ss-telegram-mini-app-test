@@ -44,7 +44,6 @@ export default function Home() {
 
   zaza.show();
   zaza.enable();
-  zaza.setBgColor("#f00");
   zaza.setText("ZAZA");
   console.log(zaza.bgColor);
 
