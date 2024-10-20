@@ -43,7 +43,11 @@ export default function Home() {
   const zaza = useMainButton();
 
   useEffect(() => {
-    console.log(zaza.show());
+    zaza.show();
+    zaza.enable();
+    zaza.setBgColor("#f00");
+    zaza.setText("ZAZA");
+    console.log(zaza.bgColor);
   }, []);
 
   const debug = useLaunchParams().startParam === "debug";
