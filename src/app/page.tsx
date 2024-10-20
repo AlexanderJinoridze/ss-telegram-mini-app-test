@@ -42,13 +42,13 @@ export default function Home() {
   const [propertyType, setPropertyType] = useState(false);
   const zaza = useMainButton();
 
-  useEffect(() => {
-    zaza.show();
-    zaza.enable();
-    zaza.setBgColor("#f00");
-    zaza.setText("ZAZA");
-    console.log(zaza.bgColor);
-  }, []);
+  zaza.show();
+  zaza.enable();
+  zaza.setBgColor("#f00");
+  zaza.setText("ZAZA");
+  console.log(zaza.bgColor);
+
+  useEffect(() => {}, []);
 
   const debug = useLaunchParams().startParam === "debug";
 
