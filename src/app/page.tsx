@@ -49,10 +49,8 @@ export default function Home() {
 
   useEffect(() => {}, []);
 
-  const debug = useLaunchParams().startParam === "debug";
-
   return (
-    <SDKProvider acceptCustomStyles debug={debug}>
+    <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         {typeof window !== "undefined" ? (
