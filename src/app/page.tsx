@@ -56,12 +56,10 @@ export default function Home() {
           <Text>გარიგების ტიპი</Text>
           <IconButton>გასუფთავება</IconButton>
         </SectionHeader>
-        <Section>
-          <Cell>ქირავდება</Cell>
-          <Cell>იყიდება</Cell>
-          <Cell>გირავდება</Cell>
-          <Cell>ქირავდება დღიურად</Cell>
-        </Section>
+        <Cell>ქირავდება</Cell>
+        <Cell>იყიდება</Cell>
+        <Cell>გირავდება</Cell>
+        <Cell>ქირავდება დღიურად</Cell>
       </Modal>
       <Modal open={propertyType} modal>
         <ModalHeader />
