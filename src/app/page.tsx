@@ -108,7 +108,7 @@ export default function Home() {
                 </ModalClose>
               </div>
               {dealTypeMap.map((item) => (
-                <ModalClose>
+                <ModalClose key={item.id}>
                   <Cell
                     style={{
                       paddingLeft: 24,
@@ -164,7 +164,7 @@ export default function Home() {
                 </ModalClose>
               </div>
               {propertyTypeMap.map((item) => (
-                <ModalClose>
+                <ModalClose key={item.id}>
                   <Cell
                     style={{
                       paddingLeft: 24,
