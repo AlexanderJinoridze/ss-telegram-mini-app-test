@@ -188,6 +188,9 @@ export default function Home() {
                 </ModalClose>
               ))}
             </Modal>
+            <Cell>მდებარეობა</Cell>
+            <Cell>ფართი</Cell>
+            <Cell>ფასი</Cell>
           </Section>
         </List>
       </Fragment>
