@@ -18,6 +18,7 @@ import {
   ButtonCell,
   FixedLayout,
   Divider,
+  Headline,
 } from "@telegram-apps/telegram-ui";
 
 import { Link } from "@/components/Link/Link";
@@ -44,8 +45,6 @@ export default function Home() {
   const mainButton = useMainButton();
   const miniApp = useMiniApp();
 
-  miniApp.setHeaderColor("#f00");
-
   mainButton.show();
   mainButton.setText("გაგზავნა");
 
@@ -61,44 +60,51 @@ export default function Home() {
         <List>
           <SectionHeader large>SS.GE</SectionHeader>
           <Section>
-            <Cell onClick={() => setDealType(!dealType)}>გარიგების ტიპი</Cell>
-            <Cell onClick={() => setPropertyType(!propertyType)}>
-              ქონების ტიპი
-            </Cell>
-          </Section>
-          {/* <FixedLayout>
-            <Button mode="filled" stretched>
-              ძიება
-            </Button>
-          </FixedLayout> */}
-        </List>
+            <Modal
+              header={<ModalHeader />}
+              trigger={<Cell>გარიგების ტიპი</Cell>}
+            >
+              <div
+                style={{
+                  padding: "12px 24px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Headline plain weight="2">
+                  გარიგების ტიპი
+                </Headline>
+                <IconButton>გასუფთავება</IconButton>
+              </div>
 
-        <Modal open={dealType} modal>
-          <ModalHeader />
-          <SectionHeader>
-            <Text>გარიგების ტიპი</Text>
-            <IconButton>გასუფთავება</IconButton>
-          </SectionHeader>
-          <Cell>ქირავდება</Cell>
-          <Cell>იყიდება</Cell>
-          <Cell>გირავდება</Cell>
-          <Cell>ქირავდება დღიურად</Cell>
-        </Modal>
-        <Modal open={propertyType} modal>
-          <ModalHeader />
-          <SectionHeader>
-            <Text>ქონების ტიპი</Text>
-            <IconButton>გასუფთავება</IconButton>
-          </SectionHeader>
-          <Section>
-            <ButtonCell>კერძო სახლი</ButtonCell>
-            <ButtonCell>ბინა</ButtonCell>
-            <ButtonCell>მიწა</ButtonCell>
-            <ButtonCell>კომერციული</ButtonCell>
-            <ButtonCell>სასტუმრო</ButtonCell>
-            <ButtonCell>აგარაკი</ButtonCell>
+              <Cell>ქირავდება</Cell>
+              <Cell>იყიდება</Cell>
+              <Cell>გირავდება</Cell>
+              <Cell>ქირავდება დღიურად</Cell>
+            </Modal>
+            <Modal header={<ModalHeader />} trigger={<Cell>ქონების ტიპი</Cell>}>
+              <div
+                style={{
+                  padding: "12px 24px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Headline plain weight="2">
+                  ქონების ტიპი
+                </Headline>
+                <IconButton>გასუფთავება</IconButton>
+              </div>
+
+              <Cell>კერძო სახლი</Cell>
+              <Cell>ბინა</Cell>
+              <Cell>მიწა</Cell>
+              <Cell>კომერციული</Cell>
+              <Cell>სასტუმრო</Cell>
+              <Cell>აგარაკი</Cell>
+            </Modal>
           </Section>
-        </Modal>
+        </List>
       </Fragment>
     </SDKProvider>
   );
