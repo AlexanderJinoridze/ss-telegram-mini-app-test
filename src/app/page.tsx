@@ -62,24 +62,25 @@ export default function Home() {
               header={<ModalHeader />}
               trigger={<Cell>გარიგების ტიპი</Cell>}
             >
-              <div
-                style={{
-                  padding: "12px 24px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                                    alignItems: "center"
-                }}
-              >
-                <Headline plain weight="2">
+              <SectionHeader large>
+                <Headline
+                  plain
+                  weight="2"
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   გარიგების ტიპი
+                  <IconButton>გასუფთავება</IconButton>
                 </Headline>
+              </SectionHeader>
+              <Section>
+                <Cell>ქირავდება</Cell>
+                <Cell>იყიდება</Cell>
+                <Cell>გირავდება</Cell>
+                <Cell>ქირავდება დღიურად</Cell>
+              </Section>
+              <SectionFooter>
                 <IconButton>გასუფთავება</IconButton>
-              </div>
-
-              <Cell>ქირავდება</Cell>
-              <Cell>იყიდება</Cell>
-              <Cell>გირავდება</Cell>
-              <Cell>ქირავდება დღიურად</Cell>
+              </SectionFooter>
             </Modal>
             <Modal header={<ModalHeader />} trigger={<Cell>ქონების ტიპი</Cell>}>
               <div
@@ -87,7 +88,7 @@ export default function Home() {
                   padding: "12px 24px",
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Headline plain weight="2">
