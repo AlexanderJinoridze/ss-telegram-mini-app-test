@@ -40,49 +40,108 @@ import {
 } from "@telegram-apps/sdk-react";
 
 export default function Home() {
-  const [dealType, setDealType] = useState(false);
-  const [propertyType, setPropertyType] = useState(false);
+  const [dealType, setDealType] = useState<number | undefined>(undefined);
+  const [dealTypeLabel, setDealTypeLabel] = useState<string>();
+  const [propertyType, setPropertyType] = useState<number | undefined>(
+    undefined
+  );
+  const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
+
   const mainButton = useMainButton();
-  const miniApp = useMiniApp();
 
   mainButton.show();
   mainButton.setText("გაგზავნა");
+
+  const dealTypeMap = [
+    { id: 1, label: "ქირავდება" },
+    { id: 2, label: "იყიდება" },
+    { id: 3, label: "გირავდება" },
+    { id: 4, label: "ქირავდება დღიურად" },
+  ];
+
+  const propertyTypeMap = [
+    { id: 1, label: "კერძო სახლი" },
+    { id: 2, label: "ბინა" },
+    { id: 3, label: "მიწა" },
+    { id: 4, label: "კომერციული" },
+    { id: 5, label: "სასტუმრო" },
+    { id: 6, label: "აგარაკი" },
+  ];
 
   return (
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        {typeof window !== "undefined" ? (
-          <pre>{(window as any).Telegram.BottomButton}</pre>
-        ) : null}
         <List>
           <SectionHeader large>SS.GE</SectionHeader>
           <Section>
             <Modal
               header={<ModalHeader />}
-              trigger={<Cell>გარიგების ტიპი</Cell>}
+              trigger={
+                <Cell>
+                  {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
+                </Cell>
+              }
             >
-              <SectionHeader large>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "8px 24px",
+                }}
+              >
                 <Headline
                   plain
                   weight="2"
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   გარიგების ტიპი
-                  <IconButton>გასუფთავება</IconButton>
                 </Headline>
-              </SectionHeader>
-              <Section>
-                <Cell>ქირავდება</Cell>
-                <Cell>იყიდება</Cell>
-                <Cell>გირავდება</Cell>
-                <Cell>ქირავდება დღიურად</Cell>
-              </Section>
-              <SectionFooter>
-                <IconButton>გასუფთავება</IconButton>
-              </SectionFooter>
+                <ModalClose>
+                  <IconButton
+                    onClick={() => {
+                      setDealType(undefined);
+                    }}
+                  >
+                    გასუფთავება
+                  </IconButton>
+                </ModalClose>
+              </div>
+              {dealTypeMap.map((item) => (
+                <ModalClose>
+                  <Cell
+                    style={{
+                      paddingLeft: 24,
+                      paddingRight: 24,
+                      background:
+                        item.id === dealType
+                          ? "var(--tgui--button_color)"
+                          : "inherit",
+                    }}
+                    onClick={() => {
+                      if (item.id === dealType) {
+                        setDealType(undefined);
+                      } else {
+                        setDealType(item.id);
+                        setDealTypeLabel(item.label);
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </Cell>
+                </ModalClose>
+              ))}
             </Modal>
-            <Modal header={<ModalHeader />} trigger={<Cell>ქონების ტიპი</Cell>}>
+            <Modal
+              header={<ModalHeader />}
+              trigger={
+                <Cell>
+                  {propertyType === undefined
+                    ? "ქონების ტიპი"
+                    : propertyTypeLabel}
+                </Cell>
+              }
+            >
               <div
                 style={{
                   padding: "12px 24px",
@@ -94,15 +153,40 @@ export default function Home() {
                 <Headline plain weight="2">
                   ქონების ტიპი
                 </Headline>
-                <IconButton>გასუფთავება</IconButton>
+                <ModalClose>
+                  <IconButton
+                    onClick={() => {
+                      setPropertyType(undefined);
+                    }}
+                  >
+                    გასუფთავება
+                  </IconButton>
+                </ModalClose>
               </div>
-
-              <Cell>კერძო სახლი</Cell>
-              <Cell>ბინა</Cell>
-              <Cell>მიწა</Cell>
-              <Cell>კომერციული</Cell>
-              <Cell>სასტუმრო</Cell>
-              <Cell>აგარაკი</Cell>
+              {propertyTypeMap.map((item) => (
+                <ModalClose>
+                  <Cell
+                    style={{
+                      paddingLeft: 24,
+                      paddingRight: 24,
+                      background:
+                        item.id === propertyType
+                          ? "var(--tgui--button_color)"
+                          : "inherit",
+                    }}
+                    onClick={() => {
+                      if (item.id === propertyType) {
+                        setPropertyType(undefined);
+                      } else {
+                        setPropertyType(item.id);
+                        setPropertyTypeLabel(item.label);
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </Cell>
+                </ModalClose>
+              ))}
             </Modal>
           </Section>
         </List>
