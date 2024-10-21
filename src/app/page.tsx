@@ -87,7 +87,7 @@ export default function Home() {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  padding: "8px 24px",
+                  padding: "0 24px 8px",
                 }}
               >
                 <Headline
@@ -144,7 +144,7 @@ export default function Home() {
             >
               <div
                 style={{
-                  padding: "12px 24px",
+                  padding: "0 24px 8px",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
