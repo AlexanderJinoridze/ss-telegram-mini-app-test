@@ -48,8 +48,6 @@ export default function Home() {
   mainButton.show();
   mainButton.setText("გაგზავნა");
 
-  useEffect(() => {}, []);
-
   return (
     <SDKProvider>
       <Fragment>
@@ -69,6 +67,7 @@ export default function Home() {
                   padding: "12px 24px",
                   display: "flex",
                   justifyContent: "space-between",
+                                    alignItems: "center"
                 }}
               >
                 <Headline plain weight="2">
@@ -88,6 +87,7 @@ export default function Home() {
                   padding: "12px 24px",
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "center"
                 }}
               >
                 <Headline plain weight="2">
