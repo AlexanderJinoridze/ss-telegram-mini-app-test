@@ -41,7 +41,6 @@ export default function Home() {
 
   const mainButton = useMainButton();
 
-  mainButton.show();
   mainButton.setText("გაგზავნა");
 
   const dealTypeMap = [
@@ -70,10 +69,17 @@ export default function Home() {
             <Modal
               header={<ModalHeader />}
               trigger={
-                <Cell className="px-6">
+                <Cell>
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
+              onOpenChange={(open) => {
+                if (open) {
+                  mainButton.hide();
+                } else {
+                  mainButton.show();
+                }
+              }}
             >
               <div className="flex justify-between items-center px-6 pb-6">
                 <Headline plain weight="2" className="flex justify-between">
@@ -115,7 +121,7 @@ export default function Home() {
               <ModalClose>
                 <div className="p-6">
                   <Button
-                    size="l"
+                    size="m"
                     stretched
                     onClick={() => setDealType(dealTypeShadow)}
                   >
