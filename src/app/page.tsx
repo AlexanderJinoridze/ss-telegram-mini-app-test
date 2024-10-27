@@ -3,21 +3,10 @@
 import {
   Section,
   Cell,
-  Image,
   List,
-  Select,
   Modal,
-  IconContainer,
   Button,
   IconButton,
-  Title,
-  LargeTitle,
-  Text,
-  Input,
-  Badge,
-  ButtonCell,
-  FixedLayout,
-  Divider,
   Headline,
 } from "@telegram-apps/telegram-ui";
 
@@ -41,6 +30,9 @@ import {
 
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
+  const [dealTypeShadow, setDealTypeShadow] = useState<number | undefined>(
+    undefined
+  );
   const [dealTypeLabel, setDealTypeLabel] = useState<string>();
   const [propertyType, setPropertyType] = useState<number | undefined>(
     undefined
@@ -78,59 +70,59 @@ export default function Home() {
             <Modal
               header={<ModalHeader />}
               trigger={
-                <Cell>
+                <Cell className="px-6">
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "0 24px 8px",
-                }}
-              >
-                <Headline
-                  plain
-                  weight="2"
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
+              <div className="flex justify-between items-center px-6 pb-6">
+                <Headline plain weight="2" className="flex justify-between">
                   გარიგების ტიპი
                 </Headline>
-                <ModalClose>
-                  <IconButton
-                    onClick={() => {
-                      setDealType(undefined);
-                    }}
-                  >
-                    გასუფთავება
-                  </IconButton>
-                </ModalClose>
+                <Button
+                  size="s"
+                  mode="bezeled"
+                  className="flex-shrink-0"
+                  onClick={() => {
+                    setDealTypeShadow(undefined);
+                  }}
+                >
+                  გასუფთავება
+                </Button>
               </div>
               {dealTypeMap.map((item) => (
-                <ModalClose key={item.id}>
-                  <Cell
-                    style={{
-                      paddingLeft: 24,
-                      paddingRight: 24,
-                      background:
-                        item.id === dealType
-                          ? "var(--tgui--button_color)"
-                          : "inherit",
-                    }}
-                    onClick={() => {
-                      if (item.id === dealType) {
-                        setDealType(undefined);
-                      } else {
-                        setDealType(item.id);
-                        setDealTypeLabel(item.label);
-                      }
-                    }}
-                  >
-                    {item.label}
-                  </Cell>
-                </ModalClose>
+                <Cell
+                  key={item.id}
+                  className="px-6"
+                  style={{
+                    backgroundColor:
+                      item.id === dealTypeShadow
+                        ? "var(--tgui--button_color)"
+                        : "inherit",
+                  }}
+                  onClick={() => {
+                    if (item.id === dealType) {
+                      setDealTypeShadow(undefined);
+                    } else {
+                      setDealTypeShadow(item.id);
+                      setDealTypeLabel(item.label);
+                    }
+                  }}
+                >
+                  {item.label}
+                </Cell>
               ))}
+              <ModalClose>
+                <div className="p-6">
+                  <Button
+                    size="l"
+                    stretched
+                    onClick={() => setDealType(dealTypeShadow)}
+                  >
+                    არჩევა
+                  </Button>
+                </div>
+              </ModalClose>
             </Modal>
             <Modal
               header={<ModalHeader />}
