@@ -10,37 +10,32 @@ import {
   Headline,
 } from "@telegram-apps/telegram-ui";
 
-import { Link } from "@/components/Link/Link";
-
-import tonSvg from "./_assets/ton.svg";
 import { Fragment, useEffect, useState } from "react";
 import { ModalClose } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalClose/ModalClose";
 import { ModalHeader } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
-import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
-import Head from "next/head";
 import Script from "next/script";
-import { useTelegramMock } from "@/hooks/useTelegramMock";
-import {
-  SDKProvider,
-  useLaunchParams,
-  useMainButton,
-  useMiniApp,
-} from "@telegram-apps/sdk-react";
+import { SDKProvider, useMainButton } from "@telegram-apps/sdk-react";
 
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
-  const [dealTypeShadow, setDealTypeShadow] = useState<number | undefined>(
-    undefined
-  );
+  const [dealTypeShadow, setDealTypeShadow] = useState<number | undefined>();
+  const [dealTypeLabelShadow, setDealTypeLabelShadow] = useState<string>();
   const [dealTypeLabel, setDealTypeLabel] = useState<string>();
+
   const [propertyType, setPropertyType] = useState<number | undefined>(
     undefined
   );
+  const [propertyTypeShadow, setPropertyTypeShadow] = useState<
+    number | undefined
+  >();
+  const [propertyTypeLabelShadow, setPropertyTypeLabelShadow] =
+    useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
 
-  const mainButton = useMainButton();
+  const [showMainButton, setShowMainButton] = useState<boolean>(false);
 
+  const mainButton = useMainButton();
   mainButton.setText("გაგზავნა");
 
   const dealTypeMap = [
@@ -59,6 +54,74 @@ export default function Home() {
     { id: 6, label: "აგარაკი" },
   ];
 
+  useEffect(() => {
+    setShowMainButton(!!(dealType || propertyType));
+  }, [dealType, propertyType]);
+
+  const onOpenChange = (
+    open: boolean,
+    modalType: "dealType" | "propertyType"
+  ) => {
+    if (modalType === "dealType") {
+      setDealTypeShadow(dealType);
+      setDealTypeLabelShadow(dealTypeLabel);
+    } else if (modalType === "propertyType") {
+      setPropertyTypeShadow(propertyType);
+      setPropertyTypeLabelShadow(propertyTypeLabel);
+    }
+
+    if (!showMainButton) return;
+
+    if (open) {
+      mainButton.hide();
+    } else {
+      mainButton.show();
+    }
+  };
+
+  const onClear = (modalType: "dealType" | "propertyType") => {
+    if (modalType === "dealType") {
+      setDealTypeShadow(undefined);
+      setDealTypeLabelShadow(undefined);
+    } else if (modalType === "propertyType") {
+      setPropertyTypeShadow(undefined);
+      setPropertyTypeLabelShadow(undefined);
+    }
+  };
+
+  const onOptionSelect = (
+    item: { id: number; label: string },
+    modalType: "dealType" | "propertyType"
+  ) => {
+    if (modalType === "dealType") {
+      if (item.id === dealTypeShadow) {
+        setDealTypeShadow(undefined);
+        setDealTypeLabelShadow(undefined);
+      } else {
+        setDealTypeShadow(item.id);
+        setDealTypeLabelShadow(item.label);
+      }
+    } else if (modalType === "propertyType") {
+      if (item.id === propertyTypeShadow) {
+        setPropertyTypeShadow(undefined);
+        setPropertyTypeLabelShadow(undefined);
+      } else {
+        setPropertyTypeShadow(item.id);
+        setPropertyTypeLabelShadow(item.label);
+      }
+    }
+  };
+
+  const onSelect = (modalType: "dealType" | "propertyType") => {
+    if (modalType === "dealType") {
+      setDealType(dealTypeShadow);
+      setDealTypeLabel(dealTypeLabelShadow);
+    } else if (modalType === "propertyType") {
+      setPropertyType(propertyTypeShadow);
+      setPropertyTypeLabel(propertyTypeLabelShadow);
+    }
+  };
+
   return (
     <SDKProvider>
       <Fragment>
@@ -73,13 +136,7 @@ export default function Home() {
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
-              onOpenChange={(open) => {
-                if (open) {
-                  mainButton.hide();
-                } else {
-                  mainButton.show();
-                }
-              }}
+              onOpenChange={(open) => onOpenChange(open, "dealType")}
             >
               <div className="flex justify-between items-center px-6 pb-6">
                 <Headline plain weight="2" className="flex justify-between">
@@ -89,9 +146,7 @@ export default function Home() {
                   size="s"
                   mode="bezeled"
                   className="flex-shrink-0"
-                  onClick={() => {
-                    setDealTypeShadow(undefined);
-                  }}
+                  onClick={() => onClear("dealType")}
                 >
                   გასუფთავება
                 </Button>
@@ -99,21 +154,12 @@ export default function Home() {
               {dealTypeMap.map((item) => (
                 <Cell
                   key={item.id}
-                  className="px-6"
-                  style={{
-                    backgroundColor:
-                      item.id === dealTypeShadow
-                        ? "var(--tgui--button_color)"
-                        : "inherit",
-                  }}
-                  onClick={() => {
-                    if (item.id === dealType) {
-                      setDealTypeShadow(undefined);
-                    } else {
-                      setDealTypeShadow(item.id);
-                      setDealTypeLabel(item.label);
-                    }
-                  }}
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    item.id === dealTypeShadow
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  onClick={() => onOptionSelect(item, "dealType")}
                 >
                   {item.label}
                 </Cell>
@@ -123,7 +169,7 @@ export default function Home() {
                   <Button
                     size="m"
                     stretched
-                    onClick={() => setDealType(dealTypeShadow)}
+                    onClick={() => onSelect("dealType")}
                   >
                     არჩევა
                   </Button>
@@ -139,52 +185,45 @@ export default function Home() {
                     : propertyTypeLabel}
                 </Cell>
               }
+              onOpenChange={(open) => onOpenChange(open, "propertyType")}
             >
-              <div
-                style={{
-                  padding: "0 24px 8px",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Headline plain weight="2">
+              <div className="flex justify-between items-center px-6 pb-6">
+                <Headline plain weight="2" className="flex justify-between">
                   ქონების ტიპი
                 </Headline>
-                <ModalClose>
-                  <IconButton
-                    onClick={() => {
-                      setPropertyType(undefined);
-                    }}
-                  >
-                    გასუფთავება
-                  </IconButton>
-                </ModalClose>
+                <Button
+                  size="s"
+                  mode="bezeled"
+                  className="flex-shrink-0"
+                  onClick={() => onClear("propertyType")}
+                >
+                  გასუფთავება
+                </Button>
               </div>
               {propertyTypeMap.map((item) => (
-                <ModalClose key={item.id}>
-                  <Cell
-                    style={{
-                      paddingLeft: 24,
-                      paddingRight: 24,
-                      background:
-                        item.id === propertyType
-                          ? "var(--tgui--button_color)"
-                          : "inherit",
-                    }}
-                    onClick={() => {
-                      if (item.id === propertyType) {
-                        setPropertyType(undefined);
-                      } else {
-                        setPropertyType(item.id);
-                        setPropertyTypeLabel(item.label);
-                      }
-                    }}
-                  >
-                    {item.label}
-                  </Cell>
-                </ModalClose>
+                <Cell
+                  key={item.id}
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    item.id === propertyTypeShadow
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  onClick={() => onOptionSelect(item, "propertyType")}
+                >
+                  {item.label}
+                </Cell>
               ))}
+              <ModalClose>
+                <div className="p-6">
+                  <Button
+                    size="m"
+                    stretched
+                    onClick={() => onSelect("propertyType")}
+                  >
+                    არჩევა
+                  </Button>
+                </div>
+              </ModalClose>
             </Modal>
             <Cell>მდებარეობა</Cell>
             <Cell>ფართი</Cell>
