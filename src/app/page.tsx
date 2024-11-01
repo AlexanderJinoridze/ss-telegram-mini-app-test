@@ -156,18 +156,25 @@ export default function Home() {
               }
               onOpenChange={(open) => {
                 if (open) {
-                  submitButton.show();
-
-                  submitButton.setText("არჩევა");
-                  submitButton.off("click", zaza);
-                  submitButton.on("click", zaza);
+                  submitButton
+                    .setParams({
+                      text: "არჩევა",
+                      isVisible: open,
+                    })
+                    .on("click", zaza);
                 } else {
                   if (!showMainButton) {
                     submitButton.hide();
                   }
-                  submitButton.setText("გაგზავნა");
-                  submitButton.off("click", soso);
-                  submitButton.on("click", soso);
+                  submitButton
+                  .setParams({
+                    text: "გაგზავნა",
+                    isVisible: open,
+                  })
+                  .on("click", soso);
+                  // submitButton.setText("გაგზავნა");
+                  // submitButton.off("click", soso);
+                  // submitButton.on("click", soso);
                 }
                 // setIsDealTypeModalOpen(open);
                 onOpenChange(open, "dealType");
