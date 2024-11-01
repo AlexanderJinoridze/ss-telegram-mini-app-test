@@ -33,10 +33,27 @@ export default function Home() {
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
 
+  const [isDealTypeModalOpen, setIsDealTypeModalOpen] =
+    useState<boolean>(false);
+
   const [showMainButton, setShowMainButton] = useState<boolean>(false);
 
-  const mainButton = useMainButton();
-  mainButton.setText("გაგზავნა");
+  const dealTypeButton = useMainButton();
+  const propertyTypeButton = useMainButton();
+  const submitButton = useMainButton();
+
+  dealTypeButton.setText("არჩევა");
+  propertyTypeButton.setText("არჩევა");
+  submitButton.setText("გაგზავნა");
+
+  dealTypeButton.on("click", () => {
+    setIsDealTypeModalOpen(false);
+    onSelect("dealType");
+  });
+
+  propertyTypeButton.on("click", () => {
+    onSelect("propertyType");
+  });
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
@@ -73,9 +90,9 @@ export default function Home() {
     if (!showMainButton) return;
 
     if (open) {
-      mainButton.hide();
+      submitButton.hide();
     } else {
-      mainButton.show();
+      submitButton.show();
     }
   };
 
@@ -131,12 +148,21 @@ export default function Home() {
           <Section>
             <Modal
               header={<ModalHeader />}
+              open={isDealTypeModalOpen}
               trigger={
                 <Cell>
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
-              onOpenChange={(open) => onOpenChange(open, "dealType")}
+              onOpenChange={(open) => {
+                if (open) {
+                  dealTypeButton.show();
+                } else {
+                  dealTypeButton.hide();
+                }
+
+                onOpenChange(open, "dealType");
+              }}
             >
               <div className="flex justify-between items-center px-6 pb-6">
                 <Headline plain weight="2" className="flex justify-between">
@@ -164,17 +190,17 @@ export default function Home() {
                   {item.label}
                 </Cell>
               ))}
-              <ModalClose>
+              {/* <ModalClose>
                 <div className="p-6">
                   <Button
                     size="m"
                     stretched
-                    onClick={() => onSelect("dealType")}
+                    onClick={() => }
                   >
                     არჩევა
                   </Button>
                 </div>
-              </ModalClose>
+              </ModalClose> */}
             </Modal>
             <Modal
               header={<ModalHeader />}
