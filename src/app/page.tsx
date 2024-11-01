@@ -160,7 +160,7 @@ export default function Home() {
                 } else {
                   dealTypeButton.hide();
                 }
-
+                setIsDealTypeModalOpen(open);
                 onOpenChange(open, "dealType");
               }}
             >
