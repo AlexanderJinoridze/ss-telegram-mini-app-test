@@ -47,7 +47,7 @@ export default function Home() {
   submitButton.setText("გაგზავნა");
 
   dealTypeButton.on("click", () => {
-    setIsDealTypeModalOpen(false);
+    // setIsDealTypeModalOpen(false);
     onSelect("dealType");
   });
 
@@ -156,8 +156,12 @@ export default function Home() {
               }
               onOpenChange={(open) => {
                 if (open) {
+                  console.log(dealTypeButton, "OPEN");
+
                   dealTypeButton.show();
                 } else {
+                  console.log(dealTypeButton, "CLOSE");
+
                   dealTypeButton.hide();
                 }
                 // setIsDealTypeModalOpen(open);
