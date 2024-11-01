@@ -86,14 +86,6 @@ export default function Home() {
       setPropertyTypeShadow(propertyType);
       setPropertyTypeLabelShadow(propertyTypeLabel);
     }
-
-    if (!showMainButton) return;
-
-    if (open) {
-      submitButton.hide();
-    } else {
-      submitButton.show();
-    }
   };
 
   const onClear = (modalType: "dealType" | "propertyType") => {
@@ -156,11 +148,16 @@ export default function Home() {
               }
               onOpenChange={(open) => {
                 if (open) {
+                  submitButton.show();
+
                   submitButton.setText("არჩევა");
                   submitButton.on("click", () => {
                     onSelect("dealType");
                   });
                 } else {
+                  if (!showMainButton) {
+                    submitButton.hide();
+                  }
                   submitButton.setText("გაგზავნა");
                   submitButton.on("click", () => {
                     console.log("SUBMIT");
