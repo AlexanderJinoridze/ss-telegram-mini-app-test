@@ -148,7 +148,7 @@ export default function Home() {
           <Section>
             <Modal
               header={<ModalHeader />}
-              open={isDealTypeModalOpen}
+              // open={isDealTypeModalOpen}
               trigger={
                 <Cell>
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
@@ -160,7 +160,7 @@ export default function Home() {
                 } else {
                   dealTypeButton.hide();
                 }
-                setIsDealTypeModalOpen(open);
+                // setIsDealTypeModalOpen(open);
                 onOpenChange(open, "dealType");
               }}
             >
