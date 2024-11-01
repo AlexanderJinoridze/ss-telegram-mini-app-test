@@ -131,6 +131,14 @@ export default function Home() {
     }
   };
 
+  const zaza = () => {
+    onSelect("dealType");
+  };
+
+  const soso = () => {
+    console.log("SUBMIT");
+  };
+
   return (
     <SDKProvider>
       <Fragment>
@@ -151,17 +159,15 @@ export default function Home() {
                   submitButton.show();
 
                   submitButton.setText("არჩევა");
-                  submitButton.on("click", () => {
-                    onSelect("dealType");
-                  });
+                  submitButton.off("click", zaza);
+                  submitButton.on("click", zaza);
                 } else {
                   if (!showMainButton) {
                     submitButton.hide();
                   }
                   submitButton.setText("გაგზავნა");
-                  submitButton.on("click", () => {
-                    console.log("SUBMIT");
-                  });
+                  submitButton.off("click", soso);
+                  submitButton.on("click", soso);
                 }
                 // setIsDealTypeModalOpen(open);
                 onOpenChange(open, "dealType");
