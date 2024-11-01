@@ -38,22 +38,22 @@ export default function Home() {
 
   const [showMainButton, setShowMainButton] = useState<boolean>(false);
 
-  const dealTypeButton = useMainButton();
-  const propertyTypeButton = useMainButton();
+  // const dealTypeButton = useMainButton();
+  // const propertyTypeButton = useMainButton();
   const submitButton = useMainButton();
 
-  dealTypeButton.setText("არჩევა");
-  propertyTypeButton.setText("არჩევა");
+  // dealTypeButton.setText("არჩევა");
+  // propertyTypeButton.setText("არჩევა");
   submitButton.setText("გაგზავნა");
 
-  dealTypeButton.on("click", () => {
-    // setIsDealTypeModalOpen(false);
-    onSelect("dealType");
-  });
+  // dealTypeButton.on("click", () => {
+  //   // setIsDealTypeModalOpen(false);
+  //   onSelect("dealType");
+  // });
 
-  propertyTypeButton.on("click", () => {
-    onSelect("propertyType");
-  });
+  // propertyTypeButton.on("click", () => {
+  //   onSelect("propertyType");
+  // });
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
@@ -156,13 +156,15 @@ export default function Home() {
               }
               onOpenChange={(open) => {
                 if (open) {
-                  console.log(dealTypeButton, "OPEN");
-
-                  dealTypeButton.show();
+                  submitButton.setText("არჩევა");
+                  submitButton.on("click", () => {
+                    onSelect("dealType");
+                  });
                 } else {
-                  console.log(dealTypeButton, "CLOSE");
-
-                  dealTypeButton.hide();
+                  submitButton.setText("გაგზავნა");
+                  submitButton.on("click", () => {
+                    console.log("SUBMIT");
+                  });
                 }
                 // setIsDealTypeModalOpen(open);
                 onOpenChange(open, "dealType");
