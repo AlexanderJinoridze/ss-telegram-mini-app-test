@@ -161,17 +161,17 @@ export default function Home() {
                       text: "არჩევა",
                       isVisible: open,
                     })
-                    .on("click", zaza);
+                    .on("change", zaza);
                 } else {
                   if (!showMainButton) {
                     submitButton.hide();
                   }
                   submitButton
-                  .setParams({
-                    text: "გაგზავნა",
-                    isVisible: open,
-                  })
-                  .on("click", soso);
+                    .setParams({
+                      text: "გაგზავნა",
+                      isVisible: open,
+                    })
+                    .on("change", soso);
                   // submitButton.setText("გაგზავნა");
                   // submitButton.off("click", soso);
                   // submitButton.on("click", soso);
