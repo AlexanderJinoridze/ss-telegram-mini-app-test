@@ -44,7 +44,7 @@ export default function Home() {
 
   // dealTypeButton.setText("არჩევა");
   // propertyTypeButton.setText("არჩევა");
-  submitButton.setText("გაგზავნა");
+  submitButton.setText("ძაზა");
 
   // dealTypeButton.on("click", () => {
   //   // setIsDealTypeModalOpen(false);
