@@ -4,7 +4,6 @@
 
 body {
   background: var(--tg-theme-secondary-bg-color, white);
-  min-height: 100vh;
 }
 
 .material-symbols-outlined {
