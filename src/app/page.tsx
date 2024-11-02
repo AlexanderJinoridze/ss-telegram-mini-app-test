@@ -202,14 +202,14 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          <div>
+          <FixedLayout>
             <Divider />
             <div className="p-5 bg-[--tg-theme-secondary-bg-color]">
               <Button size="l" stretched>
                 იპოვე
               </Button>
             </div>
-          </div>
+          </FixedLayout>
         </List>
       </Fragment>
     </SDKProvider>
