@@ -10,7 +10,7 @@ export const ModalFooter: FC<ModalFooterProps> = ({ onClick }) => {
   return (
     <div className="sticky bottom-0">
       <Divider />
-      <div className="p-2 bg-[--tg-theme-header-bg-color]">
+      <div className="p-5 bg-[--tg-theme-header-bg-color]">
         <ModalClose>
           <Button size="l" stretched onClick={onClick}>
             არჩევა

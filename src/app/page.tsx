@@ -13,7 +13,7 @@ import {
 import { Fragment, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
-import { SDKProvider, useMainButton } from "@telegram-apps/sdk-react";
+import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
@@ -33,9 +33,6 @@ export default function Home() {
   const [propertyTypeLabelShadow, setPropertyTypeLabelShadow] =
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
-
-  const zaza = useMainButton();
-  zaza.setText("AAA");
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
@@ -119,89 +116,91 @@ export default function Home() {
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <List>
-          <SectionHeader large>SS.GE</SectionHeader>
-          <Section className="pb-[66px] !mb-0">
-            <Modal
-              header={<ModalCap />}
-              trigger={
-                <Cell>
-                  {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
-                </Cell>
-              }
-              onOpenChange={dealTypeChange}
-            >
-              <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
-              {dealTypeMap.map((item) => (
-                <Cell
-                  key={item.id}
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    item.id === dealTypeShadow
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  after={
-                    item.id === dealTypeShadow ? (
-                      <span className="material-symbols-outlined">check</span>
-                    ) : null
-                  }
-                  onClick={() => dealTypeOptionSelect(item)}
-                >
-                  {item.label}
-                </Cell>
-              ))}
-              <ModalFooter onClick={dealTypeChoose} />
-            </Modal>
-            <Modal
-              header={<ModalCap />}
-              trigger={
-                <Cell>
-                  {propertyType === undefined
-                    ? "ქონების ტიპი"
-                    : propertyTypeLabel}
-                </Cell>
-              }
-              onOpenChange={propertyTypeChange}
-            >
-              <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
-              {propertyTypeMap.map((item) => (
-                <Cell
-                  key={item.id}
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    item.id === propertyTypeShadow
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  before={
-                    <span
-                      className="material-symbols-outlined"
-                      style={{
-                        fontVariationSettings:
-                          item.id === propertyTypeShadow
-                            ? '"FILL" 1'
-                            : undefined,
-                      }}
-                    >
-                      {item.iconName}
-                    </span>
-                  }
-                  after={
-                    item.id === propertyTypeShadow ? (
-                      <span className="material-symbols-outlined">check</span>
-                    ) : null
-                  }
-                  onClick={() => propertyTypeOptionSelect(item)}
-                >
-                  {item.label}
-                </Cell>
-              ))}
-              <ModalFooter onClick={propertyTypeChoose} />
-            </Modal>
+        <div className="h-screen flex flex-col">
+          <List className="overflow-auto flex-grow mb-[90px]">
+            <SectionHeader large>SS.GE</SectionHeader>
+            <Section>
+              <Modal
+                header={<ModalCap />}
+                trigger={
+                  <Cell>
+                    {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
+                  </Cell>
+                }
+                onOpenChange={dealTypeChange}
+              >
+                <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
+                {dealTypeMap.map((item) => (
+                  <Cell
+                    key={item.id}
+                    className={`px-6 transition-colors hover:bg-transparent ${
+                      item.id === dealTypeShadow
+                        ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                        : "bg-transparent"
+                    }`}
+                    after={
+                      item.id === dealTypeShadow ? (
+                        <span className="material-symbols-outlined">check</span>
+                      ) : null
+                    }
+                    onClick={() => dealTypeOptionSelect(item)}
+                  >
+                    {item.label}
+                  </Cell>
+                ))}
+                <ModalFooter onClick={dealTypeChoose} />
+              </Modal>
+              <Modal
+                header={<ModalCap />}
+                trigger={
+                  <Cell>
+                    {propertyType === undefined
+                      ? "ქონების ტიპი"
+                      : propertyTypeLabel}
+                  </Cell>
+                }
+                onOpenChange={propertyTypeChange}
+              >
+                <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
+                {propertyTypeMap.map((item) => (
+                  <Cell
+                    key={item.id}
+                    className={`px-6 transition-colors hover:bg-transparent ${
+                      item.id === propertyTypeShadow
+                        ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                        : "bg-transparent"
+                    }`}
+                    before={
+                      <span
+                        className="material-symbols-outlined"
+                        style={{
+                          fontVariationSettings:
+                            item.id === propertyTypeShadow
+                              ? '"FILL" 1'
+                              : undefined,
+                        }}
+                      >
+                        {item.iconName}
+                      </span>
+                    }
+                    after={
+                      item.id === propertyTypeShadow ? (
+                        <span className="material-symbols-outlined">check</span>
+                      ) : null
+                    }
+                    onClick={() => propertyTypeOptionSelect(item)}
+                  >
+                    {item.label}
+                  </Cell>
+                ))}
+                <ModalFooter onClick={propertyTypeChoose} />
+              </Modal>
 
-            <Cell>მდებარეობა</Cell>
-            <Cell>ფართი</Cell>
-            <Cell>ფასი</Cell>
-          </Section>
+              <Cell>მდებარეობა</Cell>
+              <Cell>ფართი</Cell>
+              <Cell>ფასი</Cell>
+            </Section>
+          </List>
           <FixedLayout>
             <Divider />
             <div className="p-5 bg-[--tg-theme-secondary-bg-color]">
@@ -210,7 +209,7 @@ export default function Home() {
               </Button>
             </div>
           </FixedLayout>
-        </List>
+        </div>
       </Fragment>
     </SDKProvider>
   );
