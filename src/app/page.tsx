@@ -116,7 +116,7 @@ export default function Home() {
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <List>
+        <List className="!p-0">
           <SectionHeader large>SS.GE</SectionHeader>
           <Section className="pb-[66px] !mb-0">
             <Modal
