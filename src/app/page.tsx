@@ -13,7 +13,11 @@ import {
 import { Fragment, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
-import { SDKProvider } from "@telegram-apps/sdk-react";
+import {
+  SDKProvider,
+  useMainButton,
+  useMainButtonRaw,
+} from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
@@ -33,6 +37,11 @@ export default function Home() {
   const [propertyTypeLabelShadow, setPropertyTypeLabelShadow] =
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
+
+  const mainButton = useMainButton();
+
+  mainButton.show();
+  mainButton.setText("იპოვე");
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
