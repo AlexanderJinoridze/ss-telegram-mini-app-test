@@ -137,8 +137,7 @@ export default function Home() {
               }
               onOpenChange={(open) => {
                 mainButton.setParams({
-                  text: "ZAZA",
-                  isVisible: !open,
+                  text: open ? "არჩევა" : "ძიება",
                 });
                 dealTypeChange();
               }}
