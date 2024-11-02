@@ -118,7 +118,7 @@ export default function Home() {
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <List>
           <SectionHeader large>SS.GE</SectionHeader>
-          <Section>
+          <Section className="pb-[66px] !mb-0">
             <Modal
               header={<ModalCap />}
               trigger={
@@ -201,7 +201,7 @@ export default function Home() {
           </Section>
           <FixedLayout>
             <Divider />
-            <div className="p-4 pb-6 bg-[--tg-theme-header-bg-color]">
+            <div className="p-2 bg-[--tg-theme-header-bg-color]">
               <Button size="l" stretched>
                 იპოვე
               </Button>
