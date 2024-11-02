@@ -8,6 +8,9 @@ import {
   FixedLayout,
   Button,
   Divider,
+  Chip,
+  Subheadline,
+  Text,
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useState } from "react";
@@ -41,13 +44,44 @@ export default function Home() {
     { id: 4, label: "ქირავდება დღიურად" },
   ];
 
+  const propertyTypeStatusMap: { [key in number]: string[] } = {
+    1: ["ახალი აშენებული", "მშენებარე", "ძველი აშენებული"],
+    2: ["ახალი აშენებული", "მშენებარე", "ძველი აშენებული"],
+    4: [
+      "კვების ობიექტი",
+      "გარაჟი",
+      "სარდაფი",
+      "სავაჭრო ობიექტი",
+      "კომერციული ფართი",
+      "სასაწყობე / საწარმოო ფართი",
+      "საოფისე ფართი",
+    ],
+    6: ["ახალი აშენებული", "მშენებარე", "ძველი აშენებული"],
+  };
+
   const propertyTypeMap = [
-    { id: 1, label: "კერძო სახლი", iconName: "home" },
-    { id: 2, label: "ბინა", iconName: "chair" },
+    {
+      id: 1,
+      label: "კერძო სახლი",
+      iconName: "home",
+    },
+    {
+      id: 2,
+      label: "ბინა",
+      iconName: "chair",
+    },
     { id: 3, label: "მიწა", iconName: "psychiatry" },
-    { id: 4, label: "კომერციული", iconName: "home_work" },
+    {
+      id: 4,
+      label: "კომერციული",
+      iconName: "home_work",
+    },
     { id: 5, label: "სასტუმრო", iconName: "hotel" },
-    { id: 6, label: "აგარაკი", iconName: "cabin" },
+    {
+      id: 6,
+      label: "აგარაკი",
+      iconName: "cabin",
+    },
   ];
 
   const dealTypeChange = () => {
@@ -162,6 +196,30 @@ export default function Home() {
                 onOpenChange={propertyTypeChange}
               >
                 <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
+                {propertyTypeShadow !== undefined &&
+                propertyTypeStatusMap[propertyTypeShadow] !== undefined ? (
+                  <div className="p-6 pt-2">
+                    <Subheadline plain weight="2">
+                      სტატუსი
+                    </Subheadline>
+                    <div className="flex flex-wrap gap-3 mt-4">
+                      {propertyTypeStatusMap[propertyTypeShadow].map(
+                        (statusLabel) => (
+                          <Button
+                            size="m"
+                            mode="outline"
+                            className="flex-shrink-0"
+                            onClick={() => {
+                              console.log("AAA");
+                            }}
+                          >
+                            <Text weight="3">{statusLabel}</Text>
+                          </Button>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ) : null}
                 {propertyTypeMap.map((item) => (
                   <Cell
                     key={item.id}
@@ -205,7 +263,7 @@ export default function Home() {
             <Divider />
             <div className="p-5 bg-[--tg-theme-header-bg-color]">
               <Button size="l" stretched>
-                იპოვე
+                გაგზავნა
               </Button>
             </div>
           </FixedLayout>
