@@ -199,8 +199,8 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          <FixedLayout>
-            <div className="p-5">
+          <FixedLayout className="!p-0">
+            <div className="p-5 bg-[--tg-theme-secondary-bg-color]">
               <Button size="l" stretched>
                 იპოვე
               </Button>
