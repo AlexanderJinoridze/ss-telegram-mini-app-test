@@ -10,14 +10,10 @@ import {
   Divider,
 } from "@telegram-apps/telegram-ui";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
-import {
-  SDKProvider,
-  useMainButton,
-  useMainButtonRaw,
-} from "@telegram-apps/sdk-react";
+import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
@@ -37,13 +33,6 @@ export default function Home() {
   const [propertyTypeLabelShadow, setPropertyTypeLabelShadow] =
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
-
-  const mainButton = useMainButton();
-
-  useEffect(() => {
-    mainButton.show();
-    mainButton.setText("იპოვე");
-  }, []);
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
@@ -137,12 +126,7 @@ export default function Home() {
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
-              onOpenChange={(open) => {
-                mainButton.setParams({
-                  text: open ? "არჩევა" : "ძიება",
-                });
-                dealTypeChange();
-              }}
+              onOpenChange={dealTypeChange}
             >
               <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
               {dealTypeMap.map((item) => (
@@ -174,12 +158,7 @@ export default function Home() {
                     : propertyTypeLabel}
                 </Cell>
               }
-              onOpenChange={(open) => {
-                mainButton.setParams({
-                  isVisible: !open,
-                });
-                propertyTypeChange();
-              }}
+              onOpenChange={propertyTypeChange}
             >
               <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
               {propertyTypeMap.map((item) => (
@@ -220,14 +199,14 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          {/* <FixedLayout>
+          <div>
             <Divider />
             <div className="p-5 bg-[--tg-theme-secondary-bg-color]">
               <Button size="l" stretched>
                 იპოვე
               </Button>
             </div>
-          </FixedLayout> */}
+          </div>
         </List>
       </Fragment>
     </SDKProvider>
