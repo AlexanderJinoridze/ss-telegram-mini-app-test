@@ -46,12 +46,12 @@ export default function Home() {
   ];
 
   const propertyTypeMap = [
-    { id: 1, label: "კერძო სახლი" },
-    { id: 2, label: "ბინა" },
-    { id: 3, label: "მიწა" },
-    { id: 4, label: "კომერციული" },
-    { id: 5, label: "სასტუმრო" },
-    { id: 6, label: "აგარაკი" },
+    { id: 1, label: "კერძო სახლი", iconName: "home" },
+    { id: 2, label: "ბინა", iconName: "chair" },
+    { id: 3, label: "მიწა", iconName: "psychiatry" },
+    { id: 4, label: "კომერციული", iconName: "home_work" },
+    { id: 5, label: "სასტუმრო", iconName: "hotel" },
+    { id: 6, label: "აგარაკი", iconName: "cabin" },
   ];
 
   useEffect(() => {
@@ -147,6 +147,9 @@ export default function Home() {
                   mode="bezeled"
                   className="flex-shrink-0"
                   onClick={() => onClear("dealType")}
+                  after={
+                    <span className="material-symbols-outlined">close</span>
+                  }
                 >
                   გასუფთავება
                 </Button>
@@ -164,12 +167,12 @@ export default function Home() {
                   {item.label}
                 </Cell>
               ))}
-              <div className={"sticky bottom-0"}>
+              <div className="sticky bottom-0">
                 <Divider />
                 <div className="p-2 bg-[--tg-theme-header-bg-color]">
                   <ModalClose>
                     <Button
-                      size="m"
+                      size="l"
                       stretched
                       onClick={() => onSelect("dealType")}
                     >
@@ -211,22 +214,43 @@ export default function Home() {
                       ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
                       : "bg-transparent"
                   }`}
+                  before={
+                    <span
+                      className="material-symbols-outlined"
+                      style={{
+                        fontVariationSettings:
+                          item.id === propertyTypeShadow
+                            ? '"FILL" 1'
+                            : undefined,
+                      }}
+                    >
+                      {item.iconName}
+                    </span>
+                  }
+                  after={
+                    item.id === propertyTypeShadow ? (
+                      <span className="material-symbols-outlined">check</span>
+                    ) : null
+                  }
                   onClick={() => onOptionSelect(item, "propertyType")}
                 >
                   {item.label}
                 </Cell>
               ))}
-              <ModalClose>
-                <div className="p-6">
-                  <Button
-                    size="m"
-                    stretched
-                    onClick={() => onSelect("propertyType")}
-                  >
-                    არჩევა
-                  </Button>
+              <div className="sticky bottom-0">
+                <Divider />
+                <div className="p-2 bg-[--tg-theme-header-bg-color]">
+                  <ModalClose>
+                    <Button
+                      size="l"
+                      stretched
+                      onClick={() => onSelect("propertyType")}
+                    >
+                      არჩევა
+                    </Button>
+                  </ModalClose>
                 </div>
-              </ModalClose>
+              </div>
             </Modal>
             <Cell>მდებარეობა</Cell>
             <Cell>ფართი</Cell>
