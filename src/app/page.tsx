@@ -201,7 +201,7 @@ export default function Home() {
           </Section>
           <FixedLayout>
             <Divider />
-            <div className="p-5 bg-[--tg-theme-header-bg-color]">
+            <div className="p-5 bg-[--tg-theme-secondary-bg-color]">
               <Button size="l" stretched>
                 იპოვე
               </Button>
