@@ -10,7 +10,7 @@ import {
   Divider,
 } from "@telegram-apps/telegram-ui";
 
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import {
@@ -40,8 +40,10 @@ export default function Home() {
 
   const mainButton = useMainButton();
 
-  mainButton.show();
-  mainButton.setText("იპოვე");
+  useEffect(() => {
+    mainButton.show();
+    mainButton.setText("იპოვე");
+  }, []);
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
