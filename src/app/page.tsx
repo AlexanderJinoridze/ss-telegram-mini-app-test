@@ -118,7 +118,7 @@ export default function Home() {
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <List>
           <SectionHeader large>SS.GE</SectionHeader>
-          <Section>
+          <Section className="pb-[66px] !mb-0">
             <Modal
               header={<ModalCap />}
               trigger={
@@ -199,14 +199,13 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          {/* <FixedLayout>
-            <Divider />
+          <FixedLayout>
             <div className="p-5">
               <Button size="l" stretched>
                 იპოვე
               </Button>
             </div>
-          </FixedLayout> */}
+          </FixedLayout>
         </List>
       </Fragment>
     </SDKProvider>
