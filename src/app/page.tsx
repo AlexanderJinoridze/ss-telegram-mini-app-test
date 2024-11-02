@@ -117,7 +117,7 @@ export default function Home() {
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <List className="flex flex-col min-h-screen">
           <SectionHeader large>SS.GE</SectionHeader>
-          <Section className="flex-grow-0">
+          <Section className="flex-grow">
             <Modal
               header={<ModalCap />}
               trigger={
