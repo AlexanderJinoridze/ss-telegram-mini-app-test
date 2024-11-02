@@ -1,11 +1,18 @@
 "use client";
 
-import { Section, Cell, List, Modal } from "@telegram-apps/telegram-ui";
+import {
+  Section,
+  Cell,
+  List,
+  Modal,
+  FixedLayout,
+  Button,
+} from "@telegram-apps/telegram-ui";
 
 import { Fragment, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
-import { SDKProvider, useMainButton } from "@telegram-apps/sdk-react";
+import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
@@ -25,12 +32,6 @@ export default function Home() {
   const [propertyTypeLabelShadow, setPropertyTypeLabelShadow] =
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
-
-  // const [showMainButton, setShowMainButton] = useState<boolean>(false);
-
-  const mainButton = useMainButton();
-  mainButton.show();
-  mainButton.setText("იპოვე");
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
@@ -197,6 +198,15 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
+          <FixedLayout
+            style={{
+              padding: 16,
+            }}
+          >
+            <Button size="l" stretched>
+              This is FixedLayout with default vertical
+            </Button>
+          </FixedLayout>
         </List>
       </Fragment>
     </SDKProvider>
