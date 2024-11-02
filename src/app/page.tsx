@@ -7,6 +7,7 @@ import {
   Modal,
   FixedLayout,
   Button,
+  Divider,
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useState } from "react";
@@ -198,14 +199,13 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          <FixedLayout
-            style={{
-              padding: 16,
-            }}
-          >
-            <Button size="l" stretched>
-              This is FixedLayout with default vertical
-            </Button>
+          <FixedLayout>
+            <Divider />
+            <div className="p-4 pb-6 bg-[--tg-theme-header-bg-color]">
+              <Button size="l" stretched>
+                იპოვე
+              </Button>
+            </div>
           </FixedLayout>
         </List>
       </Fragment>
