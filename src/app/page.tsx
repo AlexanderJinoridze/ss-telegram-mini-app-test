@@ -6,8 +6,8 @@ import {
   List,
   Modal,
   Button,
-  IconButton,
   Headline,
+  Divider,
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useEffect, useState } from "react";
@@ -33,27 +33,10 @@ export default function Home() {
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
 
-  const [isDealTypeModalOpen, setIsDealTypeModalOpen] =
-    useState<boolean>(false);
-
   const [showMainButton, setShowMainButton] = useState<boolean>(false);
 
-  // const dealTypeButton = useMainButton();
-  // const propertyTypeButton = useMainButton();
-  const submitButton = useMainButton();
-
-  // dealTypeButton.setText("არჩევა");
-  // propertyTypeButton.setText("არჩევა");
-  // submitButton.setText("ძაზა");
-
-  // dealTypeButton.on("click", () => {
-  //   // setIsDealTypeModalOpen(false);
-  //   onSelect("dealType");
-  // });
-
-  // propertyTypeButton.on("click", () => {
-  //   onSelect("propertyType");
-  // });
+  const mainButton = useMainButton();
+  mainButton.setText("გაგზავნა");
 
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
@@ -85,6 +68,14 @@ export default function Home() {
     } else if (modalType === "propertyType") {
       setPropertyTypeShadow(propertyType);
       setPropertyTypeLabelShadow(propertyTypeLabel);
+    }
+
+    if (!showMainButton) return;
+
+    if (open) {
+      mainButton.hide();
+    } else {
+      mainButton.show();
     }
   };
 
@@ -131,14 +122,6 @@ export default function Home() {
     }
   };
 
-  const zaza = () => {
-    onSelect("dealType");
-  };
-
-  const soso = () => {
-    console.log("SUBMIT");
-  };
-
   return (
     <SDKProvider>
       <Fragment>
@@ -148,39 +131,14 @@ export default function Home() {
           <Section>
             <Modal
               header={<ModalHeader />}
-              // open={isDealTypeModalOpen}
               trigger={
                 <Cell>
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
-              onOpenChange={(open) => {
-                if (open) {
-                  submitButton
-                    .setParams({
-                      text: "არჩევა",
-                      isVisible: open,
-                    })
-                    .on("change", zaza);
-                } else {
-                  if (!showMainButton) {
-                    submitButton.hide();
-                  }
-                  submitButton
-                    .setParams({
-                      text: "გაგზავნა",
-                      isVisible: open,
-                    })
-                    .on("change", soso);
-                  // submitButton.setText("გაგზავნა");
-                  // submitButton.off("click", soso);
-                  // submitButton.on("click", soso);
-                }
-                // setIsDealTypeModalOpen(open);
-                onOpenChange(open, "dealType");
-              }}
+              onOpenChange={(open) => onOpenChange(open, "dealType")}
             >
-              <div className="flex justify-between items-center px-6 pb-6">
+              <div className="flex sticky bg-[--tgui--bg_color] top-0 z-10 justify-between items-center px-6 pb-4">
                 <Headline plain weight="2" className="flex justify-between">
                   გარიგების ტიპი
                 </Headline>
@@ -206,17 +164,20 @@ export default function Home() {
                   {item.label}
                 </Cell>
               ))}
-              {/* <ModalClose>
-                <div className="p-6">
-                  <Button
-                    size="m"
-                    stretched
-                    onClick={() => }
-                  >
-                    არჩევა
-                  </Button>
+              <div className={"sticky bottom-0"}>
+                <Divider />
+                <div className="p-2 bg-[--tg-theme-header-bg-color]">
+                  <ModalClose>
+                    <Button
+                      size="m"
+                      stretched
+                      onClick={() => onSelect("dealType")}
+                    >
+                      არჩევა
+                    </Button>
+                  </ModalClose>
                 </div>
-              </ModalClose> */}
+              </div>
             </Modal>
             <Modal
               header={<ModalHeader />}
