@@ -116,7 +116,7 @@ export default function Home() {
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <List className="!p-0">
+        <List>
           <SectionHeader large>SS.GE</SectionHeader>
           <Section className="pb-[66px] !mb-0">
             <Modal
@@ -199,7 +199,7 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          <FixedLayout className="!p-0">
+          <FixedLayout>
             <Divider />
             <div className="p-5 bg-[--tg-theme-header-bg-color]">
               <Button size="l" stretched>
