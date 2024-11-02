@@ -135,7 +135,13 @@ export default function Home() {
                   {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
                 </Cell>
               }
-              onOpenChange={dealTypeChange}
+              onOpenChange={(open) => {
+                mainButton.setParams({
+                  text: "ZAZA",
+                  isVisible: !open,
+                });
+                dealTypeChange();
+              }}
             >
               <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
               {dealTypeMap.map((item) => (
@@ -167,7 +173,12 @@ export default function Home() {
                     : propertyTypeLabel}
                 </Cell>
               }
-              onOpenChange={propertyTypeChange}
+              onOpenChange={(open) => {
+                mainButton.setParams({
+                  isVisible: !open,
+                });
+                propertyTypeChange();
+              }}
             >
               <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
               {propertyTypeMap.map((item) => (
@@ -208,14 +219,14 @@ export default function Home() {
             <Cell>ფართი</Cell>
             <Cell>ფასი</Cell>
           </Section>
-          <FixedLayout>
+          {/* <FixedLayout>
             <Divider />
             <div className="p-5 bg-[--tg-theme-secondary-bg-color]">
               <Button size="l" stretched>
                 იპოვე
               </Button>
             </div>
-          </FixedLayout>
+          </FixedLayout> */}
         </List>
       </Fragment>
     </SDKProvider>
