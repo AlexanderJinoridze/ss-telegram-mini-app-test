@@ -335,6 +335,7 @@ export default function Home() {
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
                   <Input
+                    autoFocus
                     header="-დან"
                     after="მ²"
                     onFocus={() => {
@@ -346,7 +347,16 @@ export default function Home() {
                   />
                 </div>
                 <div className="[&>div]:px-6">
-                  <Input header="-მდე" after="მ²" />
+                  <Input
+                    header="-მდე"
+                    after="მ²"
+                    onFocus={() => {
+                      setInputFocused(true);
+                    }}
+                    onBlur={() => {
+                      setInputFocused(false);
+                    }}
+                  />
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
