@@ -330,8 +330,12 @@ export default function Home() {
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-                <Input header="დან" after="მ²" />
-                <Input header="მდე" after="მ²" />
+                <div className="[&>div]:px-6">
+                  <Input header="-დან" after="მ²" />
+                </div>
+                <div className="[&>div]:px-6">
+                  <Input header="-მდე" after="მ²" />
+                </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
                     ოთახები
