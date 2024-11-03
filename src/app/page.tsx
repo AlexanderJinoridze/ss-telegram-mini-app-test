@@ -329,7 +329,7 @@ export default function Home() {
                   console.log("PRICE MODAL OPEN CHANGE");
                   setInputFocused(false);
                 }}
-                className={`max-h-[calc(100%-1.5rem)] ${
+                className={`zaza max-h-[calc(100%-1.5rem)] ${
                   inputFocused ? "absolute" : "fixed"
                 }`}
               >
