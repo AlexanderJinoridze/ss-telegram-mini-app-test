@@ -8,9 +8,9 @@ import {
   FixedLayout,
   Button,
   Divider,
-  Chip,
   Subheadline,
   Text,
+  Input,
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useState } from "react";
@@ -49,21 +49,6 @@ export default function Home() {
     { id: 4, label: "ქირავდება დღიურად" },
   ];
 
-  const propertyTypeStatusMap: { [key in number]: string[] } = {
-    1: ["ახალი აშენებული", "მშენებარე", "ძველი აშენებული"],
-    2: ["ახალი აშენებული", "მშენებარე", "ძველი აშენებული"],
-    4: [
-      "კვების ობიექტი",
-      "გარაჟი",
-      "სარდაფი",
-      "სავაჭრო ობიექტი",
-      "კომერციული ფართი",
-      "სასაწყობე / საწარმოო ფართი",
-      "საოფისე ფართი",
-    ],
-    6: ["ახალი აშენებული", "მშენებარე", "ძველი აშენებული"],
-  };
-
   const propertyTypeMap = [
     {
       id: 1,
@@ -78,7 +63,7 @@ export default function Home() {
     { id: 3, label: "მიწა", iconName: "psychiatry" },
     {
       id: 4,
-      label: "კომერციული",
+      label: "კომერციული ფართი",
       iconName: "home_work",
     },
     { id: 5, label: "სასტუმრო", iconName: "hotel" },
@@ -88,6 +73,35 @@ export default function Home() {
       iconName: "cabin",
     },
   ];
+
+  const propertyTypeStatusMap: {
+    [key in number]: { id: number; label: string }[];
+  } = {
+    1: [
+      { id: 2, label: "ახალი აშენებული" },
+      { id: 3, label: "მშენებარე" },
+      { id: 453, label: "ძველი აშენებული" },
+    ],
+    2: [
+      { id: 2, label: "ახალი აშენებული" },
+      { id: 3, label: "მშენებარე" },
+      { id: 453, label: "ძველი აშენებული" },
+    ],
+    4: [
+      { id: 13, label: "კვების ობიექტი" },
+      { id: 14, label: "გარაჟი" },
+      { id: 21, label: "სარდაფი" },
+      { id: 22, label: "სავაჭრო ობიექტი" },
+      { id: 31, label: "კომერციული ფართი" },
+      { id: 6, label: "სასაწყობე / საწარმოო ფართი" },
+      { id: 7, label: "საოფისე ფართი" },
+    ],
+    6: [
+      { id: 2, label: "ახალი აშენებული" },
+      { id: 3, label: "მშენებარე" },
+      { id: 453, label: "ძველი აშენებული" },
+    ],
+  };
 
   const dealTypeChange = () => {
     setDealTypeShadow(dealType);
@@ -159,6 +173,10 @@ export default function Home() {
     setPropertyTypeLabel(propertyTypeLabelShadow);
   };
 
+  const normalizedStatusLabels = statusesLabel
+    .filter((elem) => elem !== "კომერციული ფართი")
+    .join(", ");
+
   return (
     <SDKProvider>
       <Fragment>
@@ -171,10 +189,15 @@ export default function Home() {
                 header={<ModalCap />}
                 trigger={
                   <Cell>
-                    {dealType === undefined ? "გარიგების ტიპი" : dealTypeLabel}
+                    {dealType === undefined ? (
+                      "გარიგების ტიპი"
+                    ) : (
+                      <Text weight="2">{dealTypeLabel}</Text>
+                    )}
                   </Cell>
                 }
                 onOpenChange={dealTypeChange}
+                className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
                 {dealTypeMap.map((item) => (
@@ -201,12 +224,14 @@ export default function Home() {
                 header={<ModalCap />}
                 trigger={
                   <Cell>
-                    {propertyType === undefined
-                      ? "ქონების ტიპი"
-                      : propertyTypeLabel}
+                    {propertyType === undefined ? (
+                      "ქონების ტიპი"
+                    ) : (
+                      <Text weight="2">{propertyTypeLabel}</Text>
+                    )}
                     <>
-                      {statusesLabel.length ? (
-                        <span> - {statusesLabel.join(", ")}</span>
+                      {normalizedStatusLabels ? (
+                        <Text weight="2"> - {normalizedStatusLabels}</Text>
                       ) : null}
                     </>
                   </Cell>
@@ -223,20 +248,18 @@ export default function Home() {
                     </Subheadline>
                     <div className="flex flex-wrap gap-3 mt-4">
                       {propertyTypeStatusMap[propertyTypeShadow].map(
-                        (label, statusIndex) => (
+                        ({ id, label }) => (
                           <Button
-                            key={label}
+                            key={id}
                             size="m"
                             mode={
-                              statusesShadow.includes(statusIndex)
-                                ? "filled"
-                                : "outline"
+                              statusesShadow.includes(id) ? "filled" : "outline"
                             }
                             className="flex-shrink-0"
                             onClick={() => {
-                              if (statusesShadow.includes(statusIndex)) {
+                              if (statusesShadow.includes(id)) {
                                 statusesShadow.splice(
-                                  statusesShadow.indexOf(statusIndex),
+                                  statusesShadow.indexOf(id),
                                   1
                                 );
                                 statusesLabelShadow.splice(
@@ -244,12 +267,11 @@ export default function Home() {
                                   1
                                 );
                                 setStatusesShadow([...statusesShadow]);
-                                setStatusesLabelShadow([...statusesLabelShadow]);
-                              } else {
-                                setStatusesShadow([
-                                  ...statusesShadow,
-                                  statusIndex,
+                                setStatusesLabelShadow([
+                                  ...statusesLabelShadow,
                                 ]);
+                              } else {
+                                setStatusesShadow([...statusesShadow, id]);
                                 setStatusesLabelShadow([
                                   ...statusesLabelShadow,
                                   label,
@@ -299,7 +321,53 @@ export default function Home() {
               </Modal>
 
               <Cell>მდებარეობა</Cell>
-              <Cell>ფართი</Cell>
+              <Modal
+                header={<ModalCap />}
+                trigger={<Cell>ფართი</Cell>}
+                onOpenChange={() => {
+                  console.log("PRICE MODAL OPEN CHANGE");
+                }}
+                className="max-h-[calc(100%-1.5rem)]"
+              >
+                <ModalHeader title="ფართი" onClear={propertyTypeClear} />
+                <div className="[&>div]:px-6 [&>div]:pb-3 [&>div]:pt-1">
+                  <Input placeholder="დან" after="მ²" />
+                </div>
+                <div className="[&>div]:px-6 [&>div]:pt-3 [&>div]:pb-6">
+                  <Input placeholder="მდე" after="მ²" />
+                </div>
+
+                <div className="p-6 pt-2">
+                  <Subheadline plain weight="2">
+                    ოთახები
+                  </Subheadline>
+                  <div className="flex flex-wrap gap-3 mt-4">
+                    <Button size="m" mode={"outline"} className="flex-shrink-0">
+                      <Text weight="3">1</Text>
+                    </Button>
+                    <Button size="m" mode={"outline"} className="flex-shrink-0">
+                      <Text weight="3">2</Text>
+                    </Button>
+                    <Button size="m" mode={"outline"} className="flex-shrink-0">
+                      <Text weight="3">3</Text>
+                    </Button>
+                    <Button size="m" mode={"outline"} className="flex-shrink-0">
+                      <Text weight="3">4</Text>
+                    </Button>
+                    <Button size="m" mode={"outline"} className="flex-shrink-0">
+                      <Text weight="3">5</Text>
+                    </Button>
+                    <Button size="m" mode={"outline"} className="flex-shrink-0">
+                      <Text weight="3">6+</Text>
+                    </Button>
+                  </div>
+                </div>
+                <ModalFooter
+                  onClick={() => {
+                    console.log("CHOOSE PRICE");
+                  }}
+                />
+              </Modal>
               <Cell>ფასი</Cell>
             </Section>
           </List>
