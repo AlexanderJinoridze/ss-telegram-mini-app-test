@@ -328,8 +328,8 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className={`max-h-[calc(100%-1.5rem)] ${
-                  inputFocused ? "absolute" : "fixed"
+                className={`max-h-[calc(100%-1.5rem)] h-full ${
+                  inputFocused ? "fixed" : "fixed"
                 }`}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
