@@ -183,7 +183,7 @@ export default function Home() {
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <div className="h-screen flex flex-col absolute w-full overflow-hidden">
+        <div className="h-screen flex flex-col">
           <List className="overflow-auto flex-grow mb-[90px]">
             <SectionHeader large>SS.GE</SectionHeader>
             <Section>
@@ -328,11 +328,11 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className={`zaza absolute max-h-[calc(100%-1.5rem)]`}
+                className={`max-h-[calc(100%-1.5rem)]`}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
-                  <Input autoFocus header="-დან" after="მ²" />
+                  <Input header="-დან" after="მ²" />
                 </div>
                 <div className="[&>div]:px-6">
                   <Input header="-მდე" after="მ²" />
