@@ -37,6 +37,11 @@ export default function Home() {
     useState<string>();
   const [propertyTypeLabel, setPropertyTypeLabel] = useState<string>();
 
+  const [statusesShadow, setStatusesShadow] = useState<number[]>([]);
+  const [statuses, setStatuses] = useState<number[]>([]);
+  const [statusesLabelShadow, setStatusesLabelShadow] = useState<string[]>([]);
+  const [statusesLabel, setStatusesLabel] = useState<string[]>([]);
+
   const dealTypeMap = [
     { id: 1, label: "ქირავდება" },
     { id: 2, label: "იყიდება" },
@@ -90,6 +95,8 @@ export default function Home() {
   };
 
   const propertyTypeChange = () => {
+    setStatusesShadow([...statuses]);
+    setStatusesLabelShadow([...statusesLabel]);
     setPropertyTypeShadow(propertyType);
     setPropertyTypeLabelShadow(propertyTypeLabel);
   };
@@ -100,6 +107,8 @@ export default function Home() {
   };
 
   const propertyTypeClear = () => {
+    setStatusesShadow([]);
+    setStatusesLabelShadow([]);
     setPropertyTypeShadow(undefined);
     setPropertyTypeLabelShadow(undefined);
   };
@@ -127,6 +136,8 @@ export default function Home() {
     id: number;
     label: string;
   }) => {
+    setStatusesShadow([]);
+    setStatusesLabelShadow([]);
     if (id === propertyTypeShadow) {
       setPropertyTypeShadow(undefined);
       setPropertyTypeLabelShadow(undefined);
@@ -142,6 +153,8 @@ export default function Home() {
   };
 
   const propertyTypeChoose = () => {
+    setStatuses(statusesShadow);
+    setStatusesLabel(statusesLabelShadow);
     setPropertyType(propertyTypeShadow);
     setPropertyTypeLabel(propertyTypeLabelShadow);
   };
@@ -191,6 +204,11 @@ export default function Home() {
                     {propertyType === undefined
                       ? "ქონების ტიპი"
                       : propertyTypeLabel}
+                    <>
+                      {statusesLabel.length ? (
+                        <span> - {statusesLabel.join(", ")}</span>
+                      ) : null}
+                    </>
                   </Cell>
                 }
                 onOpenChange={propertyTypeChange}
@@ -205,17 +223,41 @@ export default function Home() {
                     </Subheadline>
                     <div className="flex flex-wrap gap-3 mt-4">
                       {propertyTypeStatusMap[propertyTypeShadow].map(
-                        (statusLabel) => (
+                        (label, statusIndex) => (
                           <Button
-                            key={statusLabel}
+                            key={label}
                             size="m"
-                            mode="outline"
+                            mode={
+                              statusesShadow.includes(statusIndex)
+                                ? "bezeled"
+                                : "outline"
+                            }
                             className="flex-shrink-0"
                             onClick={() => {
-                              console.log("AAA");
+                              if (statusesShadow.includes(statusIndex)) {
+                                statusesShadow.splice(
+                                  statusesShadow.indexOf(statusIndex),
+                                  1
+                                );
+                                statusesLabelShadow.splice(
+                                  statusesLabelShadow.indexOf(label),
+                                  1
+                                );
+                                setStatusesShadow([...statusesShadow]);
+                                setStatusesLabelShadow([...statusesLabelShadow]);
+                              } else {
+                                setStatusesShadow([
+                                  ...statusesShadow,
+                                  statusIndex,
+                                ]);
+                                setStatusesLabelShadow([
+                                  ...statusesLabelShadow,
+                                  label,
+                                ]);
+                              }
                             }}
                           >
-                            <Text weight="3">{statusLabel}</Text>
+                            <Text weight="3">{label}</Text>
                           </Button>
                         )
                       )}
