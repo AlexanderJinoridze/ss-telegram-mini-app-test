@@ -206,6 +206,7 @@ export default function Home() {
                       {propertyTypeStatusMap[propertyTypeShadow].map(
                         (statusLabel) => (
                           <Button
+                            key={statusLabel}
                             size="m"
                             mode="outline"
                             className="flex-shrink-0"
