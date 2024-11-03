@@ -332,7 +332,7 @@ export default function Home() {
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
-                  <Input autoFocus header="-დან" after="მ²" />
+                  <Input header="-დან" after="მ²" />
                 </div>
                 <div className="[&>div]:px-6">
                   <Input header="-მდე" after="მ²" />
