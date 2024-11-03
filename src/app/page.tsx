@@ -177,11 +177,7 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-  const zaza = useRef<HTMLDivElement>();
-
-  function fixPosition(footer: any, vv: any) {
-    footer.style.top = `${vv.height}px`;
-  }
+  const [inputFocused, setInputFocused] = useState<boolean>(false);
 
   return (
     <SDKProvider>
@@ -332,7 +328,9 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className="max-h-[calc(100%-1.5rem)] stick-it-to-the-man"
+                className={`max-h-[calc(100%-1.5rem)] ${
+                  inputFocused ? "absolute" : "fixed"
+                }`}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
@@ -340,18 +338,10 @@ export default function Home() {
                     header="-დან"
                     after="მ²"
                     onFocus={() => {
-                      const footer = document.querySelector(
-                        ".stick-it-to-the-man"
-                      );
-
-                      if (window.visualViewport) {
-                        const vv = window.visualViewport;
-
-                        vv.addEventListener("resize", () =>
-                          fixPosition(footer, vv)
-                        );
-                        fixPosition(footer, vv); // Make sure we call it once before resizing too
-                      }
+                      setInputFocused(true);
+                    }}
+                    onBlur={() => {
+                      setInputFocused(false);
                     }}
                   />
                 </div>
