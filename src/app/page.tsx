@@ -196,31 +196,6 @@ export default function Home() {
                 onOpenChange={propertyTypeChange}
               >
                 <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
-                {propertyTypeShadow !== undefined &&
-                propertyTypeStatusMap[propertyTypeShadow] !== undefined ? (
-                  <div className="p-6 pt-2">
-                    <Subheadline plain weight="2">
-                      სტატუსი
-                    </Subheadline>
-                    <div className="flex flex-wrap gap-3 mt-4">
-                      {propertyTypeStatusMap[propertyTypeShadow].map(
-                        (statusLabel) => (
-                          <Button
-                            key={statusLabel}
-                            size="m"
-                            mode="outline"
-                            className="flex-shrink-0"
-                            onClick={() => {
-                              console.log("AAA");
-                            }}
-                          >
-                            <Text weight="3">{statusLabel}</Text>
-                          </Button>
-                        )
-                      )}
-                    </div>
-                  </div>
-                ) : null}
                 {propertyTypeMap.map((item) => (
                   <Cell
                     key={item.id}
@@ -252,6 +227,31 @@ export default function Home() {
                     {item.label}
                   </Cell>
                 ))}
+                {propertyTypeShadow !== undefined &&
+                propertyTypeStatusMap[propertyTypeShadow] !== undefined ? (
+                  <div className="p-6 pt-2">
+                    <Subheadline plain weight="2">
+                      სტატუსი
+                    </Subheadline>
+                    <div className="flex flex-wrap gap-3 mt-4">
+                      {propertyTypeStatusMap[propertyTypeShadow].map(
+                        (statusLabel) => (
+                          <Button
+                            key={statusLabel}
+                            size="m"
+                            mode="outline"
+                            className="flex-shrink-0"
+                            onClick={() => {
+                              console.log("AAA");
+                            }}
+                          >
+                            <Text weight="3">{statusLabel}</Text>
+                          </Button>
+                        )
+                      )}
+                    </div>
+                  </div>
+                ) : null}
                 <ModalFooter onClick={propertyTypeChoose} />
               </Modal>
 
