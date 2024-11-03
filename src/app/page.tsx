@@ -324,7 +324,7 @@ export default function Home() {
               <Cell>მდებარეობა</Cell>
               <Modal
                 header={<ModalCap />}
-                trigger={<Cell>ფართი</Cell>}
+                trigger={<Cell>ფართი ZAZA</Cell>}
                 onOpenChange={(open) => {
                   console.log("PRICE MODAL OPEN CHANGE");
                   setInputFocused(!open);
