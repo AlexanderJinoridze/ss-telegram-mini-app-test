@@ -322,13 +322,6 @@ export default function Home() {
                 <ModalFooter onClick={propertyTypeChoose} />
               </Modal>
               <Cell>მდებარეობა</Cell>
-
-              <div className="[&>div]:px-6">
-                <Input header="-დან" after="მ²" />
-              </div>
-              <div className="[&>div]:px-6">
-                <Input header="-მდე" after="მ²" />
-              </div>
               <Modal
                 header={<ModalCap />}
                 trigger={<Cell>ფართი</Cell>}
@@ -338,7 +331,12 @@ export default function Home() {
                 className={`max-h-[calc(100%-1.5rem)]`}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-
+                <div className="[&>div]:px-6">
+                  <Input header="-დან" after="მ²" />
+                </div>
+                <div className="[&>div]:px-6">
+                  <Input header="-მდე" after="მ²" />
+                </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
                     ოთახები
