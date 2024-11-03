@@ -327,23 +327,23 @@ export default function Home() {
                 trigger={<Cell>ფართი</Cell>}
                 onOpenChange={(open) => {
                   console.log("PRICE MODAL OPEN CHANGE");
-                  // setInputFocused(open);
+                  setInputFocused(true);
                 }}
-                className={`max-h-[calc(100%-1.5rem)] ${
+                className={`zaza max-h-[calc(100%-1.5rem)] ${
                   inputFocused ? "absolute bottom-0" : "fixed"
                 }`}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
                   <Input
-                    
+                    autoFocus
                     header="-დან"
                     after="მ²"
                     onFocus={() => {
                       setInputFocused(true);
                     }}
                     onBlur={() => {
-                      setInputFocused(false);
+                      setInputFocused(true);
                     }}
                   />
                 </div>

@@ -11,5 +11,5 @@ body {
 }
 
 .zaza::after {
-  display: none !important;
+  height: 0 !important;
 }
