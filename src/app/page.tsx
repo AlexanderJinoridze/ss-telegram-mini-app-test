@@ -177,7 +177,11 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-    const zaza = useRef<HTMLDivElement>()
+  const zaza = useRef<HTMLDivElement>();
+
+  function fixPosition(footer: any, vv: any) {
+    footer.style.top = `${vv.height}px`;
+  }
 
   return (
     <SDKProvider>
@@ -321,7 +325,6 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={propertyTypeChoose} />
               </Modal>
-
               <Cell>მდებარეობა</Cell>
               <Modal
                 header={<ModalCap />}
@@ -329,11 +332,28 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className="max-h-[calc(100%-1.5rem)]"
+                className="max-h-[calc(100%-1.5rem)] stick-it-to-the-man"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
-                  <Input header="-დან" after="მ²" />
+                  <Input
+                    header="-დან"
+                    after="მ²"
+                    onFocus={() => {
+                      const footer = document.querySelector(
+                        ".stick-it-to-the-man"
+                      );
+
+                      if (window.visualViewport) {
+                        const vv = window.visualViewport;
+
+                        vv.addEventListener("resize", () =>
+                          fixPosition(footer, vv)
+                        );
+                        fixPosition(footer, vv); // Make sure we call it once before resizing too
+                      }
+                    }}
+                  />
                 </div>
                 <div className="[&>div]:px-6">
                   <Input header="-მდე" after="მ²" />
