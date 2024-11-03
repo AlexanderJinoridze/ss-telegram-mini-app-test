@@ -327,7 +327,7 @@ export default function Home() {
                 trigger={<Cell>ფართი ZAZA</Cell>}
                 onOpenChange={(open) => {
                   console.log("PRICE MODAL OPEN CHANGE");
-                  // setInputFocused(!open);
+                  setInputFocused(open);
                 }}
                 className={`zaza max-h-[calc(100%-1.5rem)] ${
                   inputFocused ? "absolute" : "fixed"
