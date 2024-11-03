@@ -13,7 +13,7 @@ import {
   Input,
 } from "@telegram-apps/telegram-ui";
 
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider } from "@telegram-apps/sdk-react";
@@ -176,6 +176,8 @@ export default function Home() {
   const normalizedStatusLabels = statusesLabel
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
+
+    const zaza = useRef<HTMLDivElement>()
 
   return (
     <SDKProvider>
