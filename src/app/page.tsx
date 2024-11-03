@@ -229,7 +229,7 @@ export default function Home() {
                             size="m"
                             mode={
                               statusesShadow.includes(statusIndex)
-                                ? "bezeled"
+                                ? "filled"
                                 : "outline"
                             }
                             className="flex-shrink-0"
