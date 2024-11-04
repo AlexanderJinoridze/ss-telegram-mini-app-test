@@ -26,5 +26,5 @@ body > div[class^="tgui-"] {
 }
 
 .AAA::after {
-  /* display: none !important; */
+  display: none !important;
 }

@@ -432,7 +432,7 @@ export default function Home() {
                   console.log("PRICE MODAL OPEN CHANGE 111");
                 }}
                 id="area-modal"
-                className={`absolute !transform-none !bottom-0 max-h-[calc(100%-1.5rem)]`}
+                className={`absolute AAA !transform-none !bottom-0 max-h-[calc(100%-1.5rem)]`}
                 // onClick={inputBlur}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
