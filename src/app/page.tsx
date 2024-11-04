@@ -13,7 +13,7 @@ import {
   Input,
 } from "@telegram-apps/telegram-ui";
 
-import { Fragment, useRef, useState } from "react";
+import { Fragment, MouseEventHandler, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider } from "@telegram-apps/sdk-react";
@@ -177,7 +177,61 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-  const [inputFocused, setInputFocused] = useState<boolean>(false);
+  const inputBlur: MouseEventHandler<HTMLDivElement> = (event) => {
+    if (
+      ["area-from-input", "area-to-input"].includes(
+        (event.target as HTMLElement).id
+      )
+    ) {
+      return;
+    }
+
+    const inputs = document.querySelectorAll<HTMLElement>(
+      "#area-from-input, #area-to-input"
+    );
+    for (let input of Array.from(inputs)) {
+      if (input) {
+        input.blur();
+      }
+    }
+  };
+
+  const inputBlur2 = () => {
+    const inputs = document.querySelectorAll<HTMLElement>(
+      "#area-from-input, #area-to-input"
+    );
+    for (let input of Array.from(inputs)) {
+      if (input) {
+        input.blur();
+      }
+    }
+  };
+
+  const resizeHandler = () => {
+    const areaModal = document.getElementById("area-modal");
+    let height = window.visualViewport?.height ?? 0;
+    const viewport = window.visualViewport;
+
+    if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+      height = viewport?.height ?? 0;
+    }
+    if (areaModal) {
+      areaModal.style.bottom = `${height - (viewport?.height ?? 0) + 10}px`;
+    }
+  };
+
+  const blurHandler = () => {
+    const areaModal = document.getElementById("area-modal");
+    if (areaModal) {
+      areaModal.style.bottom = "0";
+      // areaModal.style.position = "fixed";
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", inputBlur2);
+    window.visualViewport?.addEventListener("resize", resizeHandler);
+  }, []);
 
   return (
     <SDKProvider>
@@ -328,14 +382,26 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
+                id="area-modal"
                 className={`max-h-[calc(100%-1.5rem)]`}
+                onClick={inputBlur}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
-                  <Input header="-დან" after="მ²" />
+                  <Input
+                    header="-დან"
+                    after="მ²"
+                    id="area-from-input"
+                    onBlur={blurHandler}
+                  />
                 </div>
                 <div className="[&>div]:px-6">
-                  <Input header="-მდე" after="მ²" />
+                  <Input
+                    header="-მდე"
+                    after="მ²"
+                    id="area-to-input"
+                    onBlur={blurHandler}
+                  />
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
