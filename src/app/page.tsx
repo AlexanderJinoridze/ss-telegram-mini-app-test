@@ -224,7 +224,7 @@ export default function Home() {
     console.log("keyboard HEIGHT", height - (viewport?.height ?? 0));
 
     if (areaModal) {
-      areaModal.classList.add("AAA");
+      // areaModal.classList.add("AAA");
       // areaModal.classList.add("bottom-[]");
       console.log("slfudalhsfasdjkfkasdfhkas", height, viewport?.height);
 
@@ -251,7 +251,7 @@ export default function Home() {
     const areaModal = document.getElementById("area-modal");
     if (areaModal) {
       // areaModal.style.bottom = "0";
-      areaModal.classList.remove("AAA");
+      // areaModal.classList.remove("AAA");
       // areaModal.style.transform = "";
       // areaModal.style.position = "fixed";
     }
@@ -412,8 +412,23 @@ export default function Home() {
               <Modal
                 header={<ModalCap />}
                 trigger={<Cell>ფართი</Cell>}
-                onOpenChange={() => {
+                onOpenChange={(open) => {
                   console.log("PRICE MODAL OPEN CHANGE");
+
+                  const areaModal = document.getElementById("area-modal");
+                  if (areaModal) {
+                    if(open) {
+                      areaModal.classList.add("AAA");
+
+                    } else {
+
+                      areaModal.classList.remove("AAA");
+                    }
+                    // areaModal.style.bottom = "0";
+                    // areaModal.style.transform = "";
+                    // areaModal.style.position = "fixed";
+                  }
+
                 }}
                 id="area-modal"
                 className={`max-h-[calc(100%-1.5rem)]`}
