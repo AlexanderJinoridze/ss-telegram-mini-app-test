@@ -13,17 +13,13 @@ import {
   Input,
 } from "@telegram-apps/telegram-ui";
 
-import { Fragment, MouseEventHandler, useEffect, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
-import useViewportSize from "@/hooks/useViewportSize";
-
-let height =
-  typeof window !== "undefined" ? window.visualViewport?.height ?? 0 : 0;
 
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
@@ -181,106 +177,11 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-  const inputBlur: MouseEventHandler<HTMLDivElement> = (event) => {
-    if (
-      ["area-from-input", "area-to-input"].includes(
-        (event.target as HTMLElement).id
-      )
-    ) {
-      return;
-    }
+  const zaza = useRef<HTMLDivElement>();
 
-    const inputs = document.querySelectorAll<HTMLElement>(
-      "#area-from-input, #area-to-input"
-    );
-    for (let input of Array.from(inputs)) {
-      if (input) {
-        input.blur();
-      }
-    }
-  };
-
-  const inputBlur2 = () => {
-    const inputs = document.querySelectorAll<HTMLElement>(
-      "#area-from-input, #area-to-input"
-    );
-    for (let input of Array.from(inputs)) {
-      if (input) {
-        input.blur();
-      }
-    }
-  };
-
-  const focusHandler = () => {
-    const areaModal = document.getElementById("area-modal");
-
-    const viewport = window.visualViewport;
-
-    console.log("IPHONE", window.navigator.userAgent);
-    if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
-      height = viewport?.height ?? 0;
-    }
-
-    console.log("HHHHHHH", height, window.visualViewport, viewport?.height);
-    console.log("keyboard HEIGHT", height - (viewport?.height ?? 0));
-
-    if (areaModal) {
-      areaModal.classList.add("AAA");
-      // areaModal.classList.add("bottom-[]");
-      console.log("slfudalhsfasdjkfkasdfhkas", height, viewport?.height);
-
-      // areaModal.style.transform = `translate3d(0, -${
-      //   height - (viewport?.height ?? 0)
-      // }px, 0)`;
-    }
-
-    // document.body.style.height = `${
-    //   height - (height - (viewport?.height ?? 0))
-    // }px`;
-
-    // const zaza = document.querySelector<HTMLElement>(
-    //   "body > div[class^='tgui-']"
-    // );
-    // if (zaza) {
-    //   zaza.style.height = `${height - (height - (viewport?.height ?? 0))}px`;
-    // }
-  };
-
-  const resizeHandler = () => {};
-
-  const blurHandler = () => {
-    const areaModal = document.getElementById("area-modal");
-    if (areaModal) {
-      // areaModal.style.bottom = "0";
-      areaModal.classList.remove("AAA");
-      // areaModal.style.transform = "";
-      // areaModal.style.position = "fixed";
-    }
-  };
-
-  const viewportSize = useViewportSize();
-
-  useEffect(() => {
-    console.log("viewportSize", viewportSize);
-
-    document.body.style.height = viewportSize ? viewportSize[1] + "px" : "100%";
-
-    const zaza = document.querySelector<HTMLElement>(
-      "body > div[class^='tgui-']"
-    );
-    if (zaza) {
-      zaza.style.height = viewportSize ? viewportSize[1] + "px" : "100%";
-    }
-  }, [viewportSize]);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", inputBlur2);
-  //   window.visualViewport?.addEventListener("resize", () => {
-  //     console.log("RESIZE");
-
-  //     resizeHandler();
-  //   });
-  // }, []);
+  function fixPosition(footer: any, vv: any) {
+    footer.style.top = `${vv.height}px`;
+  }
 
   return (
     <SDKProvider>
@@ -429,34 +330,23 @@ export default function Home() {
                 header={<ModalCap />}
                 trigger={<Cell>ფართი</Cell>}
                 onOpenChange={() => {
-                  console.log("PRICE MODAL OPEN CHANGE 111");
+                  console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                id="area-modal"
-                className={`absolute AAA !transform-none !bottom-0 max-h-[calc(100%-1.5rem)]`}
-                // onClick={inputBlur}
+                className="max-h-[calc(100%-1.5rem)] stick-it-to-the-man"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-                <div className="flex">
-                  <div className="[&>div]:px-6">
-                    <label>
-                      <span>-დან</span>
-                      <input
-                        autoFocus
-                        id="area-from-input"
-                        onFocus={focusHandler}
-                        onBlur={blurHandler}
-                      />
-                      <span>მ²</span>
-                    </label>
-                  </div>
-                  <div className="[&>div]:px-6">
-                    <label>
-                      <span>-მდე</span>
-                      <input onFocus={focusHandler} onBlur={blurHandler} />
-                      {/*  id="area-to-input" onBlur={blurHandler} */}
-                      <span>მ²</span>
-                    </label>
-                  </div>
+                <div className="[&>div]:px-6">
+                  <Input
+                    header="-დან"
+                    after="მ²"
+//                     onFocus={() => {
+// setInputFocused(true)
+//                     }}
+//                     onBlur={()}
+                  />
+                </div>
+                <div className="[&>div]:px-6">
+                  <Input header="-მდე" after="მ²" />
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">

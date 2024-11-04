@@ -21,7 +21,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=cabin,chair,check,close,home,home_work,hotel,psychiatry"
         />
       </head>
-      <body className="overflow-hidden absolute h-screen !w-screen">
+      <body className="overflow-hidden absolute h-screen w-screen">
         <Root>{children}</Root>
       </body>
     </html>
