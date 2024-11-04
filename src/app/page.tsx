@@ -21,6 +21,8 @@ import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/compone
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
 
+let height = window.visualViewport?.height ?? 0;
+
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
   const [dealTypeShadow, setDealTypeShadow] = useState<number | undefined>();
@@ -209,12 +211,17 @@ export default function Home() {
 
   const resizeHandler = () => {
     const areaModal = document.getElementById("area-modal");
-    let height = window.visualViewport?.height ?? 0;
+
     const viewport = window.visualViewport;
 
+    console.log("IPHONE", window.navigator.userAgent);
     if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+
       height = viewport?.height ?? 0;
     }
+
+    console.log("HHHHHHH", height, window.visualViewport, viewport?.height);
+
     if (areaModal) {
       areaModal.style.bottom = `${height - (viewport?.height ?? 0)}px`;
     }
@@ -230,7 +237,11 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener("scroll", inputBlur2);
-    window.visualViewport?.addEventListener("resize", resizeHandler);
+    window.visualViewport?.addEventListener("resize", () => {
+      console.log("RESIZE");
+
+      resizeHandler();
+    });
   }, []);
 
   return (
@@ -388,25 +399,25 @@ export default function Home() {
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="flex">
-                <div className="[&>div]:px-6">
-                  <label>
-                    <span>-დან</span>
-                    <input
-                      autoFocus
-                      id="area-from-input"
-                      onBlur={blurHandler}
-                    />
-                    <span>მ²</span>
-                  </label>
-                </div>
-                <div className="[&>div]:px-6">
-                  <label>
-                    <span>-მდე</span>
-                    <input />
-                    {/*  id="area-to-input" onBlur={blurHandler} */}
-                    <span>მ²</span>
-                  </label>
-                </div>
+                  <div className="[&>div]:px-6">
+                    <label>
+                      <span>-დან</span>
+                      <input
+                        autoFocus
+                        id="area-from-input"
+                        onBlur={blurHandler}
+                      />
+                      <span>მ²</span>
+                    </label>
+                  </div>
+                  <div className="[&>div]:px-6">
+                    <label>
+                      <span>-მდე</span>
+                      <input />
+                      {/*  id="area-to-input" onBlur={blurHandler} */}
+                      <span>მ²</span>
+                    </label>
+                  </div>
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
