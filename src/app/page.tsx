@@ -210,7 +210,7 @@ export default function Home() {
     }
   };
 
-  const resizeHandler = () => {
+  const focusHandler = () => {
     const areaModal = document.getElementById("area-modal");
 
     const viewport = window.visualViewport;
@@ -227,9 +227,9 @@ export default function Home() {
       areaModal.classList.add("AAA");
     }
 
-    document.body.style.height = `${
-      height - (height - (viewport?.height ?? 0))
-    }px`;
+    // document.body.style.height = `${
+    //   height - (height - (viewport?.height ?? 0))
+    // }px`;
 
     // const zaza = document.querySelector<HTMLElement>(
     //   "body > div[class^='tgui-']"
@@ -238,6 +238,8 @@ export default function Home() {
     //   zaza.style.height = `${height - (height - (viewport?.height ?? 0))}px`;
     // }
   };
+
+  const resizeHandler = () => {};
 
   const blurHandler = () => {
     const areaModal = document.getElementById("area-modal");
@@ -408,7 +410,7 @@ export default function Home() {
                 }}
                 id="area-modal"
                 className={`max-h-[calc(100%-1.5rem)]`}
-                onClick={inputBlur}
+                // onClick={inputBlur}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="flex">
@@ -416,8 +418,8 @@ export default function Home() {
                     <label>
                       <span>-დან</span>
                       <input
-                        autoFocus
                         id="area-from-input"
+                        onFocus={focusHandler}
                         onBlur={blurHandler}
                       />
                       <span>მ²</span>
@@ -426,7 +428,7 @@ export default function Home() {
                   <div className="[&>div]:px-6">
                     <label>
                       <span>-მდე</span>
-                      <input />
+                      <input onFocus={focusHandler} onBlur={blurHandler} />
                       {/*  id="area-to-input" onBlur={blurHandler} */}
                       <span>მ²</span>
                     </label>
