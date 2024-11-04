@@ -333,11 +333,22 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
+                id="Zaza"
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
-                  <Input autoFocus header="-დან" after="მ²" />
+                  <Input
+                    autoFocus
+                    header="-დან"
+                    after="მ²"
+                    onFocus={() => {
+                      document.getElementById("Zaza")?.classList.add("AAA");
+                    }}
+                    onBlur={() => {
+                      document.getElementById("Zaza")?.classList.remove("AAA");
+                    }}
+                  />
                 </div>
                 <div className="[&>div]:px-6">
                   <Input header="-მდე" after="მ²" />

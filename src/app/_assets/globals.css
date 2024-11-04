@@ -10,9 +10,6 @@ body {
   font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 
-.zaza::after {
-  display: none !important;
-}
 
 body > div[class^="tgui-"] {
   width: 100%;
@@ -20,7 +17,7 @@ body > div[class^="tgui-"] {
   position: absolute;
 }
 
-/* .AAA {
+.AAA {
   position: absolute !important;
   bottom: 0 !important;
   transform: translate3d(0, 0, 0) !important;
@@ -28,4 +25,4 @@ body > div[class^="tgui-"] {
 
 .AAA::after {
   display: none !important;
-} */
+}
