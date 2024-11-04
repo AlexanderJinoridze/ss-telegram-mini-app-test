@@ -11,6 +11,7 @@ import {
   Subheadline,
   Text,
   Input,
+  Select,
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useRef, useState } from "react";
@@ -335,14 +336,18 @@ export default function Home() {
                 className="max-h-[calc(100%-1.5rem)] stick-it-to-the-man"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
+                <Select header="Select">
+                  <option>Hello</option>
+                  <option>Okay</option>
+                </Select>
                 <div className="[&>div]:px-6">
                   <Input
                     header="-დან"
                     after="მ²"
-//                     onFocus={() => {
-// setInputFocused(true)
-//                     }}
-//                     onBlur={()}
+                    //                     onFocus={() => {
+                    // setInputFocused(true)
+                    //                     }}
+                    //                     onBlur={()}
                   />
                 </div>
                 <div className="[&>div]:px-6">
