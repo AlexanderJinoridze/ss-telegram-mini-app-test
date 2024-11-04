@@ -226,10 +226,11 @@ export default function Home() {
     if (areaModal) {
       areaModal.classList.add("AAA");
       // areaModal.classList.add("bottom-[]");
+      console.log("slfudalhsfasdjkfkasdfhkas", height, viewport?.height);
 
-      areaModal.style.transform = `translate3d(0, ${
-         (height - (viewport?.height ?? 0))
-      }px, 0)`;
+      // areaModal.style.transform = `translate3d(0, -${
+      //   height - (viewport?.height ?? 0)
+      // }px, 0)`;
     }
 
     // document.body.style.height = `${
@@ -251,8 +252,7 @@ export default function Home() {
     if (areaModal) {
       // areaModal.style.bottom = "0";
       areaModal.classList.remove("AAA");
-
-      areaModal.style.transform = "";
+      // areaModal.style.transform = "";
       // areaModal.style.position = "fixed";
     }
   };
