@@ -216,7 +216,7 @@ export default function Home() {
       height = viewport?.height ?? 0;
     }
     if (areaModal) {
-      areaModal.style.bottom = `${height - (viewport?.height ?? 0) + 10}px`;
+      areaModal.style.bottom = `${height - (viewport?.height ?? 0)}px`;
     }
   };
 
