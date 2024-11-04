@@ -387,22 +387,26 @@ export default function Home() {
                 onClick={inputBlur}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
+                <div className="flex">
                 <div className="[&>div]:px-6">
-                  <Input
-                    header="-დან"
-                    after="მ²"
-                    autoFocus
-                    id="area-from-input"
-                    onBlur={blurHandler}
-                  />
+                  <label>
+                    <span>-დან</span>
+                    <input
+                      autoFocus
+                      id="area-from-input"
+                      onBlur={blurHandler}
+                    />
+                    <span>მ²</span>
+                  </label>
                 </div>
                 <div className="[&>div]:px-6">
-                  <Input
-                    header="-მდე"
-                    after="მ²"
-                    id="area-to-input"
-                    onBlur={blurHandler}
-                  />
+                  <label>
+                    <span>-მდე</span>
+                    <input />
+                    {/*  id="area-to-input" onBlur={blurHandler} */}
+                    <span>მ²</span>
+                  </label>
+                </div>
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
