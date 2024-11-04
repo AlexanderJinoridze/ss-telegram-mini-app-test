@@ -264,6 +264,13 @@ export default function Home() {
     console.log("viewportSize", viewportSize);
 
     document.body.style.height = viewportSize ? viewportSize[1] + "px" : "100%";
+
+    const zaza = document.querySelector<HTMLElement>(
+      "body > div[class^='tgui-']"
+    );
+    if (zaza) {
+      zaza.style.height = viewportSize ? viewportSize[1] + "px" : "100%";
+    }
   }, [viewportSize]);
 
   // useEffect(() => {
