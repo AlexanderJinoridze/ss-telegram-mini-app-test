@@ -337,8 +337,8 @@ export default function Home() {
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-                <div className="[&>div]:px-6">
-                  <Input
+                <div className="[&>div]:px-6 h-96">
+                  {/* <Input
                     autoFocus
                     header="-დან"
                     after="მ²"
@@ -348,7 +348,7 @@ export default function Home() {
                     onBlur={() => {
                       document.getElementById("Zaza")?.classList.remove("AAA");
                     }}
-                  />
+                  /> */}
                 </div>
                 <div className="[&>div]:px-6">
                   <Input
