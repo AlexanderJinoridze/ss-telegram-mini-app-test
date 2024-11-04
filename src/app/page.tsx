@@ -337,7 +337,18 @@ export default function Home() {
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-
+                <div className="[&>div]:px-6">
+                  <Input
+                    header="-დან"
+                    after="მ²"
+                    onFocus={() => {
+                      document.getElementById("Zaza")?.classList.add("AAA");
+                    }}
+                    onBlur={() => {
+                      document.getElementById("Zaza")?.classList.remove("AAA");
+                    }}
+                  />
+                </div>
                 <div className="[&>div]:px-6">
                   <Input
                     header="-მდე"
@@ -349,19 +360,6 @@ export default function Home() {
                       document.getElementById("Zaza")?.classList.remove("AAA");
                     }}
                   />
-                </div>
-                <div className="[&>div]:px-6 h-96">
-                  {/* <Input
-                    autoFocus
-                    header="-დან"
-                    after="მ²"
-                    onFocus={() => {
-                      document.getElementById("Zaza")?.classList.add("AAA");
-                    }}
-                    onBlur={() => {
-                      document.getElementById("Zaza")?.classList.remove("AAA");
-                    }}
-                  /> */}
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
