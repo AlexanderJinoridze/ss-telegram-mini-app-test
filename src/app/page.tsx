@@ -394,7 +394,7 @@ export default function Home() {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
                 id="area-modal"
-                className={`zaza absolute max-h-[calc(100%-1.5rem)]`}
+                className={`max-h-[calc(100%-1.5rem)]`}
                 onClick={inputBlur}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
