@@ -10,8 +10,7 @@ import {
   Divider,
   Subheadline,
   Text,
-  Input,
-  Select,
+  Input
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useRef, useState } from "react";
@@ -177,12 +176,6 @@ export default function Home() {
   const normalizedStatusLabels = statusesLabel
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
-
-  const zaza = useRef<HTMLDivElement>();
-
-  function fixPosition(footer: any, vv: any) {
-    footer.style.top = `${vv.height}px`;
-  }
 
   return (
     <SDKProvider>
