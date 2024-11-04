@@ -3,8 +3,7 @@ import { useCallback, useEffect, useState, useLayoutEffect } from 'react'
 const useBrowserLayoutEffect =
   typeof window !== 'undefined'
     ? useLayoutEffect
-    : // eslint-disable-next-line @typescript-eslint/no-empty-function
-      () => {}
+    : () => {}
 
 type Width = number
 type Height = number
