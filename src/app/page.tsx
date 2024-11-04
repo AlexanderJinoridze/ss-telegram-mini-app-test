@@ -351,7 +351,16 @@ export default function Home() {
                   />
                 </div>
                 <div className="[&>div]:px-6">
-                  <Input header="-მდე" after="მ²" />
+                  <Input
+                    header="-მდე"
+                    after="მ²"
+                    onFocus={() => {
+                      document.getElementById("Zaza")?.classList.add("AAA");
+                    }}
+                    onBlur={() => {
+                      document.getElementById("Zaza")?.classList.remove("AAA");
+                    }}
+                  />
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
