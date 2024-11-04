@@ -391,6 +391,7 @@ export default function Home() {
                   <Input
                     header="-დან"
                     after="მ²"
+                    autoFocus
                     id="area-from-input"
                     onBlur={blurHandler}
                   />
