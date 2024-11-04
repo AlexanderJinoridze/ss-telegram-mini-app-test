@@ -441,6 +441,7 @@ export default function Home() {
                     <label>
                       <span>-დან</span>
                       <input
+                        autoFocus
                         id="area-from-input"
                         onFocus={focusHandler}
                         onBlur={blurHandler}
