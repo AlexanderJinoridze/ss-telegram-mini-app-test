@@ -10,7 +10,7 @@ import {
   Divider,
   Subheadline,
   Text,
-  Input
+  Input,
 } from "@telegram-apps/telegram-ui";
 
 import { Fragment, useRef, useState } from "react";
@@ -326,7 +326,7 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className="max-h-[calc(100%-1.5rem)]"
+                className="zaza max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">

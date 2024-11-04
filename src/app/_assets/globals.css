@@ -10,9 +10,9 @@ body {
   font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 
-/* .zaza::after {
+.zaza::after {
   display: none !important;
-} */
+}
 
 body > div[class^="tgui-"] {
   width: 100%;
