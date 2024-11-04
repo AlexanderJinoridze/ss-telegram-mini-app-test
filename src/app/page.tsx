@@ -20,6 +20,7 @@ import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
+import useViewportSize from "@/hooks/useViewportSize";
 
 let height =
   typeof window !== "undefined" ? window.visualViewport?.height ?? 0 : 0;
@@ -257,6 +258,14 @@ export default function Home() {
     }
   };
 
+  const viewportSize = useViewportSize();
+
+  useEffect(() => {
+    console.log("viewportSize", viewportSize);
+
+    document.body.style.height = viewportSize ? viewportSize[1] + "px" : "100%";
+  }, [viewportSize]);
+
   // useEffect(() => {
   //   window.addEventListener("scroll", inputBlur2);
   //   window.visualViewport?.addEventListener("resize", () => {
@@ -413,7 +422,7 @@ export default function Home() {
                 header={<ModalCap />}
                 trigger={<Cell>ფართი</Cell>}
                 onOpenChange={() => {
-                  console.log("PRICE MODAL OPEN CHANGE");
+                  console.log("PRICE MODAL OPEN CHANGE 111");
                 }}
                 id="area-modal"
                 className={`max-h-[calc(100%-1.5rem)]`}
