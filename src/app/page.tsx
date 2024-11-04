@@ -21,7 +21,8 @@ import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/compone
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
 
-let height = window.visualViewport?.height ?? 0;
+let height =
+  typeof window !== "undefined" ? window.visualViewport?.height ?? 0 : 0;
 
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
@@ -216,7 +217,6 @@ export default function Home() {
 
     console.log("IPHONE", window.navigator.userAgent);
     if (!/iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
-
       height = viewport?.height ?? 0;
     }
 
@@ -394,7 +394,7 @@ export default function Home() {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
                 id="area-modal"
-                className={`max-h-[calc(100%-1.5rem)]`}
+                className={`zaza absolute max-h-[calc(100%-1.5rem)]`}
                 onClick={inputBlur}
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
