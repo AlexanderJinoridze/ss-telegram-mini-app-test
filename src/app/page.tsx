@@ -221,28 +221,41 @@ export default function Home() {
     }
 
     console.log("HHHHHHH", height, window.visualViewport, viewport?.height);
+    console.log("keyboard HEIGHT", height - (viewport?.height ?? 0));
 
     if (areaModal) {
-      areaModal.style.bottom = `${height - (viewport?.height ?? 0)}px`;
+      areaModal.classList.add("AAA");
     }
+
+    document.body.style.height = `${
+      height - (height - (viewport?.height ?? 0))
+    }px`;
+
+    // const zaza = document.querySelector<HTMLElement>(
+    //   "body > div[class^='tgui-']"
+    // );
+    // if (zaza) {
+    //   zaza.style.height = `${height - (height - (viewport?.height ?? 0))}px`;
+    // }
   };
 
   const blurHandler = () => {
     const areaModal = document.getElementById("area-modal");
     if (areaModal) {
-      areaModal.style.bottom = "0";
+      // areaModal.style.bottom = "0";
+      areaModal.classList.remove("AAA");
       // areaModal.style.position = "fixed";
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", inputBlur2);
-    window.visualViewport?.addEventListener("resize", () => {
-      console.log("RESIZE");
+  // useEffect(() => {
+  //   window.addEventListener("scroll", inputBlur2);
+  //   window.visualViewport?.addEventListener("resize", () => {
+  //     console.log("RESIZE");
 
-      resizeHandler();
-    });
-  }, []);
+  //     resizeHandler();
+  //   });
+  // }, []);
 
   return (
     <SDKProvider>
