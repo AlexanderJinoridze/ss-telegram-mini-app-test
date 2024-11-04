@@ -21,11 +21,11 @@ body > div[class^="tgui-"] {
 }
 
 .AAA {
-  position: absolute !important;
+  /* position: absolute !important;
   bottom: 0 !important;
-  transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important; */
 }
 
 .AAA::after {
-  display: none !important;
+  /* display: none !important; */
 }
