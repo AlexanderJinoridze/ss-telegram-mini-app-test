@@ -333,70 +333,11 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className="max-h-[calc(100%-1.5rem)] stick-it-to-the-man"
+                className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-                <Select header="Select">
-                  <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option> <option>Hello</option>
-                  <option>Okay</option>
-                </Select>
                 <div className="[&>div]:px-6">
-                  <Input
-                    header="-დან"
-                    after="მ²"
-                    //                     onFocus={() => {
-                    // setInputFocused(true)
-                    //                     }}
-                    //                     onBlur={()}
-                  />
+                  <Input header="-დან" after="მ²" />
                 </div>
                 <div className="[&>div]:px-6">
                   <Input header="-მდე" after="მ²" />
