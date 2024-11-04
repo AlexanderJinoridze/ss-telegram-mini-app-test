@@ -13,13 +13,14 @@ import {
   Input,
 } from "@telegram-apps/telegram-ui";
 
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
+import useViewportSize from "@/hooks/useViewportSize";
 
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
@@ -177,6 +178,12 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
+  const viewport = useViewportSize();
+
+  useEffect(() => {
+    document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
+  }, [viewport]);
+
   return (
     <SDKProvider>
       <Fragment>
@@ -326,7 +333,7 @@ export default function Home() {
                 onOpenChange={() => {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
-                className="zaza max-h-[calc(100%-1.5rem)]"
+                className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div className="[&>div]:px-6">
