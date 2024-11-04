@@ -338,6 +338,54 @@ export default function Home() {
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <Select header="Select">
                   <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
+                  <option>Okay</option> <option>Hello</option>
                   <option>Okay</option>
                 </Select>
                 <div className="[&>div]:px-6">
