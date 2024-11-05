@@ -175,11 +175,11 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-  // const viewport = useViewportSize();
+  const viewport = useViewportSize();
 
-  // useEffect(() => {
-  //   document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
-  // }, [viewport]);
+  useEffect(() => {
+    document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
+  }, [viewport]);
 
   const hapticFeedback = useHapticFeedback();
 
