@@ -20,13 +20,12 @@ body > div[class^="tgui-"] {
   position: absolute !important;
   bottom: 0 !important;
   transform: translate3d(0, 0, 0) !important;
-  height: 100% !important;
 
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 .AAA > * {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 #Zaza > div {
