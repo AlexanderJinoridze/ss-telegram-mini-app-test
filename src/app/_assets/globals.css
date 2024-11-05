@@ -17,10 +17,16 @@ body > div[class^="tgui-"] {
 }
 
 .AAA {
-  overflow: hidden;
+
   position: absolute !important;
   bottom: 0 !important;
   transform: translate3d(0, 0, 0) !important;
+
+  overflow: hidden;
+}
+
+.AAA > * {
+  overflow: hidden;
 }
 
 .AAA::after {
