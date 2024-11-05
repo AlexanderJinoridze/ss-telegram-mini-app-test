@@ -349,7 +349,7 @@ export default function Home() {
                     }}
                   />
                 </div>
-                <div className="[&>div]:px-6">
+                {/* <div className="[&>div]:px-6">
                   <Input
                     header="-მდე"
                     after="მ²"
@@ -360,8 +360,8 @@ export default function Home() {
                       document.getElementById("Zaza")?.classList.remove("AAA");
                     }}
                   />
-                </div>
-                <div className="p-6 pt-2">
+                </div> */}
+                {/* <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
                     ოთახები
                   </Subheadline>
@@ -385,7 +385,7 @@ export default function Home() {
                       <Text weight="3">6+</Text>
                     </Button>
                   </div>
-                </div>
+                </div> */}
                 <ModalFooter
                   onClick={() => {
                     console.log("CHOOSE PRICE");
