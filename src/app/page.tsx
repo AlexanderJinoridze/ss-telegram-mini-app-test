@@ -414,7 +414,6 @@ export default function Home() {
                     </Button>
                   </div>
                 </div>
-                <div className="h-96"></div>
                 <ModalFooter
                   onClick={() => {
                     console.log("CHOOSE PRICE");

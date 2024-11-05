@@ -8,7 +8,7 @@ export interface ModalFooterProps {
 
 export const ModalFooter: FC<ModalFooterProps> = ({ onClick }) => {
   return (
-    <div className="">
+    <div className="sticky bottom-0">
       <Divider />
       <div className="p-5 bg-[--tg-theme-header-bg-color]">
         <ModalClose>
