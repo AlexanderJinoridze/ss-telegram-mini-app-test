@@ -368,7 +368,7 @@ export default function Home() {
                 <div>
                   <div className="[&>div]:px-6">
                     <Input
-                      autoFocus
+                      
                       header="-დან"
                       after="მ²"
                       onFocus={() => {
