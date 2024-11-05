@@ -16,6 +16,11 @@ body > div[class^="tgui-"] {
   position: absolute;
 }
 
+body.AAA1 *,
+body.BBB1 * {
+  overflow: hidden !important;
+}
+
 .AAA,
 .BBB {
   position: absolute !important;
@@ -24,8 +29,8 @@ body > div[class^="tgui-"] {
   overflow: hidden !important;
 }
 
-.AAA > *,
-.BBB > * {
+.AAA *,
+.BBB * {
   overflow: hidden !important;
 }
 

@@ -368,16 +368,17 @@ export default function Home() {
                 <div>
                   <div className="[&>div]:px-6">
                     <Input
-                      
                       header="-დან"
                       after="მ²"
                       onFocus={() => {
                         document.getElementById("Zaza")?.classList.add("AAA");
+                        document.body?.classList.add("AAA1");
                       }}
                       onBlur={() => {
                         document
                           .getElementById("Zaza")
                           ?.classList.remove("AAA");
+                        document.body?.classList.remove("AAA1");
                       }}
                     />
                   </div>
@@ -387,11 +388,13 @@ export default function Home() {
                       after="მ²"
                       onFocus={() => {
                         document.getElementById("Zaza")?.classList.add("BBB");
+                        document.body?.classList.add("BBB1");
                       }}
                       onBlur={() => {
                         document
                           .getElementById("Zaza")
                           ?.classList.remove("BBB");
+                        document.body?.classList.remove("BBB1");
                       }}
                     />
                   </div>
