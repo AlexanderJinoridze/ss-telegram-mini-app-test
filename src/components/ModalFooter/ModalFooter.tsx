@@ -11,11 +11,11 @@ export const ModalFooter: FC<ModalFooterProps> = ({ onClick }) => {
     <div className="sticky top-full">
       <Divider />
       <div className="p-5 bg-[--tg-theme-header-bg-color]">
-        <ModalClose>
-          <Button size="l" stretched onClick={onClick}>
-            არჩევა
-          </Button>
-        </ModalClose>
+        {/* <ModalClose> */}
+        <Button size="l" stretched onClick={onClick}>
+          არჩევა
+        </Button>
+        {/* </ModalClose> */}
       </div>
     </div>
   );

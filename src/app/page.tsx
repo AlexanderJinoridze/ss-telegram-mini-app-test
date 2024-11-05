@@ -183,6 +183,8 @@ export default function Home() {
 
   const hapticFeedback = useHapticFeedback();
 
+  const [showAreaModal, setShowAreaModal] = useState<boolean>(false);
+
   return (
     <SDKProvider>
       <Fragment>
@@ -359,7 +361,15 @@ export default function Home() {
               >
                 მდებარეობა
               </Cell>
-              <Modal
+              <Cell
+                onClick={() => {
+                  hapticFeedback.impactOccurred("rigid");
+                  setShowAreaModal(true);
+                }}
+              >
+                ფართი
+              </Cell>
+              {/* <Modal
                 header={<ModalCap />}
                 trigger={
                   <Cell
@@ -437,7 +447,7 @@ export default function Home() {
                     console.log("CHOOSE PRICE");
                   }}
                 />
-              </Modal>
+              </Modal> */}
               <Cell
                 onClick={() => {
                   hapticFeedback.impactOccurred("light");
@@ -462,6 +472,76 @@ export default function Home() {
             </div>
           </FixedLayout>
         </div>
+
+        {showAreaModal ? (
+          <div className="absolute top-0 w-screen h-screen">
+            <div
+              className="absolute w-screen h-screen bg-black/50"
+              onClick={() => {
+                setShowAreaModal(false);
+              }}
+            ></div>
+            <div className="absolute bottom-0 w-full bg-black">
+              <ModalHeader title="ფართი" onClear={propertyTypeClear} />
+              <div>
+                <div className="[&>div]:px-6">
+                  <Input
+                    header="-დან"
+                    after="მ²"
+                    onFocus={() => {
+                      document.getElementById("Zaza")?.classList.add("AAA");
+                    }}
+                    onBlur={() => {
+                      document.getElementById("Zaza")?.classList.remove("AAA");
+                    }}
+                  />
+                </div>
+                <div className="[&>div]:px-6">
+                  <Input
+                    header="-მდე"
+                    after="მ²"
+                    onFocus={() => {
+                      document.getElementById("Zaza")?.classList.add("BBB");
+                    }}
+                    onBlur={() => {
+                      document.getElementById("Zaza")?.classList.remove("BBB");
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="p-6 pt-2">
+                <Subheadline plain weight="2">
+                  ოთახები
+                </Subheadline>
+                <div className="flex flex-wrap gap-3 mt-4">
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">1</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">2</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">3</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">4</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">5</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">6+</Text>
+                  </Button>
+                </div>
+              </div>
+              <ModalFooter
+                onClick={() => {
+                  console.log("CHOOSE PRICE");
+                }}
+              />
+            </div>
+          </div>
+        ) : null}
       </Fragment>
     </SDKProvider>
   );
