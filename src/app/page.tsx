@@ -175,11 +175,11 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-  // const viewport = useViewportSize();
+  const viewport = useViewportSize();
 
-  // useEffect(() => {
-  //   document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
-  // }, [viewport]);
+  useEffect(() => {
+    document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
+  }, [viewport]);
 
   const hapticFeedback = useHapticFeedback();
 
@@ -474,9 +474,9 @@ export default function Home() {
         </div>
 
         {showAreaModal ? (
-          <div className="absolute top-0 w-screen h-screen">
+          <div className="absolute top-0 w-screen h-full">
             <div
-              className="absolute w-screen h-screen bg-black/50"
+              className="absolute w-screen h-full bg-black/50"
               onClick={() => {
                 setShowAreaModal(false);
               }}
