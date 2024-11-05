@@ -42,7 +42,8 @@ function App(props: PropsWithChildren) {
   return (
     <AppRoot
       appearance={miniApp.isDark ? "dark" : "light"}
-      platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
+      // platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
+      platform="ios"
     >
       {props.children}
     </AppRoot>
