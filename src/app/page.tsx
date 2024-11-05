@@ -189,7 +189,7 @@ export default function Home() {
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <div className="h-screen flex flex-col">
           <List className="overflow-auto flex-grow mb-[90px]">
-            <SectionHeader large className="flex !m-0 py-8 flex-col items-center">
+            <SectionHeader large className="flex !m-0 !py-8 flex-col items-center">
               <svg
                 width="128"
                 height="36"
