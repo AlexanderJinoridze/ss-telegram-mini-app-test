@@ -179,6 +179,9 @@ export default function Home() {
 
   useEffect(() => {
     document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
+    // document.querySelector<HTMLElement>(
+    //   'body > div[class^="tgui-"]'
+    // ).style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
   }, [viewport]);
 
   const hapticFeedback = useHapticFeedback();
@@ -189,7 +192,7 @@ export default function Home() {
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <div className="h-screen flex flex-col">
+        <div className=" flex flex-col">
           <List className="w-full absolute overflow-auto flex-grow !mb-[90px] py-0">
             <SectionHeader
               large
