@@ -382,10 +382,10 @@ export default function Home() {
                     header="-მდე"
                     after="მ²"
                     onFocus={() => {
-                      document.getElementById("Zaza")?.classList.add("AAA");
+                      document.getElementById("Zaza")?.classList.add("BBB");
                     }}
                     onBlur={() => {
-                      document.getElementById("Zaza")?.classList.remove("AAA");
+                      document.getElementById("Zaza")?.classList.remove("BBB");
                     }}
                   />
                 </div>

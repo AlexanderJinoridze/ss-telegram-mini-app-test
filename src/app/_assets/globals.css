@@ -16,7 +16,8 @@ body > div[class^="tgui-"] {
   position: absolute;
 }
 
-.AAA {
+.AAA,
+.BBB {
   position: absolute !important;
   bottom: 0 !important;
   transform: translate3d(0, 0, 0) !important;
@@ -24,15 +25,17 @@ body > div[class^="tgui-"] {
   overflow: hidden !important;
 }
 
-.AAA > * {
+.AAA > *,
+.BBB > * {
   overflow: hidden !important;
+}
+
+.AAA::after,
+.BBB::after {
+  display: none !important;
 }
 
 #Zaza > div {
   max-height: 100%;
   flex-grow: 1;
-}
-
-.AAA::after {
-  display: none !important;
 }
