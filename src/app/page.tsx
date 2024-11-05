@@ -362,7 +362,7 @@ export default function Home() {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
                 id="Zaza"
-                className="h-full max-h-[500px]"
+                className="h-full max-h-[400px]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div>
@@ -372,13 +372,11 @@ export default function Home() {
                       after="მ²"
                       onFocus={() => {
                         document.getElementById("Zaza")?.classList.add("AAA");
-                        document.body?.classList.add("AAA1");
                       }}
                       onBlur={() => {
                         document
                           .getElementById("Zaza")
                           ?.classList.remove("AAA");
-                        document.body?.classList.remove("AAA1");
                       }}
                     />
                   </div>
@@ -388,13 +386,11 @@ export default function Home() {
                       after="მ²"
                       onFocus={() => {
                         document.getElementById("Zaza")?.classList.add("BBB");
-                        document.body?.classList.add("BBB1");
                       }}
                       onBlur={() => {
                         document
                           .getElementById("Zaza")
                           ?.classList.remove("BBB");
-                        document.body?.classList.remove("BBB1");
                       }}
                     />
                   </div>
