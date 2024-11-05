@@ -492,10 +492,11 @@ export default function Home() {
                     header="-დან"
                     after="მ²"
                     onFocus={() => {
-                      document.getElementById("Zaza")?.classList.add("AAA");
+                      // document.getElementById("Zaza")?.classList.add("AAA");
+                      window.scrollTo(0, 0);
                     }}
                     onBlur={() => {
-                      document.getElementById("Zaza")?.classList.remove("AAA");
+                      // document.getElementById("Zaza")?.classList.remove("AAA");
                     }}
                   />
                 </div>
@@ -504,10 +505,11 @@ export default function Home() {
                     header="-მდე"
                     after="მ²"
                     onFocus={() => {
-                      document.getElementById("Zaza")?.classList.add("BBB");
+                      // document.getElementById("Zaza")?.classList.add("BBB");
+                      window.scrollTo(0, 0);
                     }}
                     onBlur={() => {
-                      document.getElementById("Zaza")?.classList.remove("BBB");
+                      // document.getElementById("Zaza")?.classList.remove("BBB");
                     }}
                   />
                 </div>
