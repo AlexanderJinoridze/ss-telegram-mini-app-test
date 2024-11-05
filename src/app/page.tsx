@@ -16,7 +16,7 @@ import {
 import { Fragment, useEffect, useRef, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
-import { SDKProvider } from "@telegram-apps/sdk-react";
+import { HapticFeedback, SDKProvider, useHapticFeedback } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
@@ -184,6 +184,8 @@ export default function Home() {
     document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
   }, [viewport]);
 
+  const zaza = useHapticFeedback()
+
   return (
     <SDKProvider>
       <Fragment>
@@ -195,7 +197,9 @@ export default function Home() {
               <Modal
                 header={<ModalCap />}
                 trigger={
-                  <Cell>
+                  <Cell onClick={() => {
+                    zaza.selectionChanged()
+                  }}>
                     {dealType === undefined ? (
                       "გარიგების ტიპი"
                     ) : (
