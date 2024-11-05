@@ -362,12 +362,13 @@ export default function Home() {
                   console.log("PRICE MODAL OPEN CHANGE");
                 }}
                 id="Zaza"
-                className="h-full max-h-[300px]"
+                className="h-full max-h-[400px]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
                 <div>
                   <div className="[&>div]:px-6">
                     <Input
+                      autoFocus
                       header="-დან"
                       after="მ²"
                       onFocus={() => {
