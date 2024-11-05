@@ -365,29 +365,35 @@ export default function Home() {
                 className="h-full max-h-[450px]"
               >
                 <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-                <div className="[&>div]:px-6">
-                  <Input
-                    header="-დან"
-                    after="მ²"
-                    onFocus={() => {
-                      document.getElementById("Zaza")?.classList.add("AAA");
-                    }}
-                    onBlur={() => {
-                      document.getElementById("Zaza")?.classList.remove("AAA");
-                    }}
-                  />
-                </div>
-                <div className="[&>div]:px-6">
-                  <Input
-                    header="-მდე"
-                    after="მ²"
-                    onFocus={() => {
-                      document.getElementById("Zaza")?.classList.add("BBB");
-                    }}
-                    onBlur={() => {
-                      document.getElementById("Zaza")?.classList.remove("BBB");
-                    }}
-                  />
+                <div className="flex">
+                  <div className="[&>div]:px-6">
+                    <Input
+                      header="-დან"
+                      after="მ²"
+                      onFocus={() => {
+                        document.getElementById("Zaza")?.classList.add("AAA");
+                      }}
+                      onBlur={() => {
+                        document
+                          .getElementById("Zaza")
+                          ?.classList.remove("AAA");
+                      }}
+                    />
+                  </div>
+                  <div className="[&>div]:px-6">
+                    <Input
+                      header="-მდე"
+                      after="მ²"
+                      onFocus={() => {
+                        document.getElementById("Zaza")?.classList.add("BBB");
+                      }}
+                      onBlur={() => {
+                        document
+                          .getElementById("Zaza")
+                          ?.classList.remove("BBB");
+                      }}
+                    />
+                  </div>
                 </div>
                 <div className="p-6 pt-2">
                   <Subheadline plain weight="2">
