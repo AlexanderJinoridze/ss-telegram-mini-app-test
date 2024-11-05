@@ -11,6 +11,11 @@ import {
   Subheadline,
   Text,
   Input,
+  Switch,
+  Placeholder,
+  Radio,
+  Select,
+  SegmentedControl,
 } from "@telegram-apps/telegram-ui";
 import { Fragment, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
@@ -20,6 +25,7 @@ import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/compone
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
 import useViewportSize from "@/hooks/useViewportSize";
+import { SegmentedControlItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/SegmentedControl/components/SegmentedControlItem/SegmentedControlItem";
 
 export default function Home() {
   const [dealType, setDealType] = useState<number | undefined>(undefined);
@@ -175,25 +181,25 @@ export default function Home() {
     .filter((elem) => elem !== "კომერციული ფართი")
     .join(", ");
 
-  const viewport = useViewportSize();
+  // const viewport = useViewportSize();
 
-  useEffect(() => {
-    document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
-    // document.querySelector<HTMLElement>(
-    //   'body > div[class^="tgui-"]'
-    // ).style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
-  }, [viewport]);
+  // useEffect(() => {
+  //   document.body.style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
+  //   // document.querySelector<HTMLElement>(
+  //   //   'body > div[class^="tgui-"]'
+  //   // ).style.height = viewport?.[1] ? `${viewport[1]}px` : "100%";
+  // }, [viewport]);
 
   const hapticFeedback = useHapticFeedback();
 
-  const [showAreaModal, setShowAreaModal] = useState<boolean>(false);
+  // const [showAreaModal, setShowAreaModal] = useState<boolean>(false);
 
   return (
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <div className=" flex flex-col">
-          <List className="w-full absolute overflow-auto flex-grow !mb-[90px] py-0">
+          <List className="!mb-[90px]">
             <SectionHeader
               large
               className="flex !m-0 !py-8 flex-col items-center"
@@ -254,6 +260,8 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
+            </Section>
+            <Section>
               <Modal
                 header={<ModalCap />}
                 trigger={
@@ -357,22 +365,14 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={propertyTypeChoose} />
               </Modal>
-              <Cell
-                onClick={() => {
-                  hapticFeedback.impactOccurred("medium");
-                }}
-              >
-                მდებარეობა
-              </Cell>
-              <Cell
+            </Section>
+            {/* <Cell
+                hovered={false}
                 onClick={() => {
                   hapticFeedback.impactOccurred("rigid");
-                  setShowAreaModal(true);
                 }}
-              >
-                ფართი
-              </Cell>
-              {/* <Modal
+              ></Cell> */}
+            {/* <Modal
                 header={<ModalCap />}
                 trigger={
                   <Cell
@@ -451,12 +451,97 @@ export default function Home() {
                   }}
                 />
               </Modal> */}
+            <Section>
               <Cell
+                onClick={() => {
+                  hapticFeedback.impactOccurred("medium");
+                }}
+              >
+                მდებარეობა
+              </Cell>
+            </Section>
+
+            <Section>
+              <Input header="-დან" after="მ²" />
+              <Input header="-მდე" after="მ²" />
+              <Modal
+                header={<ModalCap />}
+                trigger={
+                  <Cell
+                    onClick={() => {
+                      hapticFeedback.selectionChanged();
+                    }}
+                  >
+                    {dealType === undefined ? (
+                      "ოთახების რაოდენობა"
+                    ) : (
+                      <Text weight="2">{dealTypeLabel}</Text>
+                    )}
+                  </Cell>
+                }
+                onOpenChange={dealTypeChange}
+                className="max-h-[calc(100%-1.5rem)]"
+              >
+                <ModalHeader
+                  title="ოთახების რაოდენობა"
+                  onClear={dealTypeClear}
+                />
+                <Button size="m" mode={"outline"} className="flex-shrink-0">
+                  <Text weight="3">1</Text>
+                </Button>
+                <Button size="m" mode={"outline"} className="flex-shrink-0">
+                  <Text weight="3">2</Text>
+                </Button>
+                <Button size="m" mode={"outline"} className="flex-shrink-0">
+                  <Text weight="3">3</Text>
+                </Button>
+                <Button size="m" mode={"outline"} className="flex-shrink-0">
+                  <Text weight="3">4</Text>
+                </Button>
+                <Button size="m" mode={"outline"} className="flex-shrink-0">
+                  <Text weight="3">5</Text>
+                </Button>
+                <Button size="m" mode={"outline"} className="flex-shrink-0">
+                  <Text weight="3">6+</Text>
+                </Button>
+                <ModalFooter onClick={dealTypeChoose} />
+              </Modal>
+            </Section>
+
+            <Section>
+              {/* <Cell
                 onClick={() => {
                   hapticFeedback.impactOccurred("light");
                 }}
+              ></Cell> */}
+              <Input header="-დან" after="₾" />
+              <Input header="-მდე" after="₾" />
+              <SegmentedControl className="w-full">
+                <SegmentedControlItem
+                  onClick={function noRefCheck() {}}
+                  selected
+                >
+                  ₾
+                </SegmentedControlItem>
+                <SegmentedControlItem onClick={function noRefCheck() {}}>
+                  $
+                </SegmentedControlItem>
+              </SegmentedControl>
+            </Section>
+            <Section>
+              <Cell
+                Component="label"
+                after={<Radio name="radio" value="1" />}
+                multiline
               >
-                ფასი
+                სრული
+              </Cell>
+              <Cell
+                Component="label"
+                after={<Radio name="radio" value="2" />}
+                multiline
+              >
+                მ² - ის
               </Cell>
             </Section>
           </List>
@@ -475,78 +560,6 @@ export default function Home() {
             </div>
           </FixedLayout>
         </div>
-
-        {showAreaModal ? (
-          <div className="absolute top-0 w-screen h-full">
-            <div
-              className="absolute w-screen h-full bg-black/50"
-              onClick={() => {
-                setShowAreaModal(false);
-              }}
-            ></div>
-            <div className="absolute bottom-0 w-full bg-black">
-              <ModalHeader title="ფართი" onClear={propertyTypeClear} />
-              <div>
-                <div className="[&>div]:px-6">
-                  <Input
-                    header="-დან"
-                    after="მ²"
-                    onFocus={() => {
-                      // document.getElementById("Zaza")?.classList.add("AAA");
-                      window.scrollTo(0, 0);
-                    }}
-                    onBlur={() => {
-                      // document.getElementById("Zaza")?.classList.remove("AAA");
-                    }}
-                  />
-                </div>
-                <div className="[&>div]:px-6">
-                  <Input
-                    header="-მდე"
-                    after="მ²"
-                    onFocus={() => {
-                      // document.getElementById("Zaza")?.classList.add("BBB");
-                      window.scrollTo(0, 0);
-                    }}
-                    onBlur={() => {
-                      // document.getElementById("Zaza")?.classList.remove("BBB");
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="p-6 pt-2">
-                <Subheadline plain weight="2">
-                  ოთახები
-                </Subheadline>
-                <div className="flex flex-wrap gap-3 mt-4">
-                  <Button size="m" mode={"outline"} className="flex-shrink-0">
-                    <Text weight="3">1</Text>
-                  </Button>
-                  <Button size="m" mode={"outline"} className="flex-shrink-0">
-                    <Text weight="3">2</Text>
-                  </Button>
-                  <Button size="m" mode={"outline"} className="flex-shrink-0">
-                    <Text weight="3">3</Text>
-                  </Button>
-                  <Button size="m" mode={"outline"} className="flex-shrink-0">
-                    <Text weight="3">4</Text>
-                  </Button>
-                  <Button size="m" mode={"outline"} className="flex-shrink-0">
-                    <Text weight="3">5</Text>
-                  </Button>
-                  <Button size="m" mode={"outline"} className="flex-shrink-0">
-                    <Text weight="3">6+</Text>
-                  </Button>
-                </div>
-              </div>
-              <ModalFooter
-                onClick={() => {
-                  console.log("CHOOSE PRICE");
-                }}
-              />
-            </div>
-          </div>
-        ) : null}
       </Fragment>
     </SDKProvider>
   );
