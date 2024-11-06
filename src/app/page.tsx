@@ -201,7 +201,7 @@ export default function Home() {
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <div className=" flex flex-col">
-          <List className="!mb-[90px]">
+          <List className="!mb-44">
             <SectionHeader>
               <Placeholder>
                 <svg
@@ -261,8 +261,8 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
-              </Section>
-              <Section>
+            </Section>
+            <Section>
               <Modal
                 header={<ModalCap />}
                 trigger={
@@ -426,7 +426,16 @@ export default function Home() {
                 ))} */}
                   <ModalFooter onClick={propertyTypeChoose} />
                 </Modal>
-              ) : null}
+              ) : (
+                <Cell
+                  disabled
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("heavy");
+                  }}
+                >
+                  სტატუსი
+                </Cell>
+              )}
             </Section>
             {/* <Cell
                 hovered={false}
@@ -591,7 +600,7 @@ export default function Home() {
             </Section>
 
             <Section header="ფასი">
-            <Cell
+              <Cell
                 Component="label"
                 after={<Radio name="radio" value="1" />}
                 multiline
