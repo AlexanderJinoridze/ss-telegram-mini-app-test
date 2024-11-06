@@ -268,7 +268,7 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.impactOccurred("heavy");
                     }}
-                    after={
+                    before={
                       <span className="material-symbols-outlined">
                         view_cozy
                       </span>
@@ -279,11 +279,11 @@ export default function Home() {
                     ) : (
                       <Text weight="2">{propertyTypeLabel}</Text>
                     )}
-                    <>
+                    {/* <>
                       {normalizedStatusLabels ? (
                         <Text weight="2"> - {normalizedStatusLabels}</Text>
                       ) : null}
-                    </>
+                    </> */}
                   </Cell>
                 }
                 onOpenChange={propertyTypeChange}
@@ -323,8 +323,8 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={propertyTypeChoose} />
               </Modal>
-              {propertyTypeShadow !== undefined &&
-              propertyTypeStatusMap[propertyTypeShadow] !== undefined ? (
+              {propertyType !== undefined &&
+              propertyTypeStatusMap[propertyType] !== undefined ? (
                 <Modal
                   header={<ModalCap />}
                   trigger={
@@ -333,61 +333,57 @@ export default function Home() {
                         hapticFeedback.impactOccurred("heavy");
                       }}
                     >
-                      {propertyType === undefined ? (
-                        "სტატუსი"
+                      {normalizedStatusLabels ? (
+                        <Text weight="2">{normalizedStatusLabels}</Text>
                       ) : (
-                        <Text weight="2">{propertyTypeLabel}</Text>
+                        "სტატუსი"
                       )}
-                      <>
-                        {normalizedStatusLabels ? (
-                          <Text weight="2"> - {normalizedStatusLabels}</Text>
-                        ) : null}
-                      </>
                     </Cell>
                   }
                   onOpenChange={propertyTypeChange}
                   className="max-h-[calc(100%-1.5rem)]"
                 >
                   <ModalHeader title="სტატუსი" onClear={propertyTypeClear} />
-
-                  {propertyTypeStatusMap[propertyTypeShadow].map(
-                    ({ id, label }) => (
-                      <Cell
-                        key={id}
-                        className={`px-6 transition-colors hover:bg-transparent ${
-                          id === propertyTypeShadow
-                            ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                            : "bg-transparent"
-                        }`}
-                        // mode={
-                        //   statusesShadow.includes(id) ? "filled" : "outline"
-                        // }
-                        // className="flex-shrink-0"
-                        onClick={() => {
-                          if (statusesShadow.includes(id)) {
-                            statusesShadow.splice(
-                              statusesShadow.indexOf(id),
-                              1
-                            );
-                            statusesLabelShadow.splice(
-                              statusesLabelShadow.indexOf(label),
-                              1
-                            );
-                            setStatusesShadow([...statusesShadow]);
-                            setStatusesLabelShadow([...statusesLabelShadow]);
-                          } else {
-                            setStatusesShadow([...statusesShadow, id]);
-                            setStatusesLabelShadow([
-                              ...statusesLabelShadow,
-                              label,
-                            ]);
-                          }
-                        }}
-                      >
-                        <Text weight="3">{label}</Text>
-                      </Cell>
-                    )
-                  )}
+                  <div className="flex flex-wrap gap-3 p-6 pt-2">
+                  {propertyTypeStatusMap[propertyType].map(({ id, label }) => (
+                    <Button
+                      key={id}
+                      // className={`px-6 transition-colors hover:bg-transparent ${
+                      //   statusesShadow.includes(id)
+                      //     ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      //     : "bg-transparent"
+                      // }`}
+                      // after={
+                      //   statusesShadow.includes(id) ? (
+                      //     <span className="material-symbols-outlined">
+                      //       check
+                      //     </span>
+                      //   ) : null
+                      // }
+                      mode={statusesShadow.includes(id) ? "filled" : "outline"}
+                      className="flex-shrink-0"
+                      onClick={() => {
+                        if (statusesShadow.includes(id)) {
+                          statusesShadow.splice(statusesShadow.indexOf(id), 1);
+                          statusesLabelShadow.splice(
+                            statusesLabelShadow.indexOf(label),
+                            1
+                          );
+                          setStatusesShadow([...statusesShadow]);
+                          setStatusesLabelShadow([...statusesLabelShadow]);
+                        } else {
+                          setStatusesShadow([...statusesShadow, id]);
+                          setStatusesLabelShadow([
+                            ...statusesLabelShadow,
+                            label,
+                          ]);
+                        }
+                      }}
+                    >
+                      <Text weight="3">{label}</Text>
+                    </Button>
+                  ))}
+                  </div>
                   {/* {propertyTypeMap.map((item) => (
                   <Cell
                     key={item.id}
@@ -516,7 +512,7 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.impactOccurred("medium");
                     }}
-                    after={
+                    before={
                       <span className="material-symbols-outlined">
                         location_on
                       </span>
@@ -537,18 +533,9 @@ export default function Home() {
             </Section>
 
             <Section header="ფართი">
-              <Input header="-დან" placeholder="-დან" after="მ²" />
-              <Input header="-მდე" placeholder="-მდე" after="მ²" />
-              <Section
-                header={
-                  <span>
-                    ოთახების რაოდენობა: <strong>6+</strong>
-                  </span>
-                }
-              >
-                <Slider step={1} max={6} />
-              </Section>
-              {/* <Modal
+              <Input placeholder="-დან" after="მ²" />
+              <Input placeholder="-მდე" after="მ²" />
+              <Modal
                 header={<ModalCap />}
                 trigger={
                   <Cell
@@ -570,26 +557,28 @@ export default function Home() {
                   title="ოთახების რაოდენობა"
                   onClear={dealTypeClear}
                 />
-                <Button size="m" mode={"outline"} className="flex-shrink-0">
-                  <Text weight="3">1</Text>
-                </Button>
-                <Button size="m" mode={"outline"} className="flex-shrink-0">
-                  <Text weight="3">2</Text>
-                </Button>
-                <Button size="m" mode={"outline"} className="flex-shrink-0">
-                  <Text weight="3">3</Text>
-                </Button>
-                <Button size="m" mode={"outline"} className="flex-shrink-0">
-                  <Text weight="3">4</Text>
-                </Button>
-                <Button size="m" mode={"outline"} className="flex-shrink-0">
-                  <Text weight="3">5</Text>
-                </Button>
-                <Button size="m" mode={"outline"} className="flex-shrink-0">
-                  <Text weight="3">6+</Text>
-                </Button>
+                <div className="flex flex-wrap gap-3 p-6 pt-2">
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">1</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">2</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">3</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">4</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">5</Text>
+                  </Button>
+                  <Button size="m" mode={"outline"} className="flex-shrink-0">
+                    <Text weight="3">6+</Text>
+                  </Button>
+                </div>
                 <ModalFooter onClick={dealTypeChoose} />
-              </Modal> */}
+              </Modal>
             </Section>
 
             <Section header="ფასი">
@@ -598,8 +587,8 @@ export default function Home() {
                   hapticFeedback.impactOccurred("light");
                 }}
               ></Cell> */}
-              <Input header="-დან" placeholder="-დან" after="₾" />
-              <Input header="-მდე" placeholder="-მდე" after="₾" />
+              <Input placeholder="-დან" after="₾" />
+              <Input placeholder="-მდე" after="₾" />
               <SegmentedControl className="w-full">
                 <SegmentedControlItem
                   onClick={function noRefCheck() {}}
