@@ -621,7 +621,9 @@ export default function Home() {
               ></Cell> */}
               <Input placeholder="-დან" after="₾" />
               <Input placeholder="-მდე" after="₾" />
-              <SegmentedControl className="w-full">
+            </Section>
+            <SectionFooter>
+              <SegmentedControl className="w-auto">
                 <SegmentedControlItem
                   onClick={function noRefCheck() {}}
                   selected
@@ -632,8 +634,9 @@ export default function Home() {
                   $
                 </SegmentedControlItem>
               </SegmentedControl>
-            </Section>
-            <SectionFooter>All right reserved ss.ge</SectionFooter>
+            </SectionFooter>
+
+            <SectionFooter> All right reserved ss.ge</SectionFooter>
           </List>
           <FixedLayout className="z-10">
             <Divider />
