@@ -16,6 +16,7 @@ import {
   Radio,
   Select,
   SegmentedControl,
+  Slider,
 } from "@telegram-apps/telegram-ui";
 import { Fragment, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
@@ -260,8 +261,6 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
-            </Section>
-            <Section>
               <Modal
                 header={<ModalCap />}
                 trigger={
@@ -269,6 +268,11 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.impactOccurred("heavy");
                     }}
+                    after={
+                      <span className="material-symbols-outlined">
+                        view_cozy
+                      </span>
+                    }
                   >
                     {propertyType === undefined ? (
                       "ქონების ტიპი"
@@ -286,52 +290,6 @@ export default function Home() {
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader title="ქონების ტიპი" onClear={propertyTypeClear} />
-                {propertyTypeShadow !== undefined &&
-                propertyTypeStatusMap[propertyTypeShadow] !== undefined ? (
-                  <div className="p-6 pt-2">
-                    <Subheadline plain weight="2">
-                      სტატუსი
-                    </Subheadline>
-                    <div className="flex flex-wrap gap-3 mt-4">
-                      {propertyTypeStatusMap[propertyTypeShadow].map(
-                        ({ id, label }) => (
-                          <Button
-                            key={id}
-                            size="m"
-                            mode={
-                              statusesShadow.includes(id) ? "filled" : "outline"
-                            }
-                            className="flex-shrink-0"
-                            onClick={() => {
-                              if (statusesShadow.includes(id)) {
-                                statusesShadow.splice(
-                                  statusesShadow.indexOf(id),
-                                  1
-                                );
-                                statusesLabelShadow.splice(
-                                  statusesLabelShadow.indexOf(label),
-                                  1
-                                );
-                                setStatusesShadow([...statusesShadow]);
-                                setStatusesLabelShadow([
-                                  ...statusesLabelShadow,
-                                ]);
-                              } else {
-                                setStatusesShadow([...statusesShadow, id]);
-                                setStatusesLabelShadow([
-                                  ...statusesLabelShadow,
-                                  label,
-                                ]);
-                              }
-                            }}
-                          >
-                            <Text weight="3">{label}</Text>
-                          </Button>
-                        )
-                      )}
-                    </div>
-                  </div>
-                ) : null}
                 {propertyTypeMap.map((item) => (
                   <Cell
                     key={item.id}
@@ -365,6 +323,105 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={propertyTypeChoose} />
               </Modal>
+              {propertyTypeShadow !== undefined &&
+              propertyTypeStatusMap[propertyTypeShadow] !== undefined ? (
+                <Modal
+                  header={<ModalCap />}
+                  trigger={
+                    <Cell
+                      onClick={() => {
+                        hapticFeedback.impactOccurred("heavy");
+                      }}
+                    >
+                      {propertyType === undefined ? (
+                        "სტატუსი"
+                      ) : (
+                        <Text weight="2">{propertyTypeLabel}</Text>
+                      )}
+                      <>
+                        {normalizedStatusLabels ? (
+                          <Text weight="2"> - {normalizedStatusLabels}</Text>
+                        ) : null}
+                      </>
+                    </Cell>
+                  }
+                  onOpenChange={propertyTypeChange}
+                  className="max-h-[calc(100%-1.5rem)]"
+                >
+                  <ModalHeader title="სტატუსი" onClear={propertyTypeClear} />
+
+                  {propertyTypeStatusMap[propertyTypeShadow].map(
+                    ({ id, label }) => (
+                      <Cell
+                        key={id}
+                        className={`px-6 transition-colors hover:bg-transparent ${
+                          id === propertyTypeShadow
+                            ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                            : "bg-transparent"
+                        }`}
+                        // mode={
+                        //   statusesShadow.includes(id) ? "filled" : "outline"
+                        // }
+                        // className="flex-shrink-0"
+                        onClick={() => {
+                          if (statusesShadow.includes(id)) {
+                            statusesShadow.splice(
+                              statusesShadow.indexOf(id),
+                              1
+                            );
+                            statusesLabelShadow.splice(
+                              statusesLabelShadow.indexOf(label),
+                              1
+                            );
+                            setStatusesShadow([...statusesShadow]);
+                            setStatusesLabelShadow([...statusesLabelShadow]);
+                          } else {
+                            setStatusesShadow([...statusesShadow, id]);
+                            setStatusesLabelShadow([
+                              ...statusesLabelShadow,
+                              label,
+                            ]);
+                          }
+                        }}
+                      >
+                        <Text weight="3">{label}</Text>
+                      </Cell>
+                    )
+                  )}
+                  {/* {propertyTypeMap.map((item) => (
+                  <Cell
+                    key={item.id}
+                    className={`px-6 transition-colors hover:bg-transparent ${
+                      item.id === propertyTypeShadow
+                        ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                        : "bg-transparent"
+                    }`}
+                    before={
+                      <span
+                        className="material-symbols-outlined"
+                        style={{
+                          fontVariationSettings:
+                            item.id === propertyTypeShadow
+                              ? '"FILL" 1'
+                              : undefined,
+                        }}
+                      >
+                        {item.iconName}
+                      </span>
+                    }
+                    after={
+                      item.id === propertyTypeShadow ? (
+                        <span className="material-symbols-outlined">check</span>
+                      ) : null
+                    }
+                    onClick={() => propertyTypeOptionSelect(item)}
+                  >
+                    {item.label}
+                  </Cell>
+                ))} */}
+                  <ModalFooter onClick={propertyTypeChoose} />
+                </Modal>
+              ) : null}
             </Section>
             {/* <Cell
                 hovered={false}
@@ -452,19 +509,46 @@ export default function Home() {
                 />
               </Modal> */}
             <Section>
-              <Cell
-                onClick={() => {
-                  hapticFeedback.impactOccurred("medium");
-                }}
+              <Modal
+                header={<ModalCap />}
+                trigger={
+                  <Cell
+                    onClick={() => {
+                      hapticFeedback.impactOccurred("medium");
+                    }}
+                    after={
+                      <span className="material-symbols-outlined">
+                        location_on
+                      </span>
+                    }
+                  >
+                    მდებარეობა
+                  </Cell>
+                }
+                onOpenChange={dealTypeChange}
+                className="h-full flex flex-col max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
               >
-                მდებარეობა
-              </Cell>
+                <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
+                <div className="flex-grow">
+                  <Input placeholder="Search location" />
+                </div>
+                <ModalFooter onClick={dealTypeChoose} />
+              </Modal>
             </Section>
 
-            <Section>
-              <Input header="-დან" after="მ²" />
-              <Input header="-მდე" after="მ²" />
-              <Modal
+            <Section header="ფართი">
+              <Input header="-დან" placeholder="-დან" after="მ²" />
+              <Input header="-მდე" placeholder="-მდე" after="მ²" />
+              <Section
+                header={
+                  <span>
+                    ოთახების რაოდენობა: <strong>6+</strong>
+                  </span>
+                }
+              >
+                <Slider step={1} max={6} />
+              </Section>
+              {/* <Modal
                 header={<ModalCap />}
                 trigger={
                   <Cell
@@ -505,17 +589,17 @@ export default function Home() {
                   <Text weight="3">6+</Text>
                 </Button>
                 <ModalFooter onClick={dealTypeChoose} />
-              </Modal>
+              </Modal> */}
             </Section>
 
-            <Section>
+            <Section header="ფასი">
               {/* <Cell
                 onClick={() => {
                   hapticFeedback.impactOccurred("light");
                 }}
               ></Cell> */}
-              <Input header="-დან" after="₾" />
-              <Input header="-მდე" after="₾" />
+              <Input header="-დან" placeholder="-დან" after="₾" />
+              <Input header="-მდე" placeholder="-მდე" after="₾" />
               <SegmentedControl className="w-full">
                 <SegmentedControlItem
                   onClick={function noRefCheck() {}}
