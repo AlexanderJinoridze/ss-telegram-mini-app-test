@@ -229,11 +229,6 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.selectionChanged();
                     }}
-                    before={
-                      <span className="material-symbols-outlined">
-                        handshake
-                      </span>
-                    }
                   >
                     {dealType === undefined ? (
                       "გარიგების ტიპი"
