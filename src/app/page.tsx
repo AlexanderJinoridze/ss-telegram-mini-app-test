@@ -203,7 +203,7 @@ export default function Home() {
         <div className=" flex flex-col">
           <List className="!mb-[90px]">
             <SectionHeader>
-              <Placeholder description="Description" header="Title">
+              <Placeholder>
                 <svg
                   width="132"
                   height="44"
@@ -261,6 +261,8 @@ export default function Home() {
                 ))}
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
+              </Section>
+              <Section>
               <Modal
                 header={<ModalCap />}
                 trigger={
@@ -589,6 +591,20 @@ export default function Home() {
             </Section>
 
             <Section header="ფასი">
+            <Cell
+                Component="label"
+                after={<Radio name="radio" value="1" />}
+                multiline
+              >
+                სრული
+              </Cell>
+              <Cell
+                Component="label"
+                after={<Radio name="radio" value="2" />}
+                multiline
+              >
+                მ² - ის
+              </Cell>
               {/* <Cell
                 onClick={() => {
                   hapticFeedback.impactOccurred("light");
@@ -607,22 +623,6 @@ export default function Home() {
                   $
                 </SegmentedControlItem>
               </SegmentedControl>
-            </Section>
-            <Section>
-              <Cell
-                Component="label"
-                after={<Radio name="radio" value="1" />}
-                multiline
-              >
-                სრული
-              </Cell>
-              <Cell
-                Component="label"
-                after={<Radio name="radio" value="2" />}
-                multiline
-              >
-                მ² - ის
-              </Cell>
             </Section>
             <SectionFooter>All right reserved ss.ge</SectionFooter>
           </List>
