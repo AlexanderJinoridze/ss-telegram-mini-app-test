@@ -17,6 +17,7 @@ import {
   Select,
   SegmentedControl,
   Slider,
+  Checkbox,
 } from "@telegram-apps/telegram-ui";
 import { Fragment, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
@@ -229,6 +230,11 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.selectionChanged();
                     }}
+                    after={
+                      <span className="material-symbols-outlined">
+                        keyboard_arrow_down
+                      </span>
+                    }
                   >
                     {dealType === undefined ? (
                       "გარიგების ტიპი"
@@ -270,9 +276,14 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.impactOccurred("heavy");
                     }}
-                    before={
+                    // before={
+                    //   <span className="material-symbols-outlined">
+                    //     view_cozy
+                    //   </span>
+                    // }
+                    after={
                       <span className="material-symbols-outlined">
-                        view_cozy
+                        keyboard_arrow_down
                       </span>
                     }
                   >
@@ -334,6 +345,11 @@ export default function Home() {
                       onClick={() => {
                         hapticFeedback.impactOccurred("heavy");
                       }}
+                      after={
+                        <span className="material-symbols-outlined">
+                          keyboard_arrow_down
+                        </span>
+                      }
                     >
                       {normalizedStatusLabels ? (
                         <Text weight="2">{normalizedStatusLabels}</Text>
@@ -346,53 +362,79 @@ export default function Home() {
                   className="max-h-[calc(100%-1.5rem)]"
                 >
                   <ModalHeader title="სტატუსი" onClear={propertyTypeClear} />
-                  <div className="flex flex-wrap gap-3 p-6 pt-2">
-                    {propertyTypeStatusMap[propertyType].map(
-                      ({ id, label }) => (
-                        <Button
-                          key={id}
-                          // className={`px-6 transition-colors hover:bg-transparent ${
-                          //   statusesShadow.includes(id)
-                          //     ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                          //     : "bg-transparent"
-                          // }`}
-                          // after={
-                          //   statusesShadow.includes(id) ? (
-                          //     <span className="material-symbols-outlined">
-                          //       check
-                          //     </span>
-                          //   ) : null
-                          // }
-                          mode={
-                            statusesShadow.includes(id) ? "filled" : "outline"
-                          }
-                          className="flex-shrink-0"
-                          onClick={() => {
-                            if (statusesShadow.includes(id)) {
-                              statusesShadow.splice(
-                                statusesShadow.indexOf(id),
-                                1
-                              );
-                              statusesLabelShadow.splice(
-                                statusesLabelShadow.indexOf(label),
-                                1
-                              );
-                              setStatusesShadow([...statusesShadow]);
-                              setStatusesLabelShadow([...statusesLabelShadow]);
-                            } else {
-                              setStatusesShadow([...statusesShadow, id]);
-                              setStatusesLabelShadow([
-                                ...statusesLabelShadow,
-                                label,
-                              ]);
-                            }
-                          }}
-                        >
-                          <Text weight="3">{label}</Text>
-                        </Button>
-                      )
-                    )}
-                  </div>
+
+                  {propertyTypeStatusMap[propertyType].map(({ id, label }) => (
+                    <Cell
+                      key={id}
+                      className={`px-6 transition-colors hover:bg-transparent ${
+                        false
+                          ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                          : "bg-transparent"
+                      }`}
+                      after={<Checkbox />}
+                      onClick={() => {
+                        if (statusesShadow.includes(id)) {
+                          statusesShadow.splice(statusesShadow.indexOf(id), 1);
+                          statusesLabelShadow.splice(
+                            statusesLabelShadow.indexOf(label),
+                            1
+                          );
+                          setStatusesShadow([...statusesShadow]);
+                          setStatusesLabelShadow([...statusesLabelShadow]);
+                        } else {
+                          setStatusesShadow([...statusesShadow, id]);
+                          setStatusesLabelShadow([
+                            ...statusesLabelShadow,
+                            label,
+                          ]);
+                        }
+                      }}
+                    >
+                      2
+                    </Cell>
+                    // <Button
+                    //   key={id}
+                    //   // className={`px-6 transition-colors hover:bg-transparent ${
+                    //   //   statusesShadow.includes(id)
+                    //   //     ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                    //   //     : "bg-transparent"
+                    //   // }`}
+                    //   // after={
+                    //   //   statusesShadow.includes(id) ? (
+                    //   //     <span className="material-symbols-outlined">
+                    //   //       check
+                    //   //     </span>
+                    //   //   ) : null
+                    //   // }
+                    //   mode={
+                    //     statusesShadow.includes(id) ? "filled" : "outline"
+                    //   }
+                    //   className="flex-shrink-0"
+                    //   onClick={() => {
+                    //     if (statusesShadow.includes(id)) {
+                    //       statusesShadow.splice(
+                    //         statusesShadow.indexOf(id),
+                    //         1
+                    //       );
+                    //       statusesLabelShadow.splice(
+                    //         statusesLabelShadow.indexOf(label),
+                    //         1
+                    //       );
+                    //       setStatusesShadow([...statusesShadow]);
+                    //       setStatusesLabelShadow([...statusesLabelShadow]);
+                    //     } else {
+                    //       setStatusesShadow([...statusesShadow, id]);
+                    //       setStatusesLabelShadow([
+                    //         ...statusesLabelShadow,
+                    //         label,
+                    //       ]);
+                    //     }
+                    //   }}
+                    // >
+                    //   <Text weight="3">{label}</Text>
+                    // </Button>
+                  ))}
+
                   {/* {propertyTypeMap.map((item) => (
                   <Cell
                     key={item.id}
@@ -432,6 +474,11 @@ export default function Home() {
                   onClick={() => {
                     hapticFeedback.impactOccurred("heavy");
                   }}
+                  after={
+                    <span className="material-symbols-outlined">
+                      keyboard_arrow_down
+                    </span>
+                  }
                 >
                   სტატუსი
                 </Cell>
@@ -530,9 +577,9 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.impactOccurred("medium");
                     }}
-                    before={
+                    after={
                       <span className="material-symbols-outlined">
-                        location_on
+                        keyboard_arrow_down
                       </span>
                     }
                   >
@@ -540,7 +587,7 @@ export default function Home() {
                   </Cell>
                 }
                 onOpenChange={dealTypeChange}
-                className="h-full flex flex-col max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
+                className="h-full flex flex-col max-h-[450px] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
               >
                 <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
                 <div className="flex-grow">
@@ -550,9 +597,18 @@ export default function Home() {
               </Modal>
             </Section>
 
-            <Section header="ფართი">
-              <Input placeholder="-დან" after="მ²" />
-              <Input placeholder="-მდე" after="მ²" />
+            <SectionHeader>ფართი</SectionHeader>
+            <Section>
+              <Input
+                placeholder="-დან"
+                after={<span className="w-6 text-center">მ²</span>}
+              />
+              <Input
+                placeholder="-მდე"
+                after={<span className="w-6 text-center">მ²</span>}
+              />
+            </Section>
+            <Section>
               <Modal
                 header={<ModalCap />}
                 trigger={
@@ -560,6 +616,11 @@ export default function Home() {
                     onClick={() => {
                       hapticFeedback.selectionChanged();
                     }}
+                    after={
+                      <span className="material-symbols-outlined">
+                        keyboard_arrow_down
+                      </span>
+                    }
                   >
                     {dealType === undefined ? (
                       "ოთახების რაოდენობა"
@@ -575,7 +636,82 @@ export default function Home() {
                   title="ოთახების რაოდენობა"
                   onClear={dealTypeClear}
                 />
-                <div className="flex flex-wrap gap-3 p-6 pt-2">
+                <Cell
+                  // key={item.id}
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    false
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  // before={
+                  //   <span
+                  //     className="material-symbols-outlined"
+                  //     style={{
+                  //       fontVariationSettings:
+                  //         item.id === propertyTypeShadow
+                  //           ? '"FILL" 1'
+                  //           : undefined,
+                  //     }}
+                  //   >
+                  //     {item.iconName}
+                  //   </span>
+                  // }
+                  after={<Checkbox />}
+                  // onClick={() => propertyTypeOptionSelect(item)}
+                >
+                  1
+                </Cell>
+                <Cell
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    false
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  after={<Checkbox />}
+                >
+                  2
+                </Cell>{" "}
+                <Cell
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    false
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  after={<Checkbox />}
+                >
+                  3
+                </Cell>{" "}
+                <Cell
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    false
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  after={<Checkbox />}
+                >
+                  4
+                </Cell>{" "}
+                <Cell
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    false
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  after={<Checkbox />}
+                >
+                  5
+                </Cell>{" "}
+                <Cell
+                  className={`px-6 transition-colors hover:bg-transparent ${
+                    false
+                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                      : "bg-transparent"
+                  }`}
+                  after={<Checkbox />}
+                >
+                  6+
+                </Cell>
+                {/* <div className="flex flex-wrap gap-3 p-6 pt-2">
                   <Button size="m" mode={"outline"} className="flex-shrink-0">
                     <Text weight="3">1</Text>
                   </Button>
@@ -594,35 +730,50 @@ export default function Home() {
                   <Button size="m" mode={"outline"} className="flex-shrink-0">
                     <Text weight="3">6+</Text>
                   </Button>
-                </div>
+                </div> */}
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
             </Section>
 
-            <Section header="ფასი">
+            <SectionHeader>ფასი</SectionHeader>
+            <Section>
               <Cell
                 Component="label"
-                after={<Radio name="radio" value="1" />}
+                after={
+                  <div className="m-0.5">
+                    <Radio name="radio" value="2" />
+                  </div>
+                }
                 multiline
               >
                 სრული
               </Cell>
               <Cell
                 Component="label"
-                after={<Radio name="radio" value="2" />}
+                after={
+                  <div className="m-0.5">
+                    <Radio name="radio" value="2" />
+                  </div>
+                }
                 multiline
               >
                 მ² - ის
               </Cell>
+            </Section>
+            <Section>
               {/* <Cell
                 onClick={() => {
                   hapticFeedback.impactOccurred("light");
                 }}
               ></Cell> */}
-              <Input placeholder="-დან" after="₾" />
-              <Input placeholder="-მდე" after="₾" />
-            </Section>
-            <SectionFooter>
+              <Input
+                placeholder="-დან"
+                after={<span className="w-6 text-center">₾</span>}
+              />
+              <Input
+                placeholder="-მდე"
+                after={<span className="w-6 text-center">₾</span>}
+              />
               <SegmentedControl className="w-auto">
                 <SegmentedControlItem
                   onClick={function noRefCheck() {}}
@@ -634,8 +785,7 @@ export default function Home() {
                   $
                 </SegmentedControlItem>
               </SegmentedControl>
-            </SectionFooter>
-
+            </Section>
             <SectionFooter> All right reserved ss.ge</SectionFooter>
           </List>
           <FixedLayout className="z-10">
