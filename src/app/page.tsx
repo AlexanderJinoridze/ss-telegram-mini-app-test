@@ -367,11 +367,35 @@ export default function Home() {
                     <Cell
                       key={id}
                       className={`px-6 transition-colors hover:bg-transparent ${
-                        false
+                        statusesShadow.includes(id)
                           ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
                           : "bg-transparent"
                       }`}
-                      after={<Checkbox />}
+                      after={
+                        <Checkbox
+                          checked={statusesShadow.includes(id)}
+                          onClick={() => {
+                            if (statusesShadow.includes(id)) {
+                              statusesShadow.splice(
+                                statusesShadow.indexOf(id),
+                                1
+                              );
+                              statusesLabelShadow.splice(
+                                statusesLabelShadow.indexOf(label),
+                                1
+                              );
+                              setStatusesShadow([...statusesShadow]);
+                              setStatusesLabelShadow([...statusesLabelShadow]);
+                            } else {
+                              setStatusesShadow([...statusesShadow, id]);
+                              setStatusesLabelShadow([
+                                ...statusesLabelShadow,
+                                label,
+                              ]);
+                            }
+                          }}
+                        />
+                      }
                       onClick={() => {
                         if (statusesShadow.includes(id)) {
                           statusesShadow.splice(statusesShadow.indexOf(id), 1);
@@ -390,7 +414,7 @@ export default function Home() {
                         }
                       }}
                     >
-                      2
+                      <Text weight="3">{label}</Text>
                     </Cell>
                     // <Button
                     //   key={id}
