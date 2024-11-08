@@ -371,31 +371,7 @@ export default function Home() {
                           ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
                           : "bg-transparent"
                       }`}
-                      after={
-                        <Checkbox
-                          checked={statusesShadow.includes(id)}
-                          onClick={() => {
-                            if (statusesShadow.includes(id)) {
-                              statusesShadow.splice(
-                                statusesShadow.indexOf(id),
-                                1
-                              );
-                              statusesLabelShadow.splice(
-                                statusesLabelShadow.indexOf(label),
-                                1
-                              );
-                              setStatusesShadow([...statusesShadow]);
-                              setStatusesLabelShadow([...statusesLabelShadow]);
-                            } else {
-                              setStatusesShadow([...statusesShadow, id]);
-                              setStatusesLabelShadow([
-                                ...statusesLabelShadow,
-                                label,
-                              ]);
-                            }
-                          }}
-                        />
-                      }
+                      after={<Checkbox checked={statusesShadow.includes(id)} />}
                       onClick={() => {
                         if (statusesShadow.includes(id)) {
                           statusesShadow.splice(statusesShadow.indexOf(id), 1);
@@ -616,6 +592,14 @@ export default function Home() {
                 <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
                 <div className="flex-grow">
                   <Input placeholder="Search location" />
+                  <Input
+                    placeholder="-დან"
+                    after={<span className="w-6 text-center">მ²</span>}
+                  />
+                  <Input
+                    placeholder="-მდე"
+                    after={<span className="w-6 text-center">მ²</span>}
+                  />
                 </div>
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
