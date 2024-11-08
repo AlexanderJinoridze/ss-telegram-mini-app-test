@@ -587,7 +587,7 @@ export default function Home() {
                   </Cell>
                 }
                 onOpenChange={dealTypeChange}
-                className="h-full flex flex-col max-h-[450px] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
+                className="flex flex-col max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
               >
                 <ModalHeader title="გარიგების ტიპი" onClear={dealTypeClear} />
                 <div className="flex-grow">
