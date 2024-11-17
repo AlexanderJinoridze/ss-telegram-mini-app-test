@@ -7,7 +7,7 @@ body {
 }
 
 *[class^="tgui-"][role="tablist"] {
-  background-color: var(--tgui--bg_color);
+  background-color: transparent;
 }
 
 *[class^="tgui-"][role="tablist"] > div > div {
