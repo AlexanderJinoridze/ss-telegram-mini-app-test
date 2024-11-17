@@ -8,15 +8,11 @@ import {
   FixedLayout,
   Button,
   Divider,
-  Subheadline,
   Text,
   Input,
-  Switch,
   Placeholder,
   Radio,
-  Select,
   SegmentedControl,
-  Slider,
   Checkbox,
 } from "@telegram-apps/telegram-ui";
 import { Fragment, useEffect, useState } from "react";
@@ -99,7 +95,7 @@ export default function Home() {
       { id: 14, label: "გარაჟი" },
       { id: 21, label: "სარდაფი" },
       { id: 22, label: "სავაჭრო ობიექტი" },
-      { id: 31, label: "კომერციული ფართი" },
+      { id: 31, label: "სხვა კომერციული ფართი" },
       { id: 6, label: "სასაწყობე / საწარმოო ფართი" },
       { id: 7, label: "საოფისე ფართი" },
     ],
@@ -109,6 +105,15 @@ export default function Home() {
       { id: 453, label: "ძველი აშენებული" },
     ],
   };
+
+  const rooms = [
+    { id: 1, label: "1 ოთახიანი" },
+    { id: 2, label: "2 ოთახიანი" },
+    { id: 3, label: "3 ოთახიანი" },
+    { id: 4, label: "4 ოთახიანი" },
+    { id: 5, label: "5 ოთახიანი" },
+    { id: 6, label: "6+ ოთახიანი" },
+  ];
 
   const dealTypeChange = () => {
     setDealTypeShadow(dealType);
@@ -179,10 +184,6 @@ export default function Home() {
     setPropertyType(propertyTypeShadow);
     setPropertyTypeLabel(propertyTypeLabelShadow);
   };
-
-  const normalizedStatusLabels = statusesLabel
-    .filter((elem) => elem !== "კომერციული ფართი")
-    .join(", ");
 
   // const viewport = useViewportSize();
 
@@ -268,7 +269,7 @@ export default function Home() {
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
             </Section>
-            <Section>
+            <Section footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
               <Modal
                 header={<ModalCap />}
                 trigger={
@@ -351,8 +352,8 @@ export default function Home() {
                         </span>
                       }
                     >
-                      {normalizedStatusLabels ? (
-                        <Text weight="2">{normalizedStatusLabels}</Text>
+                      {statusesLabel.length ? (
+                        <Text weight="2">{statusesLabel.join(", ")}</Text>
                       ) : (
                         "სტატუსი"
                       )}
@@ -604,7 +605,6 @@ export default function Home() {
                 <ModalFooter onClick={dealTypeChoose} />
               </Modal>
             </Section>
-
             <SectionHeader>ფართი</SectionHeader>
             <Section>
               <Input
@@ -644,7 +644,7 @@ export default function Home() {
                   title="ოთახების რაოდენობა"
                   onClear={dealTypeClear}
                 />
-                <Cell
+                {/* <Cell
                   // key={item.id}
                   className={`px-6 transition-colors hover:bg-transparent ${
                     false
@@ -668,57 +668,20 @@ export default function Home() {
                   // onClick={() => propertyTypeOptionSelect(item)}
                 >
                   1
-                </Cell>
-                <Cell
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    false
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  after={<Checkbox />}
-                >
-                  2
-                </Cell>{" "}
-                <Cell
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    false
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  after={<Checkbox />}
-                >
-                  3
-                </Cell>{" "}
-                <Cell
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    false
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  after={<Checkbox />}
-                >
-                  4
-                </Cell>{" "}
-                <Cell
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    false
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  after={<Checkbox />}
-                >
-                  5
-                </Cell>{" "}
-                <Cell
-                  className={`px-6 transition-colors hover:bg-transparent ${
-                    false
-                      ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                      : "bg-transparent"
-                  }`}
-                  after={<Checkbox />}
-                >
-                  6+
-                </Cell>
+                </Cell> */}
+                {rooms.map((room) => (
+                  <Cell
+                    key={room.id}
+                    className={`px-6 transition-colors hover:bg-transparent ${
+                      false
+                        ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                        : "bg-transparent"
+                    }`}
+                    after={<Checkbox />}
+                  >
+                    {room.label}
+                  </Cell>
+                ))}
                 {/* <div className="flex flex-wrap gap-3 p-6 pt-2">
                   <Button size="m" mode={"outline"} className="flex-shrink-0">
                     <Text weight="3">1</Text>
@@ -794,9 +757,9 @@ export default function Home() {
                 </SegmentedControlItem>
               </SegmentedControl>
             </Section>
-            <SectionFooter> All right reserved ss.ge</SectionFooter>
+            <SectionFooter>© SS.ge ყველა უფლება დაცულია</SectionFooter>
           </List>
-          <FixedLayout className="z-10">
+          <FixedLayout className="z-[1]">
             <Divider />
             <div className="p-5 bg-[--tg-theme-header-bg-color]">
               <Button
