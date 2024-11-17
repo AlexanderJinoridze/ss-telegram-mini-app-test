@@ -369,7 +369,7 @@ export default function Home() {
                       key={id}
                       className={`px-6 transition-colors hover:bg-transparent ${
                         statusesShadow.includes(id)
-                          ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
+                          ? "!bg-[--tg-theme-secondary-bg-color] text-[--tgui--button_text_color]"
                           : "bg-transparent"
                       }`}
                       after={<Checkbox checked={statusesShadow.includes(id)} />}
