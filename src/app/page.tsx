@@ -469,32 +469,34 @@ export default function Home() {
             </Section>
             <SectionHeader>ფასი</SectionHeader>
             <Section>
-              {priceTypes.map((priceType) => (
+              {priceTypes.map(({ id, label }) => (
                 <Cell
+                  key={id}
                   Component="label"
                   after={
                     <div className="m-0.5">
                       <Radio
                         name="radio"
-                        onChange={() => setSelectedPriceType(priceType.id)}
-                        checked={priceType.id === selectedPriceType}
+                        onChange={() => setSelectedPriceType(id)}
+                        checked={id === selectedPriceType}
                       />
                     </div>
                   }
                   multiline
                 >
-                  {priceType.label}
+                  {label}
                 </Cell>
               ))}
             </Section>
             <Section>
               <TabsList className="gap-0">
-                {currencies.map((currency) => (
+                {currencies.map(({ id, label }) => (
                   <TabsItem
-                    onClick={() => setSelectedCurrency(currency.id)}
-                    selected={currency.id === selectedCurrency}
+                    key={id}
+                    onClick={() => setSelectedCurrency(id)}
+                    selected={id === selectedCurrency}
                   >
-                    {currency.label}
+                    {label}
                   </TabsItem>
                 ))}
               </TabsList>
