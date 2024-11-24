@@ -494,7 +494,7 @@ export default function Home() {
                 <a
                   href="https://lemondo.com"
                   target="_blank"
-                  className="[&:hover_path]:fill-white"
+                  className="[&:hover_path]:fill-[--tg-theme-text-color]"
                 >
                   <svg
                     className="h-9"
@@ -510,7 +510,7 @@ export default function Home() {
                 <a
                   href="http://palitra.ge"
                   target="_blank"
-                  className="[&:hover_path]:fill-white"
+                  className="[&:hover_path]:fill-[--tg-theme-text-color]"
                 >
                   <svg
                     className="h-9"
