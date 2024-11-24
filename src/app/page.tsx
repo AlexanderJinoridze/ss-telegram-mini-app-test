@@ -15,6 +15,7 @@ import {
   SegmentedControl,
   Checkbox,
   Caption,
+  TabsList,
 } from "@telegram-apps/telegram-ui";
 import { Fragment, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
@@ -25,6 +26,7 @@ import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
 import { SegmentedControlItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/SegmentedControl/components/SegmentedControlItem/SegmentedControlItem";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
+import { TabsItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
 type valueOf<T> = T[keyof T];
 
@@ -469,6 +471,14 @@ export default function Home() {
               </Cell>
             </Section>
             <Section>
+              <TabsList className="h-14">
+                <TabsItem onClick={function noRefCheck() {}} selected>
+                  <Text>₾ - ლარში</Text>
+                </TabsItem>
+                <TabsItem onClick={function noRefCheck() {}}>
+                  <Text>$ - დოლარში</Text>
+                </TabsItem>
+              </TabsList>
               <Input
                 placeholder="-დან"
                 after={<span className="w-6 text-center">₾</span>}
@@ -477,7 +487,7 @@ export default function Home() {
                 placeholder="-მდე"
                 after={<span className="w-6 text-center">₾</span>}
               />
-              <SegmentedControl className="w-auto">
+              {/* <SegmentedControl className="w-auto">
                 <SegmentedControlItem
                   onClick={function noRefCheck() {}}
                   selected
@@ -487,7 +497,7 @@ export default function Home() {
                 <SegmentedControlItem onClick={function noRefCheck() {}}>
                   $
                 </SegmentedControlItem>
-              </SegmentedControl>
+              </SegmentedControl> */}
             </Section>
             <SectionFooter className="flex flex-col items-center mt-8">
               <div className="flex gap-6 mt-4 mb-6 justify-center">
