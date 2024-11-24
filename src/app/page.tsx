@@ -15,6 +15,7 @@ import {
   Checkbox,
   Caption,
   TabsList,
+  Subheadline,
 } from "@telegram-apps/telegram-ui";
 import { Fragment, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
@@ -489,14 +490,21 @@ export default function Home() {
               ))}
             </Section>
             <Section>
-              <TabsList className="gap-0">
+              <TabsList className="gap-0 h-12">
                 {currencies.map(({ id, label }) => (
                   <TabsItem
                     key={id}
+                    className="h-12"
                     onClick={() => setSelectedCurrency(id)}
                     selected={id === selectedCurrency}
                   >
-                    {label}
+                    <Subheadline
+                      level="2"
+                      plain
+                      weight={id === selectedCurrency ? "2" : "3"}
+                    >
+                      {label}
+                    </Subheadline>
                   </TabsItem>
                 ))}
               </TabsList>
