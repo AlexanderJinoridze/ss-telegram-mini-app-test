@@ -158,8 +158,8 @@ export default function Home() {
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <div className=" flex flex-col">
-          <List className="!mb-48">
+        <form className=" flex flex-col">
+          <List className="!mb-48 p-6">
             <SectionHeader>
               <Placeholder>
                 <svg
@@ -354,6 +354,7 @@ export default function Home() {
               ) : (
                 <Cell
                   disabled
+                  hovered={false}
                   onClick={() => {
                     hapticFeedback.impactOccurred("heavy");
                   }}
@@ -385,7 +386,7 @@ export default function Home() {
                   </Cell>
                 }
                 onOpenChange={() => setDealTypeShadow(dealType)}
-                className="flex flex-col max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
+                className="flex flex-col h-full max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
               >
                 <ModalHeader
                   title="გარიგების ტიპი"
@@ -495,6 +496,7 @@ export default function Home() {
                   <TabsItem
                     key={id}
                     className="h-12"
+                    type="button"
                     onClick={() => setSelectedCurrency(id)}
                     selected={id === selectedCurrency}
                   >
@@ -565,8 +567,9 @@ export default function Home() {
           </List>
           <FixedLayout className="z-[1]">
             <Divider />
-            <div className="p-5 bg-[--tg-theme-header-bg-color]">
+            <div className="px-6 py-5 bg-[--tg-theme-header-bg-color]">
               <Button
+                type="submit"
                 onClick={() => {
                   hapticFeedback.impactOccurred("soft");
                 }}
@@ -577,7 +580,7 @@ export default function Home() {
               </Button>
             </div>
           </FixedLayout>
-        </div>
+        </form>
       </Fragment>
     </SDKProvider>
   );
