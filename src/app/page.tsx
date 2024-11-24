@@ -472,16 +472,11 @@ export default function Home() {
             </Section>
             <Section>
               <TabsList>
-                <TabsItem
-                  onClick={function noRefCheck() {}}
-                  selected
-                >
-                  <Text>₾ - ლარში</Text>
+                <TabsItem onClick={function noRefCheck() {}} selected>
+                  ₾ - ლარში
                 </TabsItem>
-                <TabsItem
-                  onClick={function noRefCheck() {}}
-                >
-                  <Text>$ - დოლარში</Text>
+                <TabsItem onClick={function noRefCheck() {}}>
+                  $ - დოლარში
                 </TabsItem>
               </TabsList>
               <Input
