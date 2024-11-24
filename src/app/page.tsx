@@ -311,7 +311,7 @@ export default function Home() {
                           key={id}
                           className={`px-6 transition-colors hover:bg-transparent ${
                             isSelectedStatus
-                              ? "!bg-[--tg-theme-secondary-bg-color] text-[--tgui--button_text_color]"
+                              ? "!bg-[--tg-theme-secondary-bg-color]"
                               : "bg-transparent"
                           }`}
                           after={<Checkbox checked={isSelectedStatus} />}
