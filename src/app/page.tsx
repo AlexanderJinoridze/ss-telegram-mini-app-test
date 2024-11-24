@@ -471,11 +471,16 @@ export default function Home() {
               </Cell>
             </Section>
             <Section>
-              <TabsList className="h-14">
-                <TabsItem onClick={function noRefCheck() {}} selected>
+              <TabsList>
+                <TabsItem
+                  onClick={function noRefCheck() {}}
+                  selected
+                >
                   <Text>₾ - ლარში</Text>
                 </TabsItem>
-                <TabsItem onClick={function noRefCheck() {}}>
+                <TabsItem
+                  onClick={function noRefCheck() {}}
+                >
                   <Text>$ - დოლარში</Text>
                 </TabsItem>
               </TabsList>
