@@ -499,7 +499,7 @@ export default function Home() {
                     selected={id === selectedCurrency}
                   >
                     <Subheadline
-                      level="2"
+                      level="1"
                       plain
                       weight={id === selectedCurrency ? "2" : "3"}
                     >
