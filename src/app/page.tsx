@@ -159,7 +159,7 @@ export default function Home() {
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
         <form className=" flex flex-col">
-          <List className="!mb-48 p-6">
+          <List className="!mb-48">
             <SectionHeader>
               <Placeholder>
                 <svg
@@ -567,7 +567,7 @@ export default function Home() {
           </List>
           <FixedLayout className="z-[1]">
             <Divider />
-            <div className="px-6 py-5 bg-[--tg-theme-header-bg-color]">
+            <div className="p-5 bg-[--tg-theme-header-bg-color]">
               <Button
                 type="submit"
                 onClick={() => {
