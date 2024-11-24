@@ -12,19 +12,17 @@ import {
   Input,
   Placeholder,
   Radio,
-  SegmentedControl,
   Checkbox,
   Caption,
   TabsList,
 } from "@telegram-apps/telegram-ui";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider, useHapticFeedback } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
-import { SegmentedControlItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/SegmentedControl/components/SegmentedControlItem/SegmentedControlItem";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { TabsItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 
@@ -91,13 +89,23 @@ const propertyTypeStatusMap: {
   ],
 };
 
-const rooms = [
+const roomsMap = [
   { id: 1, label: "1 ოთახიანი" },
   { id: 2, label: "2 ოთახიანი" },
   { id: 3, label: "3 ოთახიანი" },
   { id: 4, label: "4 ოთახიანი" },
   { id: 5, label: "5 ოთახიანი" },
   { id: 6, label: "6+ ოთახიანი" },
+];
+
+const priceTypes = [
+  { id: 1, label: "სრული" },
+  { id: 2, label: "მ² - ის" },
+];
+
+const currencies = [
+  { id: 1, label: "₾ - ლარში" },
+  { id: 2, label: "$ - დოლარში" },
 ];
 
 export default function Home() {
@@ -114,6 +122,12 @@ export default function Home() {
   const [statusesShadow, setStatusesShadow] = useState<
     valueOf<typeof propertyTypeStatusMap>
   >([]);
+  const [rooms, setRooms] = useState<typeof roomsMap>([]);
+  const [roomsShadow, setRoomsShadow] = useState<typeof roomsMap>([]);
+  const [selectedPriceType, setSelectedPriceType] = useState<number>(1);
+  const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
+
+  const currencySymbol = selectedCurrency === 1 ? "₾" : "$";
 
   const propertyTypeChange = () => {
     setStatusesShadow([...statuses]);
@@ -378,14 +392,6 @@ export default function Home() {
                 />
                 <div className="flex-grow">
                   <Input placeholder="Search location" />
-                  <Input
-                    placeholder="-დან"
-                    after={<span className="w-6 text-center">მ²</span>}
-                  />
-                  <Input
-                    placeholder="-მდე"
-                    after={<span className="w-6 text-center">მ²</span>}
-                  />
                 </div>
                 <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
               </Modal>
@@ -394,10 +400,12 @@ export default function Home() {
             <Section>
               <Input
                 placeholder="-დან"
+                inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
               />
               <Input
                 placeholder="-მდე"
+                inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
               />
             </Section>
@@ -415,89 +423,95 @@ export default function Home() {
                       </span>
                     }
                   >
-                    {dealType === undefined ? (
-                      "ოთახების რაოდენობა"
+                    {rooms.length ? (
+                      <Text weight="2">
+                        {rooms.map((room) => room.label).join(", ")}
+                      </Text>
                     ) : (
-                      <Text weight="2">{dealType.label}</Text>
+                      "ოთახების რაოდენობა"
                     )}
                   </Cell>
                 }
-                onOpenChange={() => setDealTypeShadow(dealType)}
+                onOpenChange={() => setRoomsShadow([...rooms])}
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader
                   title="ოთახების რაოდენობა"
-                  onClear={() => setDealTypeShadow(undefined)}
+                  onClear={() => setRoomsShadow([])}
                 />
-                {rooms.map((room) => (
-                  <Cell
-                    key={room.id}
-                    className={`px-6 transition-colors hover:bg-transparent ${
-                      false
-                        ? "!bg-[--tgui--button_color] text-[--tgui--button_text_color]"
-                        : "bg-transparent"
-                    }`}
-                    after={<Checkbox />}
-                  >
-                    {room.label}
-                  </Cell>
-                ))}
-                <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
+                {roomsMap.map(({ id, label }) => {
+                  const roomIds = roomsShadow.map((room) => room.id);
+                  const isSelectedRooms = roomIds.includes(id);
+                  return (
+                    <Cell
+                      key={id}
+                      className={`px-6 transition-colors hover:bg-transparent ${
+                        isSelectedRooms
+                          ? "!bg-[--tg-theme-secondary-bg-color]"
+                          : "bg-transparent"
+                      }`}
+                      after={<Checkbox checked={isSelectedRooms} />}
+                      onClick={() => {
+                        if (isSelectedRooms) {
+                          roomsShadow.splice(roomIds.indexOf(id), 1);
+                          setRoomsShadow([...roomsShadow]);
+                        } else {
+                          setRoomsShadow([...roomsShadow, { id, label }]);
+                        }
+                      }}
+                    >
+                      <Text weight="3">{label}</Text>
+                    </Cell>
+                  );
+                })}
+                <ModalFooter onClick={() => setRooms(roomsShadow)} />
               </Modal>
             </Section>
             <SectionHeader>ფასი</SectionHeader>
             <Section>
-              <Cell
-                Component="label"
-                after={
-                  <div className="m-0.5">
-                    <Radio name="radio" value="2" />
-                  </div>
-                }
-                multiline
-              >
-                სრული
-              </Cell>
-              <Cell
-                Component="label"
-                after={
-                  <div className="m-0.5">
-                    <Radio name="radio" value="2" />
-                  </div>
-                }
-                multiline
-              >
-                მ² - ის
-              </Cell>
+              {priceTypes.map((priceType) => (
+                <Cell
+                  Component="label"
+                  after={
+                    <div className="m-0.5">
+                      <Radio
+                        name="radio"
+                        onChange={() => setSelectedPriceType(priceType.id)}
+                        checked={priceType.id === selectedPriceType}
+                      />
+                    </div>
+                  }
+                  multiline
+                >
+                  {priceType.label}
+                </Cell>
+              ))}
             </Section>
             <Section>
-              <TabsList>
-                <TabsItem onClick={function noRefCheck() {}} selected>
-                  ₾ - ლარში
-                </TabsItem>
-                <TabsItem onClick={function noRefCheck() {}}>
-                  $ - დოლარში
-                </TabsItem>
+              <TabsList className="gap-0">
+                {currencies.map((currency) => (
+                  <TabsItem
+                    onClick={() => setSelectedCurrency(currency.id)}
+                    selected={currency.id === selectedCurrency}
+                  >
+                    {currency.label}
+                  </TabsItem>
+                ))}
               </TabsList>
               <Input
                 placeholder="-დან"
-                after={<span className="w-6 text-center">₾</span>}
+                inputMode="numeric"
+                after={
+                  <span className="w-6 text-center">{currencySymbol}</span>
+                }
               />
               <Input
                 placeholder="-მდე"
-                after={<span className="w-6 text-center">₾</span>}
+                inputMode="numeric"
+                after={
+                  <span className="w-6 text-center">{currencySymbol}</span>
+                }
               />
-              {/* <SegmentedControl className="w-auto">
-                <SegmentedControlItem
-                  onClick={function noRefCheck() {}}
-                  selected
-                >
-                  ₾
-                </SegmentedControlItem>
-                <SegmentedControlItem onClick={function noRefCheck() {}}>
-                  $
-                </SegmentedControlItem>
-              </SegmentedControl> */}
             </Section>
             <SectionFooter className="flex flex-col items-center mt-8">
               <div className="flex gap-6 mt-4 mb-6 justify-center">
