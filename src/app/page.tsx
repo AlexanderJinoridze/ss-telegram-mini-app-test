@@ -160,6 +160,7 @@ export default function Home() {
   };
 
   const propertyTypeChoose = () => {
+    hapticFeedback.impactOccurred("light");
     setStatuses(statusesShadow);
     setPropertyType(propertyTypeShadow);
   };
@@ -282,7 +283,12 @@ export default function Home() {
                     {item.label}
                   </Cell>
                 ))}
-                <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
+                <ModalFooter
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("light");
+                    setDealType(dealTypeShadow);
+                  }}
+                />
               </Modal>
             </Section>
             <Section footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
@@ -459,7 +465,12 @@ export default function Home() {
                 <div className="flex-grow">
                   <Input placeholder="Search location" />
                 </div>
-                <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
+                <ModalFooter
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("light");
+                    setDealType(dealTypeShadow);
+                  }}
+                />
               </Modal>
             </Section>
             <SectionHeader>ფართი</SectionHeader>
@@ -557,7 +568,12 @@ export default function Home() {
                     </Cell>
                   );
                 })}
-                <ModalFooter onClick={() => setRooms(roomsShadow)} />
+                <ModalFooter
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("light");
+                    setRooms(roomsShadow);
+                  }}
+                />
               </Modal>
             </Section>
             <SectionHeader>ფასი</SectionHeader>
