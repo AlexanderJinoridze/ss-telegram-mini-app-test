@@ -30,6 +30,8 @@ import { useForm } from "react-hook-form";
 
 type valueOf<T> = T[keyof T];
 
+const numberPattern = /^\d+$/;
+
 const dealTypeMap = [
   { id: 1, label: "ქირავდება" },
   { id: 2, label: "იყიდება" },
@@ -164,8 +166,21 @@ export default function Home() {
     formState: { errors, isSubmitted },
   } = useForm();
 
+  const checkArea = (areaType: "areaFrom" | "areaTo") => {
+    if (numberPattern.test(getValues()[areaType]) && isSubmitted) {
+      const areaFrom = getValues().areaFrom;
+      const areaTo = getValues().areaTo;
+
+      if (!areaFrom || !areaTo || Number(areaFrom) <= Number(areaTo)) {
+        clearErrors(areaType);
+      } else {
+        setError(areaType, { type: "manual" });
+      }
+    }
+  };
+
   const checkPrice = (priceType: "priceFrom" | "priceTo") => {
-    if (!errors[priceType] && isSubmitted) {
+    if (numberPattern.test(getValues()[priceType]) && isSubmitted) {
       const priceFrom = getValues().priceFrom;
       const priceTo = getValues().priceTo;
 
@@ -427,11 +442,29 @@ export default function Home() {
                 placeholder="-დან"
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
+                status={errors.areaFrom ? "error" : "default"}
+                {...register("areaFrom", {
+                  pattern: numberPattern,
+                  validate: (areaFrom) =>
+                    !areaFrom ||
+                    !getValues().areaTo ||
+                    areaFrom <= Number(getValues().areaTo),
+                  onChange: () => checkArea("areaTo"),
+                })}
               />
               <Input
                 placeholder="-მდე"
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
+                status={errors.areaTo ? "error" : "default"}
+                {...register("areaTo", {
+                  pattern: numberPattern,
+                  validate: (areaTo) =>
+                    !getValues().areaFrom ||
+                    !areaTo ||
+                    Number(getValues().areaFrom) <= areaTo,
+                  onChange: () => checkArea("areaFrom"),
+                })}
               />
             </Section>
             <Section>
@@ -541,7 +574,7 @@ export default function Home() {
                 }
                 status={errors.priceFrom ? "error" : "default"}
                 {...register("priceFrom", {
-                  pattern: /^\d+$/,
+                  pattern: numberPattern,
                   validate: (priceFrom) =>
                     !priceFrom ||
                     !getValues().priceTo ||
@@ -557,7 +590,7 @@ export default function Home() {
                 }
                 status={errors.priceTo ? "error" : "default"}
                 {...register("priceTo", {
-                  pattern: /^\d+$/,
+                  pattern: numberPattern,
                   validate: (priceTo) =>
                     !getValues().priceFrom ||
                     !priceTo ||
