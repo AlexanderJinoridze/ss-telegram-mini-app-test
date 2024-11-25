@@ -165,7 +165,7 @@ export default function Home() {
   } = useForm();
 
   const checkPrice = (priceType: "priceFrom" | "priceTo") => {
-    if (isSubmitted) {
+    if (!errors[priceType] && isSubmitted) {
       const priceFrom = getValues().priceFrom;
       const priceTo = getValues().priceTo;
 
