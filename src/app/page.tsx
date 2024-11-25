@@ -26,6 +26,7 @@ import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { TabsItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
+import { useForm } from "react-hook-form";
 
 type valueOf<T> = T[keyof T];
 
@@ -154,11 +155,33 @@ export default function Home() {
 
   const hapticFeedback = useHapticFeedback();
 
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitted },
+  } = useForm();
+
+  const checkPrice = (priceType: "priceFrom" | "priceTo") => {
+    if (isSubmitted) {
+      const priceFrom = getValues().priceFrom;
+      const priceTo = getValues().priceTo;
+
+      if (!priceFrom || !priceTo || Number(priceFrom) <= Number(priceTo)) {
+        clearErrors(priceType);
+      } else {
+        setError(priceType, { type: "manual" });
+      }
+    }
+  };
+
   return (
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <form className=" flex flex-col">
+        <form onSubmit={handleSubmit(() => {})} className=" flex flex-col">
           <List className="!mb-48">
             <SectionHeader>
               <Placeholder>
@@ -516,6 +539,15 @@ export default function Home() {
                 after={
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
+                status={errors.priceFrom ? "error" : "default"}
+                {...register("priceFrom", {
+                  pattern: /^\d+$/,
+                  validate: (priceFrom) =>
+                    !priceFrom ||
+                    !getValues().priceTo ||
+                    priceFrom <= Number(getValues().priceTo),
+                  onChange: () => checkPrice("priceTo"),
+                })}
               />
               <Input
                 placeholder="-მდე"
@@ -523,6 +555,15 @@ export default function Home() {
                 after={
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
+                status={errors.priceTo ? "error" : "default"}
+                {...register("priceTo", {
+                  pattern: /^\d+$/,
+                  validate: (priceTo) =>
+                    !getValues().priceFrom ||
+                    !priceTo ||
+                    Number(getValues().priceFrom) <= priceTo,
+                  onChange: () => checkPrice("priceFrom"),
+                })}
               />
             </Section>
             <SectionFooter className="flex flex-col items-center mt-8">
