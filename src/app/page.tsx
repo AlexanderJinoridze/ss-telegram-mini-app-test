@@ -222,7 +222,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.selectionChanged();
+                      hapticFeedback.impactOccurred("medium");
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -275,7 +275,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.impactOccurred("heavy");
+                      hapticFeedback.impactOccurred("medium");
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -334,7 +334,7 @@ export default function Home() {
                   trigger={
                     <Cell
                       onClick={() => {
-                        hapticFeedback.impactOccurred("heavy");
+                        hapticFeedback.impactOccurred("medium");
                       }}
                       after={
                         <span className="material-symbols-outlined">
@@ -394,7 +394,7 @@ export default function Home() {
                   disabled
                   hovered={false}
                   onClick={() => {
-                    hapticFeedback.impactOccurred("heavy");
+                    hapticFeedback.impactOccurred("medium");
                   }}
                   after={
                     <span className="material-symbols-outlined">
@@ -473,7 +473,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.selectionChanged();
+                      hapticFeedback.impactOccurred("medium");
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -510,6 +510,7 @@ export default function Home() {
                       }`}
                       after={<Checkbox checked={isSelectedRooms} />}
                       onClick={() => {
+                        hapticFeedback.impactOccurred("medium");
                         if (isSelectedRooms) {
                           roomsShadow.splice(roomIds.indexOf(id), 1);
                           setRoomsShadow([...roomsShadow]);
@@ -531,6 +532,9 @@ export default function Home() {
                 <Cell
                   key={id}
                   Component="label"
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("medium");
+                  }}
                   after={
                     <div className="m-0.5">
                       <Radio
@@ -553,7 +557,10 @@ export default function Home() {
                     key={id}
                     className="h-12"
                     type="button"
-                    onClick={() => setSelectedCurrency(id)}
+                    onClick={() => {
+                      hapticFeedback.impactOccurred("medium");
+                      setSelectedCurrency(id);
+                    }}
                     selected={id === selectedCurrency}
                   >
                     <Subheadline
@@ -569,6 +576,9 @@ export default function Home() {
               <Input
                 placeholder="-დან"
                 inputMode="numeric"
+                onClick={() => {
+                  hapticFeedback.impactOccurred("medium");
+                }}
                 after={
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
@@ -585,6 +595,9 @@ export default function Home() {
               <Input
                 placeholder="-მდე"
                 inputMode="numeric"
+                onClick={() => {
+                  hapticFeedback.impactOccurred("medium");
+                }}
                 after={
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
@@ -605,6 +618,9 @@ export default function Home() {
                   href="https://lemondo.com"
                   target="_blank"
                   className="[&:hover_path]:fill-[--tg-theme-text-color]"
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("medium");
+                  }}
                 >
                   <svg
                     className="h-9"
@@ -621,6 +637,9 @@ export default function Home() {
                   href="http://palitra.ge"
                   target="_blank"
                   className="[&:hover_path]:fill-[--tg-theme-text-color]"
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("medium");
+                  }}
                 >
                   <svg
                     className="h-9"
@@ -645,7 +664,7 @@ export default function Home() {
               <Button
                 type="submit"
                 onClick={() => {
-                  hapticFeedback.impactOccurred("soft");
+                  hapticFeedback.impactOccurred("medium");
                 }}
                 size="l"
                 stretched
