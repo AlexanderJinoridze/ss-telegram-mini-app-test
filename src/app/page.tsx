@@ -140,7 +140,8 @@ export default function Home() {
     }
   }, [isOpen]);
 
-  const propertyTypeChange = () => {
+  const propertyTypeChange = (open: boolean) => {
+    setIsOpen(open);
     setStatusesShadow([...statuses]);
     setPropertyTypeShadow(propertyType);
   };
@@ -437,7 +438,10 @@ export default function Home() {
                     მდებარეობა
                   </Cell>
                 }
-                onOpenChange={() => setDealTypeShadow(dealType)}
+                onOpenChange={(open) => {
+                  setIsOpen(open);
+                  setDealTypeShadow(dealType);
+                }}
                 className="flex flex-col h-full max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
               >
                 <ModalHeader
@@ -506,7 +510,10 @@ export default function Home() {
                     )}
                   </Cell>
                 }
-                onOpenChange={() => setRoomsShadow([...rooms])}
+                onOpenChange={(open) => {
+                  setIsOpen(open);
+                  setRoomsShadow([...rooms]);
+                }}
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader
