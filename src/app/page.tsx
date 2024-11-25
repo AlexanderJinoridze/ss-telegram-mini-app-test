@@ -136,7 +136,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!isOpen) {
-      hapticFeedback.impactOccurred("heavy");
+      hapticFeedback.impactOccurred("medium");
     }
   }, [isOpen]);
 
