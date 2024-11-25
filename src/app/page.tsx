@@ -130,8 +130,15 @@ export default function Home() {
   const [roomsShadow, setRoomsShadow] = useState<typeof roomsMap>([]);
   const [selectedPriceType, setSelectedPriceType] = useState<number>(1);
   const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const currencySymbol = selectedCurrency === 1 ? "₾" : "$";
+
+  useEffect(() => {
+    if (!isOpen) {
+      hapticFeedback.impactOccurred("heavy");
+    }
+  }, [isOpen]);
 
   const propertyTypeChange = () => {
     setStatusesShadow([...statuses]);
@@ -154,17 +161,6 @@ export default function Home() {
     setStatuses(statusesShadow);
     setPropertyType(propertyTypeShadow);
   };
-
-  const hapticFeedback = useHapticFeedback();
-
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setError,
-    clearErrors,
-    formState: { errors, isSubmitted },
-  } = useForm();
 
   const checkArea = (areaType: "areaFrom" | "areaTo") => {
     if (numberPattern.test(getValues()[areaType]) && isSubmitted) {
@@ -192,15 +188,16 @@ export default function Home() {
     }
   };
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const hapticFeedback = useHapticFeedback();
 
-  useEffect(() => {
-    if (!isOpen) {
-      console.log("ZAZAZA");
-
-      hapticFeedback.impactOccurred("heavy");
-    }
-  }, [isOpen]);
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitted },
+  } = useForm();
 
   return (
     <SDKProvider>
@@ -232,7 +229,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.impactOccurred("medium");
+                      hapticFeedback.selectionChanged();
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -248,7 +245,6 @@ export default function Home() {
                   </Cell>
                 }
                 onOpenChange={(open) => {
-                  console.log(open);
                   setIsOpen(open);
                   setDealTypeShadow(dealType);
                 }}
@@ -284,12 +280,7 @@ export default function Home() {
                     {item.label}
                   </Cell>
                 ))}
-                <ModalFooter
-                  onClick={() => {
-                    hapticFeedback.impactOccurred("rigid");
-                    setDealType(dealTypeShadow);
-                  }}
-                />
+                <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
               </Modal>
             </Section>
             <Section footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
@@ -298,7 +289,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.impactOccurred("medium");
+                      hapticFeedback.selectionChanged();
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -357,7 +348,7 @@ export default function Home() {
                   trigger={
                     <Cell
                       onClick={() => {
-                        hapticFeedback.impactOccurred("medium");
+                        hapticFeedback.selectionChanged();
                       }}
                       after={
                         <span className="material-symbols-outlined">
@@ -417,7 +408,7 @@ export default function Home() {
                   disabled
                   hovered={false}
                   onClick={() => {
-                    hapticFeedback.impactOccurred("medium");
+                    hapticFeedback.selectionChanged();
                   }}
                   after={
                     <span className="material-symbols-outlined">
@@ -435,7 +426,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.impactOccurred("medium");
+                      hapticFeedback.selectionChanged();
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -466,6 +457,7 @@ export default function Home() {
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
                 status={errors.areaFrom ? "error" : "default"}
+                onClick={() => hapticFeedback.selectionChanged()}
                 {...register("areaFrom", {
                   pattern: numberPattern,
                   validate: (areaFrom) =>
@@ -480,6 +472,7 @@ export default function Home() {
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
                 status={errors.areaTo ? "error" : "default"}
+                onClick={() => hapticFeedback.selectionChanged()}
                 {...register("areaTo", {
                   pattern: numberPattern,
                   validate: (areaTo) =>
@@ -496,7 +489,7 @@ export default function Home() {
                 trigger={
                   <Cell
                     onClick={() => {
-                      hapticFeedback.impactOccurred("medium");
+                      hapticFeedback.selectionChanged();
                     }}
                     after={
                       <span className="material-symbols-outlined">
@@ -533,7 +526,7 @@ export default function Home() {
                       }`}
                       after={<Checkbox checked={isSelectedRooms} />}
                       onClick={() => {
-                        hapticFeedback.impactOccurred("medium");
+                        hapticFeedback.selectionChanged();
                         if (isSelectedRooms) {
                           roomsShadow.splice(roomIds.indexOf(id), 1);
                           setRoomsShadow([...roomsShadow]);
@@ -556,7 +549,7 @@ export default function Home() {
                   key={id}
                   Component="label"
                   onClick={() => {
-                    hapticFeedback.impactOccurred("medium");
+                    hapticFeedback.selectionChanged();
                   }}
                   after={
                     <div className="m-0.5">
@@ -581,7 +574,7 @@ export default function Home() {
                     className="h-12"
                     type="button"
                     onClick={() => {
-                      hapticFeedback.impactOccurred("medium");
+                      hapticFeedback.selectionChanged();
                       setSelectedCurrency(id);
                     }}
                     selected={id === selectedCurrency}
@@ -600,7 +593,7 @@ export default function Home() {
                 placeholder="-დან"
                 inputMode="numeric"
                 onClick={() => {
-                  hapticFeedback.impactOccurred("medium");
+                  hapticFeedback.selectionChanged();
                 }}
                 after={
                   <span className="w-6 text-center">{currencySymbol}</span>
@@ -619,7 +612,7 @@ export default function Home() {
                 placeholder="-მდე"
                 inputMode="numeric"
                 onClick={() => {
-                  hapticFeedback.impactOccurred("medium");
+                  hapticFeedback.selectionChanged();
                 }}
                 after={
                   <span className="w-6 text-center">{currencySymbol}</span>
@@ -642,7 +635,7 @@ export default function Home() {
                   target="_blank"
                   className="[&:hover_path]:fill-[--tg-theme-text-color]"
                   onClick={() => {
-                    hapticFeedback.impactOccurred("medium");
+                    hapticFeedback.selectionChanged();
                   }}
                 >
                   <svg
@@ -661,7 +654,7 @@ export default function Home() {
                   target="_blank"
                   className="[&:hover_path]:fill-[--tg-theme-text-color]"
                   onClick={() => {
-                    hapticFeedback.impactOccurred("medium");
+                    hapticFeedback.selectionChanged();
                   }}
                 >
                   <svg
@@ -687,7 +680,7 @@ export default function Home() {
               <Button
                 type="submit"
                 onClick={() => {
-                  hapticFeedback.impactOccurred("medium");
+                  hapticFeedback.selectionChanged();
                 }}
                 size="l"
                 stretched
