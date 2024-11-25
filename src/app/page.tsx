@@ -336,7 +336,10 @@ export default function Home() {
                         <span className="material-symbols-outlined">check</span>
                       ) : null
                     }
-                    onClick={() => propertyTypeOptionSelect(item)}
+                    onClick={() => {
+                      hapticFeedback.impactOccurred("medium");
+                      propertyTypeOptionSelect(item);
+                    }}
                   >
                     {item.label}
                   </Cell>
@@ -387,6 +390,7 @@ export default function Home() {
                           }`}
                           after={<Checkbox checked={isSelectedStatus} />}
                           onClick={() => {
+                            hapticFeedback.impactOccurred("medium");
                             if (isSelectedStatus) {
                               statusesShadow.splice(statusIds.indexOf(id), 1);
                               setStatusesShadow([...statusesShadow]);
