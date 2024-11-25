@@ -239,7 +239,7 @@ export default function Home() {
                 }
                 onOpenChange={(open) => {
                   if (!open) {
-                    hapticFeedback.impactOccurred("heavy");
+                    hapticFeedback.impactOccurred("rigid");
                   }
                   setDealTypeShadow(dealType);
                 }}
