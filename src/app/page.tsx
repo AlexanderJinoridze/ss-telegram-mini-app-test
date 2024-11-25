@@ -237,12 +237,20 @@ export default function Home() {
                     )}
                   </Cell>
                 }
-                onOpenChange={() => setDealTypeShadow(dealType)}
+                onOpenChange={(open) => {
+                  if (!open) {
+                    hapticFeedback.impactOccurred("heavy");
+                  }
+                  setDealTypeShadow(dealType);
+                }}
                 className="max-h-[calc(100%-1.5rem)]"
               >
                 <ModalHeader
                   title="გარიგების ტიპი"
-                  onClear={() => setDealTypeShadow(undefined)}
+                  onClear={() => {
+                    hapticFeedback.impactOccurred("rigid");
+                    setDealTypeShadow(undefined);
+                  }}
                 />
                 {dealTypeMap.map((item) => (
                   <Cell
@@ -257,16 +265,22 @@ export default function Home() {
                         <span className="material-symbols-outlined">check</span>
                       ) : null
                     }
-                    onClick={() =>
+                    onClick={() => {
+                      hapticFeedback.selectionChanged();
                       setDealTypeShadow(
                         item.id === dealTypeShadow?.id ? undefined : item
-                      )
-                    }
+                      );
+                    }}
                   >
                     {item.label}
                   </Cell>
                 ))}
-                <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
+                <ModalFooter
+                  onClick={() => {
+                    hapticFeedback.impactOccurred("rigid");
+                    setDealType(dealTypeShadow);
+                  }}
+                />
               </Modal>
             </Section>
             <Section footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
