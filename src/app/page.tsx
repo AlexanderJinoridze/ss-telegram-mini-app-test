@@ -17,7 +17,7 @@ import {
   TabsList,
   Subheadline,
 } from "@telegram-apps/telegram-ui";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider, useHapticFeedback } from "@telegram-apps/sdk-react";
@@ -192,6 +192,16 @@ export default function Home() {
     }
   };
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      console.log("ZAZAZA");
+
+      hapticFeedback.impactOccurred("heavy");
+    }
+  }, [isOpen]);
+
   return (
     <SDKProvider>
       <Fragment>
@@ -238,9 +248,8 @@ export default function Home() {
                   </Cell>
                 }
                 onOpenChange={(open) => {
-                  if (!open) {
-                    hapticFeedback.impactOccurred("rigid");
-                  }
+                  console.log(open);
+                  setIsOpen(open);
                   setDealTypeShadow(dealType);
                 }}
                 className="max-h-[calc(100%-1.5rem)]"
