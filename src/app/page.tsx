@@ -104,7 +104,7 @@ const roomsMap = [
 
 const priceTypes = [
   { id: 1, label: "სრული" },
-  { id: 2, label: "მ² - ის" },
+  { id: 2, label: "მ²-ის" },
 ];
 
 const currencies = [
