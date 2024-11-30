@@ -202,8 +202,8 @@ export default function Home() {
   } = useForm();
 
   const currencySymbol = selectedCurrency === 1 ? "₾" : "$";
-  const invalidInputClass =
-    platform === "ios" && errors.areaFrom
+  const invalidInputClass = (fieldName: string) =>
+    platform === "ios" && errors[fieldName]
       ? "!rounded-inherit !shadow-invalid_input"
       : undefined;
 
@@ -485,7 +485,7 @@ export default function Home() {
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
                 status={errors.areaFrom ? "error" : "default"}
-                className={invalidInputClass}
+                className={invalidInputClass("areaFrom")}
                 onClick={() => hapticFeedback.selectionChanged()}
                 {...register("areaFrom", {
                   pattern: numberPattern,
@@ -501,7 +501,7 @@ export default function Home() {
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
                 status={errors.areaTo ? "error" : "default"}
-                className={invalidInputClass}
+                className={invalidInputClass("areaTo")}
                 onClick={() => hapticFeedback.selectionChanged()}
                 {...register("areaTo", {
                   pattern: numberPattern,
@@ -640,7 +640,7 @@ export default function Home() {
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
                 status={errors.priceFrom ? "error" : "default"}
-                className={invalidInputClass}
+                className={invalidInputClass("priceFrom")}
                 {...register("priceFrom", {
                   pattern: numberPattern,
                   validate: (priceFrom) =>
@@ -660,7 +660,7 @@ export default function Home() {
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
                 status={errors.priceTo ? "error" : "default"}
-                className={invalidInputClass}
+                className={invalidInputClass("priceTo")}
                 {...register("priceTo", {
                   pattern: numberPattern,
                   validate: (priceTo) =>
