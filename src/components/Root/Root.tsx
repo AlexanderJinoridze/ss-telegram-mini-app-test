@@ -18,11 +18,12 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ErrorPage } from "@/components/ErrorPage";
 import { useTelegramMock } from "@/hooks/useTelegramMock";
 import { useDidMount } from "@/hooks/useDidMount";
+import { usePlatform } from "@/hooks/usePlatform";
 
 import "./styles.css";
 
 function App(props: PropsWithChildren) {
-  const lp = useLaunchParams();
+  const platform = usePlatform();
   const miniApp = useMiniApp();
   const themeParams = useThemeParams();
   const viewport = useViewport();
@@ -40,10 +41,7 @@ function App(props: PropsWithChildren) {
   }, [viewport]);
 
   return (
-    <AppRoot
-      appearance={miniApp.isDark ? "dark" : "light"}
-      platform={["macos", "ios"].includes(lp.platform) ? "ios" : "base"}
-    >
+    <AppRoot appearance={miniApp.isDark ? "dark" : "light"} platform={platform}>
       {props.children}
     </AppRoot>
   );

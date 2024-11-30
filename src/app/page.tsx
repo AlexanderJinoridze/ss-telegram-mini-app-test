@@ -27,6 +27,7 @@ import ModalHeader from "@/components/ModalHeader";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { TabsItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 import { useForm } from "react-hook-form";
+import { usePlatform } from "@/hooks/usePlatform";
 
 type valueOf<T> = T[keyof T];
 
@@ -132,8 +133,6 @@ export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const currencySymbol = selectedCurrency === 1 ? "₾" : "$";
-
   useEffect(() => {
     if (!isOpen) {
       hapticFeedback.impactOccurred("medium");
@@ -192,7 +191,7 @@ export default function Home() {
   };
 
   const hapticFeedback = useHapticFeedback();
-
+  const platform = usePlatform();
   const {
     register,
     handleSubmit,
@@ -202,11 +201,17 @@ export default function Home() {
     formState: { errors, isSubmitted },
   } = useForm();
 
+  const currencySymbol = selectedCurrency === 1 ? "₾" : "$";
+  const invalidInputClass =
+    platform === "ios" && errors.areaFrom
+      ? "!rounded-inherit !shadow-invalid_input"
+      : undefined;
+
   return (
     <SDKProvider>
       <Fragment>
         <Script src="https://telegram.org/js/telegram-web-app.js" />
-        <form onSubmit={handleSubmit(() => {})} className=" flex flex-col">
+        <form onSubmit={handleSubmit(() => {})} className="flex flex-col">
           <List className="!mb-48">
             <SectionHeader>
               <Placeholder>
@@ -480,6 +485,7 @@ export default function Home() {
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
                 status={errors.areaFrom ? "error" : "default"}
+                className={invalidInputClass}
                 onClick={() => hapticFeedback.selectionChanged()}
                 {...register("areaFrom", {
                   pattern: numberPattern,
@@ -495,6 +501,7 @@ export default function Home() {
                 inputMode="numeric"
                 after={<span className="w-6 text-center">მ²</span>}
                 status={errors.areaTo ? "error" : "default"}
+                className={invalidInputClass}
                 onClick={() => hapticFeedback.selectionChanged()}
                 {...register("areaTo", {
                   pattern: numberPattern,
@@ -633,6 +640,7 @@ export default function Home() {
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
                 status={errors.priceFrom ? "error" : "default"}
+                className={invalidInputClass}
                 {...register("priceFrom", {
                   pattern: numberPattern,
                   validate: (priceFrom) =>
@@ -652,6 +660,7 @@ export default function Home() {
                   <span className="w-6 text-center">{currencySymbol}</span>
                 }
                 status={errors.priceTo ? "error" : "default"}
+                className={invalidInputClass}
                 {...register("priceTo", {
                   pattern: numberPattern,
                   validate: (priceTo) =>

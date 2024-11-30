@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      borderRadius: {
+        inherit: "inherit",
+      },
+      boxShadow: {
+        invalid_input: "0 0 0 2px var(--tgui--destructive_text_color) inset",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
