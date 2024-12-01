@@ -108,7 +108,7 @@ export const LocationModal: FC = () => {
           <ModalSection>
             {cityDistricts.map((item) => {
               return (
-                <>
+                <Fragment key={item.districtId}>
                   <Cell
                     Component="label"
                     after={<Checkbox name="checkbox" value="1" />}
@@ -120,6 +120,7 @@ export const LocationModal: FC = () => {
                     {item.subDistricts.map((item) => {
                       return (
                         <Cell
+                          key={item.subDistrictId}
                           Component="label"
                           after={<Checkbox name="checkbox" value="1" />}
                           multiline
@@ -130,7 +131,7 @@ export const LocationModal: FC = () => {
                       );
                     })}
                   </div>
-                </>
+                </Fragment>
               );
             })}
           </ModalSection>
@@ -191,6 +192,7 @@ export const LocationModal: FC = () => {
                   const isWithDistricts = item.districts.length;
                   return (
                     <Chip
+                      key={item.cityId}
                       mode="elevated"
                       Component="label"
                       after={
