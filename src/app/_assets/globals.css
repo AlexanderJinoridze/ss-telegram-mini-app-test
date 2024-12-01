@@ -6,7 +6,7 @@ body {
   background: var(--tg-theme-secondary-bg-color, white);
 }
 
-/* *[class^="tgui-"][role="tablist"] {
+*[class^="tgui-"][role="tablist"] {
   background-color: transparent;
 }
 
@@ -16,7 +16,7 @@ body {
 
 label {
   background-color: transparent !important;
-} */
+}
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
