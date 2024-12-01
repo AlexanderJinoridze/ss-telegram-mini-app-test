@@ -6,7 +6,7 @@ body {
   background: var(--tg-theme-secondary-bg-color, white);
 }
 
-*[class^="tgui-"][role="tablist"] {
+/* *[class^="tgui-"][role="tablist"] {
   background-color: transparent;
 }
 
@@ -16,38 +16,8 @@ body {
 
 label {
   background-color: transparent !important;
-}
+} */
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
-
-/* body > div[class^="tgui-"] {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  overflow: hidden;
-} */
-/* 
-.AAA,
-.BBB {
-  position: absolute !important;
-  bottom: 0 !important;
-  transform: translate3d(0, 0, 0) !important;
-  overflow: hidden !important;
-}
-
-.AAA > *,
-.BBB > * {
-  overflow: hidden !important;
-}
-
-.AAA::after,
-.BBB::after {
-  display: none !important;
-}
-
-#Zaza > div {
-  max-height: 100%;
-  flex-grow: 1;
-} */

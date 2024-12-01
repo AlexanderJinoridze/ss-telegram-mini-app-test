@@ -24,6 +24,7 @@ import { SDKProvider, useHapticFeedback } from "@telegram-apps/sdk-react";
 import { ModalHeader as ModalCap } from "@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader";
 import ModalFooter from "@/components/ModalFooter";
 import ModalHeader from "@/components/ModalHeader";
+import LocationModal from "@/components/LocationModal";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { TabsItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 import { useForm } from "react-hook-form";
@@ -461,14 +462,14 @@ export default function Home() {
                 className="flex flex-col h-full max-h-[calc(100%-1.5rem)] [&>div]:flex [&>div]:flex-col [&>div]:h-full"
               >
                 <ModalHeader
-                  title="გარიგების ტიპი"
+                  title="მდებარეობა"
                   onClear={() => {
                     hapticFeedback.impactOccurred("rigid");
                     setDealTypeShadow(undefined);
                   }}
                 />
                 <div className="flex-grow">
-                  <Input placeholder="Search location" />
+                  <LocationModal />
                 </div>
                 <ModalFooter
                   onClick={() => {
