@@ -161,11 +161,11 @@ export const LocationModal: FC = () => {
                 {selectedStreets.map((item) => item.streetTitle).join(", ")}
               </Button>
             ) : (
-              <Subheadline>
+              <Text weight="1">
                 {selectedSubDistricts
                   .map((item) => item.subDistrictTitle)
                   .join(", ")}
-              </Subheadline>
+              </Text>
             )}
           </>
         ) : selectedSubDistricts.length ? (
@@ -182,7 +182,7 @@ export const LocationModal: FC = () => {
               .join(", ")}
           </Button>
         ) : selectedFavCity && selectedFavCity.districts.length ? (
-          <strong>{selectedFavCity.cityTitle}</strong>
+          <Text weight="1">{selectedFavCity.cityTitle}</Text>
         ) : null}
 
         {streets.length && !showStreets ? (
@@ -206,14 +206,16 @@ export const LocationModal: FC = () => {
 
         {selectedMunicipalityCities.length ? (
           <Button
+            size="s"
             onClick={() => {
               setSelectedMunicipalityCities([]);
             }}
+            after={<span className="material-symbols-outlined">close</span>}
           >
             {selectedMunicipalityCities.map((item) => item.title).join(", ")}
           </Button>
         ) : selectedMunicipality ? (
-          <strong>{selectedMunicipality.municipalityTitle}</strong>
+          <Text weight="1">{selectedMunicipality.municipalityTitle}</Text>
         ) : null}
       </div>
       {/* {municipalityCities || cityDistricts ? (
