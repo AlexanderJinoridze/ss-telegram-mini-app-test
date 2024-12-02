@@ -15,6 +15,8 @@
     "@telegram-apps/telegram-ui": "^2.1.5",
     "@tonconnect/ui-react": "^2.0.5",
     "eruda": "^3.0.1",
+    "lodash.difference": "^4.5.0",
+    "lodash.union": "^4.6.0",
     "next": "14.2.4",
     "normalize.css": "^8.0.1",
     "react": "^18",
@@ -22,6 +24,8 @@
     "react-hook-form": "^7.53.2"
   },
   "devDependencies": {
+    "@types/lodash.difference": "^4.5.9",
+    "@types/lodash.union": "^4.6.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
