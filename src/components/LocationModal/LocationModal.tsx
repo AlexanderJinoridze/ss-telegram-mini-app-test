@@ -8,6 +8,7 @@ import {
   Radio,
   Section,
   Subheadline,
+  Text,
 } from "@telegram-apps/telegram-ui";
 import { FC, Fragment, useEffect, useState } from "react";
 import ModalSection from "../ModalSection";
@@ -115,7 +116,10 @@ export const LocationModal: FC = () => {
         <input className="w-full" />
       </div>
       <div className="flex gap-2 items-center h-9 px-6 my-4">
-        {(selectedSubDistricts && selectedFavCity && selectedFavCity.districts.length) || selectedMunicipality ? (
+        {(selectedSubDistricts &&
+          selectedFavCity &&
+          selectedFavCity.districts.length) ||
+        selectedMunicipality ? (
           <IconButton
             size="s"
             mode="bezeled"
@@ -157,11 +161,11 @@ export const LocationModal: FC = () => {
                 {selectedStreets.map((item) => item.streetTitle).join(", ")}
               </Button>
             ) : (
-              <strong>
+              <Subheadline>
                 {selectedSubDistricts
                   .map((item) => item.subDistrictTitle)
                   .join(", ")}
-              </strong>
+              </Subheadline>
             )}
           </>
         ) : selectedSubDistricts.length ? (
