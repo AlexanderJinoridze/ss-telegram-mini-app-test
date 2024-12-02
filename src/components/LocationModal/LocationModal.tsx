@@ -111,9 +111,11 @@ export const LocationModal: FC = () => {
 
   return (
     <>
-      <input className="w-full" />
-      <div className="flex gap-2 items-center h-9 px-4 my-3">
-        {(selectedSubDistricts && selectedFavCity) || selectedMunicipality ? (
+      <div className="mx-6">
+        <input className="w-full" />
+      </div>
+      <div className="flex gap-2 items-center h-9 px-6 my-4">
+        {(selectedSubDistricts && selectedFavCity && selectedFavCity.districts.length) || selectedMunicipality ? (
           <IconButton
             size="s"
             mode="bezeled"
@@ -175,7 +177,7 @@ export const LocationModal: FC = () => {
               .map((item) => item.subDistrictTitle)
               .join(", ")}
           </Button>
-        ) : selectedFavCity ? (
+        ) : selectedFavCity && selectedFavCity.districts.length ? (
           <strong>{selectedFavCity.cityTitle}</strong>
         ) : null}
 
