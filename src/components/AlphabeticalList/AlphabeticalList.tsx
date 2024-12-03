@@ -1,16 +1,22 @@
-import { Cell, Subheadline } from "@telegram-apps/telegram-ui";
+import { Cell, Checkbox, Subheadline } from "@telegram-apps/telegram-ui";
 import { FC, Fragment } from "react";
 
 export interface AlphabeticalListProps {
   list: any[];
-  filterField: string;
-  onClickHandler: (item: any) => void;
+  idField?: string;
+  titleField?: string;
+  onClickHandler?: (item: any) => void;
+  isChecked?: (item: any) => boolean;
+  onChangeHandler?: (item: any, isChecked: boolean, value: string) => void;
 }
 
 export const AlphabeticalList: FC<AlphabeticalListProps> = ({
   list,
-  filterField,
+  idField = "id",
+  titleField = "title",
+  isChecked,
   onClickHandler,
+  onChangeHandler,
 }) => {
   let currentLetter = "";
 
@@ -26,12 +32,12 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
 
   return (
     <div className="flex flex-col">
-      {list.sort(sortAlphabetically(filterField)).map((item) => {
-        const municipalityTitle = item.municipalityTitle;
-        const firstLetter = municipalityTitle.charAt(0);
+      {list.sort(sortAlphabetically(titleField)).map((item) => {
+        const title = item[titleField];
+        const firstLetter = title.charAt(0);
 
         return (
-          <Fragment key={item.municipalityId}>
+          <Fragment key={item[idField]}>
             {currentLetter !== firstLetter
               ? ((currentLetter = firstLetter),
                 (
@@ -46,9 +52,23 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
               : null}
             <Cell
               className="border-b border-[--tg-theme-secondary-bg-color]"
-              onClick={() => onClickHandler(item)}
+              Component={onChangeHandler && isChecked ? "label" : undefined}
+              after={
+                onChangeHandler && isChecked ? (
+                  <Checkbox
+                    value={item[idField]}
+                    checked={isChecked(item)}
+                    onChange={(event) => {
+                      const target = event.target;
+
+                      onChangeHandler(item, target.checked, target.value);
+                    }}
+                  />
+                ) : null
+              }
+              onClick={onClickHandler ? () => onClickHandler(item) : undefined}
             >
-              {municipalityTitle}
+              {title}
             </Cell>
           </Fragment>
         );

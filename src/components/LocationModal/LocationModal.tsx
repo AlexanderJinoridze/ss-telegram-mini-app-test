@@ -1,20 +1,17 @@
 import {
   Badge,
   Button,
-  Caption,
   Cell,
   Checkbox,
   Chip,
   IconButton,
   Radio,
-  Section,
   Subheadline,
   Text,
 } from "@telegram-apps/telegram-ui";
 import { FC, Fragment, useEffect, useState } from "react";
 import ModalSection from "../ModalSection";
 import locationChain from "../../app/_assets/locationChain.json";
-import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import union from "lodash.union";
 import difference from "lodash.difference";
 import AlphabeticalList from "../AlphabeticalList";
@@ -67,8 +64,6 @@ export type Municipality = {
 };
 
 export const LocationModal: FC = () => {
-  let currentLetter = "";
-
   const [selectedMunicipality, setSelectedMunicipality] =
     useState<Municipality>();
   const [selectedMunicipalityCities, setSelectedMunicipalityCities] = useState<
@@ -87,16 +82,6 @@ export const LocationModal: FC = () => {
     MunicipalityCity[]
   >([]);
   const [streets, setStreets] = useState<Street[]>([]);
-
-  const sortAlphabetically = (fieldName: string) => (a: any, b: any) => {
-    if (a[fieldName] < b[fieldName]) {
-      return -1;
-    }
-    if (a[fieldName] > b[fieldName]) {
-      return 1;
-    }
-    return 0;
-  };
 
   useEffect(() => {
     console.log("selectedFavCity", selectedFavCity);
@@ -239,51 +224,25 @@ export const LocationModal: FC = () => {
       <div className="flex flex-col justify-between items-center">
         {showStreets ? (
           <ModalSection>
-            <Section className="flex flex-col">
-              {streets.sort(sortAlphabetically("streetTitle")).map((item) => {
-                const municipalityCityTitle = item.streetTitle;
-                const firstLetter = municipalityCityTitle.charAt(0);
-
-                return (
-                  <Fragment key={item.streetId}>
-                    {currentLetter !== firstLetter
-                      ? ((currentLetter = firstLetter),
-                        (<SectionHeader>{firstLetter}</SectionHeader>))
-                      : null}
-                    <Cell
-                      Component="label"
-                      after={
-                        <Checkbox
-                          value={item.streetId}
-                          checked={selectedStreets.some(
-                            (a) => a.streetTitle === item.streetTitle
-                          )}
-                          onChange={(event) => {
-                            const isChecked = event.target.checked;
-
-                            if (isChecked) {
-                              setSelectedStreets([...selectedStreets, item]);
-                            } else {
-                              setSelectedStreets(
-                                selectedStreets.filter((item) => {
-                                  return (
-                                    item?.streetId !==
-                                    Number(event?.target?.value)
-                                  );
-                                })
-                              );
-                            }
-                          }}
-                        />
-                      }
-                      multiline
-                    >
-                      {municipalityCityTitle}
-                    </Cell>
-                  </Fragment>
-                );
-              })}
-            </Section>
+            <AlphabeticalList
+              list={streets}
+              idField="streetId"
+              titleField="streetTitle"
+              isChecked={(item) =>
+                selectedStreets.some((a) => a.streetTitle === item.streetTitle)
+              }
+              onChangeHandler={(item, isChecked, value) => {
+                if (isChecked) {
+                  setSelectedStreets([...selectedStreets, item]);
+                } else {
+                  setSelectedStreets(
+                    selectedStreets.filter((item) => {
+                      return item?.streetId !== Number(value);
+                    })
+                  );
+                }
+              }}
+            />
           </ModalSection>
         ) : cityDistricts.length ? (
           <ModalSection>
@@ -389,55 +348,26 @@ export const LocationModal: FC = () => {
           </ModalSection>
         ) : municipalityCities.length ? (
           <ModalSection>
-            <Section className="flex flex-col">
-              {municipalityCities
-                .sort(sortAlphabetically("title"))
-                .map((item) => {
-                  const municipalityCityTitle = item.title;
-                  const firstLetter = municipalityCityTitle.charAt(0);
-
-                  return (
-                    <Fragment key={item.id}>
-                      {currentLetter !== firstLetter
-                        ? ((currentLetter = firstLetter),
-                          (<SectionHeader>{firstLetter}</SectionHeader>))
-                        : null}
-                      <Cell
-                        Component="label"
-                        after={
-                          <Checkbox
-                            value={item.id}
-                            checked={selectedMunicipalityCities.some(
-                              (a) => a.title === item.title
-                            )}
-                            onChange={(event) => {
-                              const isChecked = event.target.checked;
-
-                              if (isChecked) {
-                                setSelectedMunicipalityCities([
-                                  ...selectedMunicipalityCities,
-                                  item,
-                                ]);
-                              } else {
-                                setSelectedMunicipalityCities(
-                                  selectedMunicipalityCities.filter((item) => {
-                                    return (
-                                      item?.id !== Number(event?.target?.value)
-                                    );
-                                  })
-                                );
-                              }
-                            }}
-                          />
-                        }
-                        multiline
-                      >
-                        {municipalityCityTitle}
-                      </Cell>
-                    </Fragment>
+            <AlphabeticalList
+              list={municipalityCities}
+              isChecked={(item) =>
+                selectedMunicipalityCities.some((a) => a.title === item.title)
+              }
+              onChangeHandler={(item, isChecked, value) => {
+                if (isChecked) {
+                  setSelectedMunicipalityCities([
+                    ...selectedMunicipalityCities,
+                    item,
+                  ]);
+                } else {
+                  setSelectedMunicipalityCities(
+                    selectedMunicipalityCities.filter((item) => {
+                      return item?.id !== Number(value);
+                    })
                   );
-                })}
-            </Section>
+                }
+              }}
+            />
           </ModalSection>
         ) : (
           <>
@@ -524,7 +454,8 @@ export const LocationModal: FC = () => {
             <ModalSection title="მუნიციპალიტეტები">
               <AlphabeticalList
                 list={locationChain.municipalityChain}
-                filterField="municipalityTitle"
+                idField="municipalityId"
+                titleField="municipalityTitle"
                 onClickHandler={(item) => {
                   setSelectedMunicipality(item as Municipality);
                   setMunicipalityCities(item.cities as MunicipalityCity[]);
