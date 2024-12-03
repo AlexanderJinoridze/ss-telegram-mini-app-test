@@ -476,7 +476,7 @@ export default function Home() {
                     setDealTypeShadow(undefined);
                   }}
                 />
-                <div className="flex-grow">
+                <div className="flex-grow min-h-0">
                   <LocationModal />
                 </div>
                 <ModalFooter

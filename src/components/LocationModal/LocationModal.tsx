@@ -99,11 +99,11 @@ export const LocationModal: FC = () => {
   ]);
 
   return (
-    <>
+    <div className="h-full flex flex-col">
       <div className="mx-6">
         <input className="w-full" />
       </div>
-      <div className="flex gap-2 items-center h-9 px-6 my-4">
+      <div className="flex gap-2 flex-shrink-0 items-center h-9 px-6 my-4">
         {(selectedSubDistricts &&
           selectedFavCity &&
           selectedFavCity.districts.length) ||
@@ -226,7 +226,7 @@ export const LocationModal: FC = () => {
           BACK
         </button>
       ) : null} */}
-      <div className="flex flex-col justify-between items-center">
+      <div className="flex flex-col justify-between items-center overflow-auto">
         {showStreets ? (
           <ModalSection>
             <AlphabeticalList
@@ -441,6 +441,6 @@ export const LocationModal: FC = () => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
