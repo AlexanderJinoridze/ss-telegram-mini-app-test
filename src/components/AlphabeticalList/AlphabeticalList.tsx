@@ -51,7 +51,7 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                 ))
               : null}
             <Cell
-              className="border-b border-[--tg-theme-secondary-bg-color] px-6"
+              className="px-6"
               Component={onChangeHandler && isChecked ? "label" : undefined}
               after={
                 onChangeHandler && isChecked ? (
