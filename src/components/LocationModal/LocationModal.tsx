@@ -3,9 +3,7 @@ import {
   Button,
   Cell,
   Checkbox,
-  Chip,
   IconButton,
-  Radio,
   Subheadline,
   Text,
 } from "@telegram-apps/telegram-ui";
@@ -14,6 +12,8 @@ import ModalSection from "../ModalSection";
 import locationChain from "../../app/_assets/locationChain.json";
 import union from "lodash.union";
 import difference from "lodash.difference";
+import find from "lodash.find";
+import filter from "lodash.filter";
 import AlphabeticalList from "../AlphabeticalList";
 import FavLocations from "../FavLocations";
 
@@ -230,16 +230,20 @@ export const LocationModal: FC = () => {
               idField="streetId"
               titleField="streetTitle"
               isChecked={(item) =>
-                selectedStreets.some((a) => a.streetTitle === item.streetTitle)
+                !!find(
+                  selectedStreets,
+                  (a: any) => a.streetId === item.streetId
+                )
               }
               onChangeHandler={(item, isChecked, value) => {
                 if (isChecked) {
                   setSelectedStreets([...selectedStreets, item]);
                 } else {
                   setSelectedStreets(
-                    selectedStreets.filter((item) => {
-                      return item?.streetId !== Number(value);
-                    })
+                    filter(
+                      selectedStreets,
+                      (item) => item?.streetId !== Number(value)
+                    )
                   );
                 }
               }}
