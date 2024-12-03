@@ -331,9 +331,13 @@ export const LocationModal: FC = () => {
                             <Checkbox
                               name="subDistrict"
                               value={item.subDistrictId}
-                              checked={selectedSubDistricts.some(
-                                (a) => a.subDistrictId === item.subDistrictId
-                              )}
+                              checked={
+                                !!find(
+                                  selectedSubDistricts,
+                                  (a: any) =>
+                                    a.subDistrictId === item.subDistrictId
+                                )
+                              }
                               onChange={(event) => {
                                 if (event.target.checked) {
                                   setSelectedSubDistricts([
@@ -344,7 +348,8 @@ export const LocationModal: FC = () => {
                                 } else {
                                   setStreets(difference(streets, item.streets));
                                   setSelectedSubDistricts(
-                                    selectedSubDistricts.filter(
+                                    filter(
+                                      selectedSubDistricts,
                                       (item) =>
                                         item?.subDistrictId !==
                                         Number(event?.target?.value)
@@ -369,7 +374,7 @@ export const LocationModal: FC = () => {
             <AlphabeticalList
               list={municipalityCities}
               isChecked={(item) =>
-                selectedMunicipalityCities.some((a) => a.title === item.title)
+                !!find(selectedMunicipalityCities, (a: any) => a.id === item.id)
               }
               onChangeHandler={(item, isChecked, value) => {
                 if (isChecked) {
@@ -379,9 +384,10 @@ export const LocationModal: FC = () => {
                   ]);
                 } else {
                   setSelectedMunicipalityCities(
-                    selectedMunicipalityCities.filter((item) => {
-                      return item?.id !== Number(value);
-                    })
+                    filter(
+                      selectedMunicipalityCities,
+                      (item) => item?.id !== Number(value)
+                    )
                   );
                 }
               }}
