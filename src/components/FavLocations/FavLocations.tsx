@@ -34,7 +34,7 @@ export const FavLocations: FC<FavLocationsProps> = ({
                   keyboard_arrow_right
                 </span>
               ) : (
-                <div className="px-[2px]">
+                <div className="size-6 flex items-center justify-center">
                   <Radio
                     name="favCity"
                     onChange={() => onChangeHandler(item)}
