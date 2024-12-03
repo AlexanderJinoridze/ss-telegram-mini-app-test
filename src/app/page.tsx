@@ -556,23 +556,28 @@ export default function Home() {
                   return (
                     <Cell
                       key={id}
+                      Component="label"
                       className={`px-6 transition-colors hover:bg-transparent ${
                         isSelectedRooms
                           ? "!bg-[--tg-theme-secondary-bg-color]"
                           : "bg-transparent"
                       }`}
-                      after={<Checkbox checked={isSelectedRooms} />}
-                      onClick={() => {
-                        hapticFeedback.impactOccurred("soft");
-                        if (isSelectedRooms) {
-                          roomsShadow.splice(roomIds.indexOf(id), 1);
-                          setRoomsShadow([...roomsShadow]);
-                        } else {
-                          setRoomsShadow([...roomsShadow, { id, label }]);
-                        }
-                      }}
+                      after={
+                        <Checkbox
+                          checked={isSelectedRooms}
+                          onChange={() => {
+                            hapticFeedback.impactOccurred("soft");
+                            if (isSelectedRooms) {
+                              roomsShadow.splice(roomIds.indexOf(id), 1);
+                              setRoomsShadow([...roomsShadow]);
+                            } else {
+                              setRoomsShadow([...roomsShadow, { id, label }]);
+                            }
+                          }}
+                        />
+                      }
                     >
-                      <Text weight="3">{label}</Text>
+                      {label}
                     </Cell>
                   );
                 })}
