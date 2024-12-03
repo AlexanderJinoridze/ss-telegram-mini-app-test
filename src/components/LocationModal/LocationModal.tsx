@@ -84,11 +84,11 @@ export const LocationModal: FC = () => {
   const [streets, setStreets] = useState<Street[]>([]);
 
   useEffect(() => {
-    console.log("selectedFavCity", selectedFavCity);
-    console.log("selectedMunicipality", selectedMunicipality);
-    console.log("selectedMunicipalityCities", selectedMunicipalityCities);
-    console.log("selectedSubDistricts", selectedSubDistricts);
-    console.log("selectedStreets", selectedStreets);
+    // console.log("selectedFavCity", selectedFavCity);
+    // console.log("selectedMunicipality", selectedMunicipality);
+    // console.log("selectedMunicipalityCities", selectedMunicipalityCities);
+    // console.log("selectedSubDistricts", selectedSubDistricts);
+    // console.log("selectedStreets", selectedStreets);
   }, [
     selectedFavCity,
     selectedMunicipality,
