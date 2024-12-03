@@ -395,26 +395,34 @@ export default function Home() {
                       return (
                         <Cell
                           key={id}
+                          Component="label"
                           className={`px-6 transition-colors hover:bg-transparent ${
                             isSelectedStatus
                               ? "!bg-[--tg-theme-secondary-bg-color]"
                               : "bg-transparent"
                           }`}
-                          after={<Checkbox checked={isSelectedStatus} />}
-                          onClick={() => {
-                            hapticFeedback.impactOccurred("soft");
-                            if (isSelectedStatus) {
-                              statusesShadow.splice(statusIds.indexOf(id), 1);
-                              setStatusesShadow([...statusesShadow]);
-                            } else {
-                              setStatusesShadow([
-                                ...statusesShadow,
-                                { id, label },
-                              ]);
-                            }
-                          }}
+                          after={
+                            <Checkbox
+                              checked={isSelectedStatus}
+                              onChange={() => {
+                                hapticFeedback.impactOccurred("soft");
+                                if (isSelectedStatus) {
+                                  statusesShadow.splice(
+                                    statusIds.indexOf(id),
+                                    1
+                                  );
+                                  setStatusesShadow([...statusesShadow]);
+                                } else {
+                                  setStatusesShadow([
+                                    ...statusesShadow,
+                                    { id, label },
+                                  ]);
+                                }
+                              }}
+                            />
+                          }
                         >
-                          <Text weight="3">{label}</Text>
+                          {label}
                         </Cell>
                       );
                     }

@@ -51,8 +51,12 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                 ))
               : null}
             <Cell
-              className="px-6"
               Component={onChangeHandler && isChecked ? "label" : undefined}
+              className={`px-6 transition-colors hover:bg-transparent ${
+                isChecked?.(item)
+                  ? "!bg-[--tg-theme-secondary-bg-color]"
+                  : "bg-transparent"
+              }`}
               after={
                 onChangeHandler && isChecked ? (
                   <Checkbox
@@ -60,7 +64,6 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                     checked={isChecked(item)}
                     onChange={(event) => {
                       const target = event.target;
-
                       onChangeHandler(item, target.checked, target.value);
                     }}
                   />

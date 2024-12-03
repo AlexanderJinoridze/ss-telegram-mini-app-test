@@ -251,16 +251,24 @@ export const LocationModal: FC = () => {
               return (
                 <Fragment key={item.districtId}>
                   <Cell
-                    className="px-6"
+                    className={`px-6 transition-colors hover:bg-transparent ${
+                      item.subDistricts.every((item) =>
+                        selectedSubDistricts
+                          .map((item) => item.subDistrictId)
+                          .includes(item.subDistrictId)
+                      )
+                        ? "!bg-[--tg-theme-secondary-bg-color]"
+                        : "bg-transparent"
+                    }`}
                     Component="label"
                     after={
                       <Checkbox
                         name="district"
-                        checked={item.subDistricts.every((item) => {
-                          return selectedSubDistricts
+                        checked={item.subDistricts.every((item) =>
+                          selectedSubDistricts
                             .map((item) => item.subDistrictId)
-                            .includes(item.subDistrictId);
-                        })}
+                            .includes(item.subDistrictId)
+                        )}
                         value={item.subDistricts.map((item) =>
                           String(item.subDistrictId)
                         )}
@@ -307,7 +315,13 @@ export const LocationModal: FC = () => {
                       return (
                         <Cell
                           key={item.subDistrictId}
-                          className="px-6"
+                          className={`px-6 transition-colors hover:bg-transparent ${
+                            selectedSubDistricts.some(
+                              (a) => a.subDistrictId === item.subDistrictId
+                            )
+                              ? "!bg-[--tg-theme-secondary-bg-color]"
+                              : "bg-transparent"
+                          }`}
                           Component="label"
                           after={
                             <Checkbox
