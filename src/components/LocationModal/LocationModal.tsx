@@ -15,6 +15,7 @@ import locationChain from "../../app/_assets/locationChain.json";
 import union from "lodash.union";
 import difference from "lodash.difference";
 import AlphabeticalList from "../AlphabeticalList";
+import FavLocations from "../FavLocations";
 
 export type Street = {
   streetId: number;
@@ -250,6 +251,7 @@ export const LocationModal: FC = () => {
               return (
                 <Fragment key={item.districtId}>
                   <Cell
+                    className="px-6"
                     Component="label"
                     after={
                       <Checkbox
@@ -297,7 +299,6 @@ export const LocationModal: FC = () => {
                         }}
                       />
                     }
-                    multiline
                   >
                     <Subheadline weight="1">{item.districtTitle}</Subheadline>
                   </Cell>
@@ -306,6 +307,7 @@ export const LocationModal: FC = () => {
                       return (
                         <Cell
                           key={item.subDistrictId}
+                          className="px-6"
                           Component="label"
                           after={
                             <Checkbox
@@ -334,8 +336,6 @@ export const LocationModal: FC = () => {
                               }}
                             />
                           }
-                          multiline
-                          className="pl-12"
                         >
                           {item.subDistrictTitle}
                         </Cell>
@@ -373,82 +373,30 @@ export const LocationModal: FC = () => {
           <>
             <ModalSection title="პოპულარული ქალაქები">
               <div className="grid grid-cols-2 gap-2 mx-6">
-                {locationChain.visibleCities.map((item) => {
-                  const isWithDistricts = item.districts.length;
-                  return (
-                    <Chip
-                      key={item.cityId}
-                      mode="elevated"
-                      Component="label"
-                      className={
-                        "!bg-[--tg-theme-secondary-bg-color] whitespace-nowrap p-4"
-                      }
-                      after={
-                        isWithDistricts ? (
-                          <span className="material-symbols-outlined -mt-[1.5px]">
-                            keyboard_arrow_right
-                          </span>
-                        ) : (
-                          <Radio
-                            name="favCity"
-                            onChange={() => setSelectedFavCity(item as City)}
-                            className="block -mt-[1.5px] p-[2px]"
-                          />
-                        )
-                      }
-                      onClick={
-                        isWithDistricts
-                          ? () => {
-                              setSelectedFavCity(item as City);
-                              setCityDistricts(item.districts as District[]);
-                            }
-                          : undefined
-                      }
-                    >
-                      {item.cityTitle}
-                    </Chip>
-                  );
-                })}
-                {locationChain.visibleMunicipalitetyChain.map((item) => {
-                  const isWithCities = item.cities.length;
-                  return (
-                    <Chip
-                      key={item.municipalityId}
-                      mode="elevated"
-                      Component="label"
-                      className={
-                        "!bg-[--tg-theme-secondary-bg-color] whitespace-nowrap p-4"
-                      }
-                      after={
-                        isWithCities ? (
-                          <span className="material-symbols-outlined block -mt-[1.5px]">
-                            keyboard_arrow_right
-                          </span>
-                        ) : (
-                          <Radio
-                            name="favCity"
-                            onChange={() =>
-                              setSelectedMunicipality(item as Municipality)
-                            }
-                            className="block -mt-[1.5px] p-[2px]"
-                          />
-                        )
-                      }
-                      onClick={
-                        isWithCities
-                          ? () => {
-                              setSelectedMunicipality(item as Municipality);
-                              setMunicipalityCities(
-                                item.cities as MunicipalityCity[]
-                              );
-                            }
-                          : undefined
-                      }
-                    >
-                      {item.municipalityTitle}
-                    </Chip>
-                  );
-                })}
+                <FavLocations
+                  list={locationChain.visibleCities}
+                  innserSectionField="districts"
+                  titleField="cityTitle"
+                  onChangeHandler={(item) => {
+                    setSelectedFavCity(item as City);
+                  }}
+                  onClickHandler={(item) => {
+                    setSelectedFavCity(item as City);
+                    setCityDistricts(item.districts as District[]);
+                  }}
+                />
+                <FavLocations
+                  list={locationChain.visibleMunicipalitetyChain}
+                  innserSectionField="cities"
+                  titleField="municipalityTitle"
+                  onChangeHandler={(item) => {
+                    setSelectedMunicipality(item as Municipality);
+                  }}
+                  onClickHandler={(item) => {
+                    setSelectedMunicipality(item as Municipality);
+                    setMunicipalityCities(item.cities as MunicipalityCity[]);
+                  }}
+                />
               </div>
             </ModalSection>
             <ModalSection title="მუნიციპალიტეტები">
