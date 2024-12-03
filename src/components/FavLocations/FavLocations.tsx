@@ -26,19 +26,20 @@ export const FavLocations: FC<FavLocationsProps> = ({
             mode="elevated"
             Component="label"
             className={
-              "!bg-[--tg-theme-secondary-bg-color] whitespace-nowrap p-4"
+              "!bg-[--tg-theme-secondary-bg-color] whitespace-nowrap p-4 h-14"
             }
             after={
               isWithInner ? (
-                <span className="material-symbols-outlined -mt-[1.5px]">
+                <span className="material-symbols-outlined">
                   keyboard_arrow_right
                 </span>
               ) : (
-                <Radio
-                  name="favCity"
-                  onChange={() => onChangeHandler(item)}
-                  className="block -mt-[1.5px] p-[2px]"
-                />
+                <div className="mx-[2px]">
+                  <Radio
+                    name="favCity"
+                    onChange={() => onChangeHandler(item)}
+                  />
+                </div>
               )
             }
             onClick={isWithInner ? () => onClickHandler(item) : undefined}
