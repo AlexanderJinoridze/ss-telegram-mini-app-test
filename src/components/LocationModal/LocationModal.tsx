@@ -1,6 +1,7 @@
 import {
   Badge,
   Button,
+  Caption,
   Cell,
   Checkbox,
   Chip,
@@ -16,15 +17,16 @@ import locationChain from "../../app/_assets/locationChain.json";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import union from "lodash.union";
 import difference from "lodash.difference";
+import AlphabeticalList from "../AlphabeticalList";
 
-type Street = {
+export type Street = {
   streetId: number;
   streetTitle: string;
   latitude: string | null;
   longitude: string | null;
 };
 
-type SubDistrict = {
+export type SubDistrict = {
   subDistrictId: number;
   subDistrictTitle: string;
   subDistrictTitleSeo: string;
@@ -33,7 +35,7 @@ type SubDistrict = {
   streets: Street[];
 };
 
-type District = {
+export type District = {
   districtId: number;
   districtTitle: string;
   latitude: string | null;
@@ -41,7 +43,7 @@ type District = {
   subDistricts: SubDistrict[];
 };
 
-type City = {
+export type City = {
   cityId: number;
   cityTitle: string;
   latitude: null;
@@ -49,14 +51,14 @@ type City = {
   districts: District[];
 };
 
-type MunicipalityCity = {
+export type MunicipalityCity = {
   id: number;
   title: string;
   latitude: null;
   longitude: null;
 };
 
-type Municipality = {
+export type Municipality = {
   municipalityId: number;
   municipalityTitle: string;
   latitude: null;
@@ -440,7 +442,7 @@ export const LocationModal: FC = () => {
         ) : (
           <>
             <ModalSection title="პოპულარული ქალაქები">
-              <div className="grid grid-cols-2 gap-2 mx-4">
+              <div className="grid grid-cols-2 gap-2 mx-6">
                 {locationChain.visibleCities.map((item) => {
                   const isWithDistricts = item.districts.length;
                   return (
@@ -448,11 +450,19 @@ export const LocationModal: FC = () => {
                       key={item.cityId}
                       mode="elevated"
                       Component="label"
+                      className={
+                        "!bg-[--tg-theme-secondary-bg-color] whitespace-nowrap p-4"
+                      }
                       after={
-                        isWithDistricts ? null : (
+                        isWithDistricts ? (
+                          <span className="material-symbols-outlined -mt-[1.5px]">
+                            keyboard_arrow_right
+                          </span>
+                        ) : (
                           <Radio
                             name="favCity"
                             onChange={() => setSelectedFavCity(item as City)}
+                            className="block -mt-[1.5px] p-[2px]"
                           />
                         )
                       }
@@ -476,13 +486,21 @@ export const LocationModal: FC = () => {
                       key={item.municipalityId}
                       mode="elevated"
                       Component="label"
+                      className={
+                        "!bg-[--tg-theme-secondary-bg-color] whitespace-nowrap p-4"
+                      }
                       after={
-                        isWithCities ? null : (
+                        isWithCities ? (
+                          <span className="material-symbols-outlined block -mt-[1.5px]">
+                            keyboard_arrow_right
+                          </span>
+                        ) : (
                           <Radio
                             name="favCity"
                             onChange={() =>
                               setSelectedMunicipality(item as Municipality)
                             }
+                            className="block -mt-[1.5px] p-[2px]"
                           />
                         )
                       }
@@ -504,35 +522,14 @@ export const LocationModal: FC = () => {
               </div>
             </ModalSection>
             <ModalSection title="მუნიციპალიტეტები">
-              <Section className="flex flex-col">
-                {locationChain.municipalityChain
-                  .sort(sortAlphabetically("municipalityTitle"))
-                  .map((item) => {
-                    const municipalityTitle = item.municipalityTitle;
-                    const firstLetter = municipalityTitle.charAt(0);
-
-                    return (
-                      <Fragment key={item.municipalityId}>
-                        {currentLetter !== firstLetter
-                          ? ((currentLetter = firstLetter),
-                            (<SectionHeader>{firstLetter}</SectionHeader>))
-                          : null}
-                        <Cell
-                          Component="label"
-                          multiline
-                          onClick={() => {
-                            setSelectedMunicipality(item as Municipality);
-                            setMunicipalityCities(
-                              item.cities as MunicipalityCity[]
-                            );
-                          }}
-                        >
-                          {municipalityTitle}
-                        </Cell>
-                      </Fragment>
-                    );
-                  })}
-              </Section>
+              <AlphabeticalList
+                list={locationChain.municipalityChain}
+                filterField="municipalityTitle"
+                onClickHandler={(item) => {
+                  setSelectedMunicipality(item as Municipality);
+                  setMunicipalityCities(item.cities as MunicipalityCity[]);
+                }}
+              />
             </ModalSection>
           </>
         )}
