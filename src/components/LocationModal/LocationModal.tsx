@@ -149,7 +149,7 @@ export const LocationModal: FC = () => {
                 {selectedStreets.map((item) => item.streetTitle).join(", ")}
               </Button>
             ) : (
-              <Text weight="1">
+              <Text weight="1" className="truncate">
                 {selectedSubDistricts
                   .map((item) => item.subDistrictTitle)
                   .join(", ")}
@@ -170,7 +170,9 @@ export const LocationModal: FC = () => {
               .join(", ")}
           </Button>
         ) : selectedFavCity && selectedFavCity.districts.length ? (
-          <Text weight="1">{selectedFavCity.cityTitle}</Text>
+          <Text weight="1" className="truncate">
+            {selectedFavCity.cityTitle}
+          </Text>
         ) : null}
 
         {streets.length && !showStreets ? (
@@ -203,7 +205,9 @@ export const LocationModal: FC = () => {
             {selectedMunicipalityCities.map((item) => item.title).join(", ")}
           </Button>
         ) : selectedMunicipality ? (
-          <Text weight="1">{selectedMunicipality.municipalityTitle}</Text>
+          <Text weight="1" className="truncate">
+            {selectedMunicipality.municipalityTitle}
+          </Text>
         ) : null}
       </div>
       {/* {municipalityCities || cityDistricts ? (
