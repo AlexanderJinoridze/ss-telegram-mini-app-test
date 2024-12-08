@@ -3,7 +3,9 @@ import {
   Button,
   Cell,
   Checkbox,
+  Divider,
   IconButton,
+  Input,
   Subheadline,
   Text,
 } from "@telegram-apps/telegram-ui";
@@ -100,10 +102,13 @@ export const LocationModal: FC = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="mx-6">
-        <input className="w-full" />
+      <div className="modal-input">
+        <Input
+          before={<span className="material-symbols-outlined">search</span>}
+          placeholder="ჩაწერე რაიონი, ქალაქი, უბანი ან ქუჩა"
+        />
       </div>
-      <div className="flex gap-2 flex-shrink-0 items-center h-9 px-6 my-4">
+      <div className="flex [&:empty]:hidden gap-2 flex-shrink-0 items-center h-9 box-content px-6 pb-4">
         {(selectedSubDistricts &&
           selectedFavCity &&
           selectedFavCity.districts.length) ||
@@ -210,6 +215,7 @@ export const LocationModal: FC = () => {
           </Text>
         ) : null}
       </div>
+      <Divider />
       {/* {municipalityCities || cityDistricts ? (
         <button
           onClick={() => {

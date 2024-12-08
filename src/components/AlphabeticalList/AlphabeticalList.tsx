@@ -67,7 +67,11 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                       onChangeHandler(item, target.checked, target.value);
                     }}
                   />
-                ) : null
+                ) : (
+                  <span className="material-symbols-outlined">
+                    keyboard_arrow_right
+                  </span>
+                )
               }
               onClick={onClickHandler ? () => onClickHandler(item) : undefined}
             >
