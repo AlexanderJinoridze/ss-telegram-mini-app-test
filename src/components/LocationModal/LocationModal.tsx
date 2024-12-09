@@ -18,6 +18,7 @@ import find from "lodash.find";
 import filter from "lodash.filter";
 import AlphabeticalList from "../AlphabeticalList";
 import FavLocations from "../FavLocations";
+import ModalCell from "../ModalCell";
 
 export type Street = {
   streetId: number;
@@ -101,7 +102,23 @@ export const LocationModal: FC = () => {
   ]);
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex flex-col min-h-0">
+      {/* {municipalityCities || cityDistricts ? (
+        <button
+          onClick={() => {
+            setSelectedFavCity(undefined);
+            setSelectedMunicipality(undefined);
+            setMunicipalityCities(undefined);
+            setCityDistricts(undefined);
+            setSelectedSubDistricts([]);
+            setStreets([]);
+            setSelectedStreets([]);
+            setShowStreets(false);
+          }}
+        >
+          BACK
+        </button>
+      ) : null} */}
       <div className="modal-input">
         <Input
           before={<span className="material-symbols-outlined">search</span>}
@@ -216,22 +233,6 @@ export const LocationModal: FC = () => {
         ) : null}
       </div>
       <Divider />
-      {/* {municipalityCities || cityDistricts ? (
-        <button
-          onClick={() => {
-            setSelectedFavCity(undefined);
-            setSelectedMunicipality(undefined);
-            setMunicipalityCities(undefined);
-            setCityDistricts(undefined);
-            setSelectedSubDistricts([]);
-            setStreets([]);
-            setSelectedStreets([]);
-            setShowStreets(false);
-          }}
-        >
-          BACK
-        </button>
-      ) : null} */}
       <div className="flex flex-col justify-between items-center overflow-auto">
         {showStreets ? (
           <ModalSection>
@@ -245,139 +246,90 @@ export const LocationModal: FC = () => {
                   (a: any) => a.streetId === item.streetId
                 )
               }
-              onChangeHandler={(item, isChecked, value) => {
-                if (isChecked) {
-                  setSelectedStreets([...selectedStreets, item]);
-                } else {
-                  setSelectedStreets(
-                    filter(
-                      selectedStreets,
-                      (item) => item?.streetId !== Number(value)
-                    )
-                  );
-                }
+              changeHandler={(item, value, isChecked) => {
+                setSelectedStreets(
+                  isChecked
+                    ? [...selectedStreets, item]
+                    : filter(
+                        selectedStreets,
+                        (item) => item?.streetId !== Number(value)
+                      )
+                );
               }}
             />
           </ModalSection>
         ) : cityDistricts.length ? (
           <ModalSection>
-            {cityDistricts.map((item) => {
-              return (
-                <Fragment key={item.districtId}>
-                  <Cell
-                    className={`px-6 transition-colors hover:bg-transparent ${
-                      item.subDistricts.every((item) =>
-                        selectedSubDistricts
-                          .map((item) => item.subDistrictId)
-                          .includes(item.subDistrictId)
-                      )
-                        ? "!bg-[--tg-theme-secondary-bg-color]"
-                        : "bg-transparent"
-                    }`}
-                    Component="label"
-                    after={
-                      <Checkbox
-                        name="district"
-                        checked={item.subDistricts.every((item) =>
-                          selectedSubDistricts
-                            .map((item) => item.subDistrictId)
-                            .includes(item.subDistrictId)
-                        )}
-                        value={item.subDistricts.map((item) =>
-                          String(item.subDistrictId)
-                        )}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            setSelectedSubDistricts(
-                              union(selectedSubDistricts, item.subDistricts)
-                            );
-
-                            setStreets(
-                              union(
-                                streets,
-                                item.subDistricts
-                                  .map((item) => item.streets)
-                                  .flat()
-                              )
-                            );
-                          } else {
-                            setStreets(
-                              difference(
-                                streets,
-                                item.subDistricts
-                                  .map((item) => item.streets)
-                                  .flat()
-                              )
-                            );
-                            setSelectedSubDistricts(
-                              selectedSubDistricts.filter(
-                                (item) =>
-                                  !event?.target?.value
-                                    .split(",")
-                                    .includes(String(item?.subDistrictId))
-                              )
-                            );
-                          }
-                        }}
-                      />
-                    }
-                  >
+            {cityDistricts.map((item) => (
+              <Fragment key={item.districtId}>
+                <ModalCell
+                  children={
                     <Subheadline weight="1">{item.districtTitle}</Subheadline>
-                  </Cell>
-                  <div>
-                    {item.subDistricts.map((item) => {
-                      return (
-                        <Cell
-                          key={item.subDistrictId}
-                          className={`px-6 transition-colors hover:bg-transparent ${
-                            selectedSubDistricts.some(
-                              (a) => a.subDistrictId === item.subDistrictId
+                  }
+                  value={item.subDistricts.map((item) =>
+                    String(item.subDistrictId)
+                  )}
+                  isChecked={item.subDistricts.every(
+                    (item) =>
+                      !!find(
+                        selectedSubDistricts,
+                        (a: any) => a.subDistrictId === item.subDistrictId
+                      )
+                  )}
+                  changeHandler={(value, checked) => {
+                    setSelectedSubDistricts(
+                      checked
+                        ? union(selectedSubDistricts, item.subDistricts)
+                        : selectedSubDistricts.filter(
+                            (item) =>
+                              !value
+                                .split(",")
+                                .includes(String(item?.subDistrictId))
+                          )
+                    );
+                    setStreets(
+                      checked
+                        ? union(
+                            streets,
+                            item.subDistricts.map((item) => item.streets).flat()
+                          )
+                        : difference(
+                            streets,
+                            item.subDistricts.map((item) => item.streets).flat()
+                          )
+                    );
+                  }}
+                />
+                {item.subDistricts.map((item) => (
+                  <ModalCell
+                    key={item.subDistrictId}
+                    children={item.subDistrictTitle}
+                    value={item.subDistrictId}
+                    isChecked={
+                      !!find(
+                        selectedSubDistricts,
+                        (a: any) => a.subDistrictId === item.subDistrictId
+                      )
+                    }
+                    changeHandler={(value, checked) => {
+                      setSelectedSubDistricts(
+                        checked
+                          ? [...selectedSubDistricts, item]
+                          : filter(
+                              selectedSubDistricts,
+                              (item) => item?.subDistrictId !== Number(value)
                             )
-                              ? "!bg-[--tg-theme-secondary-bg-color]"
-                              : "bg-transparent"
-                          }`}
-                          Component="label"
-                          after={
-                            <Checkbox
-                              name="subDistrict"
-                              value={item.subDistrictId}
-                              checked={
-                                !!find(
-                                  selectedSubDistricts,
-                                  (a: any) =>
-                                    a.subDistrictId === item.subDistrictId
-                                )
-                              }
-                              onChange={(event) => {
-                                if (event.target.checked) {
-                                  setSelectedSubDistricts([
-                                    ...selectedSubDistricts,
-                                    item,
-                                  ]);
-                                  setStreets([...streets, ...item.streets]);
-                                } else {
-                                  setStreets(difference(streets, item.streets));
-                                  setSelectedSubDistricts(
-                                    filter(
-                                      selectedSubDistricts,
-                                      (item) =>
-                                        item?.subDistrictId !==
-                                        Number(event?.target?.value)
-                                    )
-                                  );
-                                }
-                              }}
-                            />
-                          }
-                        >
-                          {item.subDistrictTitle}
-                        </Cell>
                       );
-                    })}
-                  </div>
-                </Fragment>
-              );
-            })}
+                      setStreets(
+                        checked
+                          ? [...streets, ...item.streets]
+                          : difference(streets, item.streets)
+                      );
+                    }}
+                  />
+                ))}
+              </Fragment>
+            ))}
           </ModalSection>
         ) : municipalityCities.length ? (
           <ModalSection>
@@ -386,20 +338,15 @@ export const LocationModal: FC = () => {
               isChecked={(item) =>
                 !!find(selectedMunicipalityCities, (a: any) => a.id === item.id)
               }
-              onChangeHandler={(item, isChecked, value) => {
-                if (isChecked) {
-                  setSelectedMunicipalityCities([
-                    ...selectedMunicipalityCities,
-                    item,
-                  ]);
-                } else {
-                  setSelectedMunicipalityCities(
-                    filter(
-                      selectedMunicipalityCities,
-                      (item) => item?.id !== Number(value)
-                    )
-                  );
-                }
+              changeHandler={(item, value, isChecked) => {
+                setSelectedMunicipalityCities(
+                  isChecked
+                    ? [...selectedMunicipalityCities, item]
+                    : filter(
+                        selectedMunicipalityCities,
+                        (item) => item?.id !== Number(value)
+                      )
+                );
               }}
             />
           </ModalSection>
@@ -411,10 +358,10 @@ export const LocationModal: FC = () => {
                   list={locationChain.visibleCities}
                   innserSectionField="districts"
                   titleField="cityTitle"
-                  onChangeHandler={(item) => {
+                  changeHandler={(item) => {
                     setSelectedFavCity(item as City);
                   }}
-                  onClickHandler={(item) => {
+                  clickHandler={(item) => {
                     setSelectedFavCity(item as City);
                     setCityDistricts(item.districts as District[]);
                   }}
@@ -423,10 +370,10 @@ export const LocationModal: FC = () => {
                   list={locationChain.visibleMunicipalitetyChain}
                   innserSectionField="cities"
                   titleField="municipalityTitle"
-                  onChangeHandler={(item) => {
+                  changeHandler={(item) => {
                     setSelectedMunicipality(item as Municipality);
                   }}
-                  onClickHandler={(item) => {
+                  clickHandler={(item) => {
                     setSelectedMunicipality(item as Municipality);
                     setMunicipalityCities(item.cities as MunicipalityCity[]);
                   }}
@@ -438,7 +385,7 @@ export const LocationModal: FC = () => {
                 list={locationChain.municipalityChain}
                 idField="municipalityId"
                 titleField="municipalityTitle"
-                onClickHandler={(item) => {
+                clickHandler={(item) => {
                   setSelectedMunicipality(item as Municipality);
                   setMunicipalityCities(item.cities as MunicipalityCity[]);
                 }}

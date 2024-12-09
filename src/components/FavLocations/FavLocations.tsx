@@ -5,16 +5,16 @@ export interface FavLocationsProps {
   list: any[];
   titleField?: string;
   innserSectionField: string;
-  onClickHandler: (item: any) => void;
-  onChangeHandler: (item: any) => void;
+  clickHandler: (item: any) => void;
+  changeHandler: (item: any) => void;
 }
 
 export const FavLocations: FC<FavLocationsProps> = ({
   list,
   titleField = "title",
   innserSectionField,
-  onClickHandler,
-  onChangeHandler,
+  clickHandler,
+  changeHandler,
 }) => {
   return (
     <>
@@ -35,14 +35,11 @@ export const FavLocations: FC<FavLocationsProps> = ({
                 </span>
               ) : (
                 <div className="size-6 flex items-center justify-center">
-                  <Radio
-                    name="favCity"
-                    onChange={() => onChangeHandler(item)}
-                  />
+                  <Radio name="favCity" onChange={() => changeHandler(item)} />
                 </div>
               )
             }
-            onClick={isWithInner ? () => onClickHandler(item) : undefined}
+            onClick={isWithInner ? () => clickHandler(item) : undefined}
           >
             {item[titleField]}
           </Chip>

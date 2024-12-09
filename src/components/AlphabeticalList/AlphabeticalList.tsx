@@ -1,13 +1,14 @@
 import { Cell, Checkbox, Subheadline } from "@telegram-apps/telegram-ui";
 import { FC, Fragment } from "react";
+import ModalCell from "../ModalCell";
 
 export interface AlphabeticalListProps {
   list: any[];
   idField?: string;
   titleField?: string;
-  onClickHandler?: (item: any) => void;
+  clickHandler?: (item: any) => void;
   isChecked?: (item: any) => boolean;
-  onChangeHandler?: (item: any, isChecked: boolean, value: string) => void;
+  changeHandler?: (item: any, value: string, isChecked: boolean) => void;
 }
 
 export const AlphabeticalList: FC<AlphabeticalListProps> = ({
@@ -15,8 +16,8 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
   idField = "id",
   titleField = "title",
   isChecked,
-  onClickHandler,
-  onChangeHandler,
+  clickHandler,
+  changeHandler,
 }) => {
   let currentLetter = "";
 
@@ -50,21 +51,37 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                   </Subheadline>
                 ))
               : null}
-            <Cell
-              Component={onChangeHandler && isChecked ? "label" : undefined}
+            <ModalCell
+              children={title}
+              value={item[idField]}
+              isChecked={isChecked?.(item)}
+              changeHandler={
+                changeHandler
+                  ? (value, checked) => changeHandler(item, value, checked)
+                  : undefined
+              }
+              clickHandler={clickHandler ? () => clickHandler(item) : undefined}
+              after={
+                <span className="material-symbols-outlined">
+                  keyboard_arrow_right
+                </span>
+              }
+            />
+            {/* <Cell
+              Component={changeHandler && isChecked ? "label" : undefined}
               className={`px-6 transition-colors hover:bg-transparent ${
                 isChecked?.(item)
                   ? "!bg-[--tg-theme-secondary-bg-color]"
                   : "bg-transparent"
               }`}
               after={
-                onChangeHandler && isChecked ? (
+                changeHandler && isChecked ? (
                   <Checkbox
                     value={item[idField]}
                     checked={isChecked(item)}
                     onChange={(event) => {
                       const target = event.target;
-                      onChangeHandler(item, target.checked, target.value);
+                      changeHandler(item, target.value, target.checked);
                     }}
                   />
                 ) : (
@@ -73,10 +90,10 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                   </span>
                 )
               }
-              onClick={onClickHandler ? () => onClickHandler(item) : undefined}
+              onClick={clickHandler ? () => clickHandler(item) : undefined}
             >
               {title}
-            </Cell>
+            </Cell> */}
           </Fragment>
         );
       })}
