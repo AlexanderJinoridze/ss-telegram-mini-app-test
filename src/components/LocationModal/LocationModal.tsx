@@ -1,8 +1,6 @@
 import {
   Badge,
   Button,
-  Cell,
-  Checkbox,
   Divider,
   IconButton,
   Input,
@@ -263,9 +261,6 @@ export const LocationModal: FC = () => {
             {cityDistricts.map((item) => (
               <Fragment key={item.districtId}>
                 <ModalCell
-                  children={
-                    <Subheadline weight="1">{item.districtTitle}</Subheadline>
-                  }
                   value={item.subDistricts.map((item) =>
                     String(item.subDistrictId)
                   )}
@@ -299,11 +294,12 @@ export const LocationModal: FC = () => {
                           )
                     );
                   }}
-                />
+                >
+                  <Subheadline weight="1">{item.districtTitle}</Subheadline>
+                </ModalCell>
                 {item.subDistricts.map((item) => (
                   <ModalCell
                     key={item.subDistrictId}
-                    children={item.subDistrictTitle}
                     value={item.subDistrictId}
                     isChecked={
                       !!find(
@@ -326,7 +322,9 @@ export const LocationModal: FC = () => {
                           : difference(streets, item.streets)
                       );
                     }}
-                  />
+                  >
+                    {item.subDistrictTitle}
+                  </ModalCell>
                 ))}
               </Fragment>
             ))}

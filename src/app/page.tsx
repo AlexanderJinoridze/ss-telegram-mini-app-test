@@ -235,12 +235,13 @@ export default function Home() {
                 {dealTypeMap.map((item) => (
                   <ModalCell
                     key={item.id}
-                    children={item.label}
                     isSelected={item.id === dealTypeShadow?.id}
                     clickHandler={(isSelected) =>
                       setDealTypeShadow(isSelected ? undefined : item)
                     }
-                  />
+                  >
+                    {item.label}
+                  </ModalCell>
                 ))}
                 <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
               </Modal>
@@ -301,8 +302,9 @@ export default function Home() {
                         item.id === propertyTypeShadow?.id ? undefined : item
                       );
                     }}
-                    children={item.label}
-                  />
+                  >
+                    {item.label}
+                  </ModalCell>
                 ))}
                 <ModalFooter
                   onClick={() => {
@@ -353,7 +355,6 @@ export default function Home() {
                       return (
                         <ModalCell
                           key={id}
-                          children={label}
                           isChecked={isChecked}
                           value={id}
                           changeHandler={() => {
@@ -367,7 +368,9 @@ export default function Home() {
                               ]);
                             }
                           }}
-                        />
+                        >
+                          {label}
+                        </ModalCell>
                       );
                     }
                   )}
@@ -501,7 +504,6 @@ export default function Home() {
                   return (
                     <ModalCell
                       key={id}
-                      children={label}
                       isChecked={isSelectedRooms}
                       changeHandler={() => {
                         if (isSelectedRooms) {
@@ -511,7 +513,9 @@ export default function Home() {
                           setRoomsShadow([...roomsShadow, { id, label }]);
                         }
                       }}
-                    />
+                    >
+                      {label}
+                    </ModalCell>
                   );
                 })}
                 <ModalFooter onClick={() => setRooms(roomsShadow)} />

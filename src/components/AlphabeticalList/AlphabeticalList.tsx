@@ -52,7 +52,6 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                 ))
               : null}
             <ModalCell
-              children={title}
               value={item[idField]}
               isChecked={isChecked?.(item)}
               changeHandler={
@@ -66,7 +65,9 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
                   keyboard_arrow_right
                 </span>
               }
-            />
+            >
+              {title}
+            </ModalCell>
             {/* <Cell
               Component={changeHandler && isChecked ? "label" : undefined}
               className={`px-6 transition-colors hover:bg-transparent ${
