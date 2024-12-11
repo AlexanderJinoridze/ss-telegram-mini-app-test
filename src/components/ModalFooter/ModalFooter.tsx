@@ -11,7 +11,7 @@ export const ModalFooter: FC<ModalFooterProps> = ({ onClick }) => {
   const hapticFeedback = useHapticFeedback();
 
   return (
-    <div className="sticky bottom-0 top-full">
+    <div className="sticky bottom-0">
       <Divider />
       <div className="p-5 bg-[--tg-theme-header-bg-color]">
         <ModalClose>

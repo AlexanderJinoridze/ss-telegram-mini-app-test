@@ -15,7 +15,7 @@ export const ModalSection: FC<PropsWithChildren<ModalSectionProps>> = ({
         <Subheadline
           plain
           weight="2"
-          className="flex justify-between px-6 pb-4 [div:first-child>&]:pt-4"
+          className="flex justify-between px-6 pb-4 [div:first-child>&]:pt-6"
         >
           {title}
         </Subheadline>
