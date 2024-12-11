@@ -2,7 +2,6 @@ import { Dispatch, FC, SetStateAction } from "react";
 import FavLocations from "../FavLocations";
 import { City, District, Municipality, MunicipalityCity } from "@/types";
 
-
 export interface PopularLocationsProps {
   popularCities: any[];
   popularMunicipalities: any[];
@@ -19,33 +18,31 @@ export const PopularLocations: FC<PopularLocationsProps> = ({
   setSelectedFavCity,
   setCityDistricts,
   setMunicipalityCities,
-}) => {
-  return (
-    <div className="grid grid-cols-2 gap-2 mx-6">
-      <FavLocations
-        list={popularCities}
-        innserSectionField="districts"
-        titleField="cityTitle"
-        changeHandler={(item) => {
-          setSelectedFavCity(item as City);
-        }}
-        clickHandler={(item) => {
-          setSelectedFavCity(item as City);
-          setCityDistricts(item.districts as District[]);
-        }}
-      />
-      <FavLocations
-        list={popularMunicipalities}
-        innserSectionField="cities"
-        titleField="municipalityTitle"
-        changeHandler={(item) => {
-          setSelectedMunicipality(item as Municipality);
-        }}
-        clickHandler={(item) => {
-          setSelectedMunicipality(item as Municipality);
-          setMunicipalityCities(item.cities as MunicipalityCity[]);
-        }}
-      />
-    </div>
-  );
-};
+}) => (
+  <div className="grid grid-cols-2 gap-2 mx-6">
+    <FavLocations
+      list={popularCities}
+      innserSectionField="districts"
+      titleField="cityTitle"
+      changeHandler={(item) => {
+        setSelectedFavCity(item as City);
+      }}
+      clickHandler={(item) => {
+        setSelectedFavCity(item as City);
+        setCityDistricts(item.districts as District[]);
+      }}
+    />
+    <FavLocations
+      list={popularMunicipalities}
+      innserSectionField="cities"
+      titleField="municipalityTitle"
+      changeHandler={(item) => {
+        setSelectedMunicipality(item as Municipality);
+      }}
+      clickHandler={(item) => {
+        setSelectedMunicipality(item as Municipality);
+        setMunicipalityCities(item.cities as MunicipalityCity[]);
+      }}
+    />
+  </div>
+);

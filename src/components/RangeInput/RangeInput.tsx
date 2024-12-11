@@ -22,9 +22,10 @@ export const RangeInput: FC<RangeInputProps> = ({
     platform === "ios" && hookForm.formState.errors[fieldName]
       ? "!rounded-inherit !shadow-invalid_input"
       : undefined;
-  const validateTo = (to: any, from: any) => !from || !to || Number(from) <= to;
+  const validateTo = (to: any, from: any) =>
+    !from || !to || Number(from) <= Number(to);
   const validateFrom = (from: any, to: any) =>
-    !from || !to || from <= Number(to);
+    !from || !to || Number(from) <= Number(to);
   const compareRange = (priceType: string, from: any, to: any) => {
     if (
       numberPattern.test(hookForm.getValues()[priceType]) &&

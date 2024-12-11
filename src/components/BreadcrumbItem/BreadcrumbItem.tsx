@@ -6,7 +6,7 @@ export interface BreadcrumbItemProps {
   isNotSelected: boolean;
   selectedLabel: string;
   notSelectedLabel: string;
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const BreadcrumbItem: FC<BreadcrumbItemProps> = ({
@@ -14,27 +14,21 @@ export const BreadcrumbItem: FC<BreadcrumbItemProps> = ({
   isNotSelected,
   selectedLabel,
   notSelectedLabel,
-  onClick
-}) => {
-  // showStreets && selectedStreets.length
-  // showStreets
-  //selectedStreets.map((item) => item.streetTitle).join(", ")
-  // () => setSelectedStreets([])
-  // selectedSubDistricts.map((item) => item.subDistrictTitle).join(", ")
-
-  return (
-    <>
-      {isSelected ? (
-        <Button
-          size="s"
-          onClick={onClick}
-          after={<span className="material-symbols-outlined">close</span>}
-        >
-          {selectedLabel}
-        </Button>
-      ) : isNotSelected ? (
-        <Text weight="1" className="truncate">{notSelectedLabel}</Text>
-      ) : null}
-    </>
-  );
-};
+  onClick,
+}) => (
+  <>
+    {isSelected ? (
+      <Button
+        size="s"
+        onClick={onClick}
+        after={<span className="material-symbols-outlined">close</span>}
+      >
+        {selectedLabel}
+      </Button>
+    ) : isNotSelected ? (
+      <Text weight="1" className="truncate">
+        {notSelectedLabel}
+      </Text>
+    ) : null}
+  </>
+);

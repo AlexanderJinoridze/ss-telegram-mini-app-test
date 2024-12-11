@@ -1,4 +1,4 @@
-import { Cell, Checkbox, Subheadline } from "@telegram-apps/telegram-ui";
+import { Subheadline } from "@telegram-apps/telegram-ui";
 import { FC, Fragment } from "react";
 import ModalCell from "../ModalCell";
 
@@ -36,7 +36,6 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
       {list.sort(sortAlphabetically(titleField)).map((item) => {
         const title = item[titleField];
         const firstLetter = title.charAt(0);
-
         return (
           <Fragment key={item[idField]}>
             {currentLetter !== firstLetter
@@ -68,33 +67,6 @@ export const AlphabeticalList: FC<AlphabeticalListProps> = ({
             >
               {title}
             </ModalCell>
-            {/* <Cell
-              Component={changeHandler && isChecked ? "label" : undefined}
-              className={`px-6 transition-colors hover:bg-transparent ${
-                isChecked?.(item)
-                  ? "!bg-[--tg-theme-secondary-bg-color]"
-                  : "bg-transparent"
-              }`}
-              after={
-                changeHandler && isChecked ? (
-                  <Checkbox
-                    value={item[idField]}
-                    checked={isChecked(item)}
-                    onChange={(event) => {
-                      const target = event.target;
-                      changeHandler(item, target.value, target.checked);
-                    }}
-                  />
-                ) : (
-                  <span className="material-symbols-outlined">
-                    keyboard_arrow_right
-                  </span>
-                )
-              }
-              onClick={clickHandler ? () => clickHandler(item) : undefined}
-            >
-              {title}
-            </Cell> */}
           </Fragment>
         );
       })}

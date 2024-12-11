@@ -153,7 +153,6 @@ export const LocationModal: FC = () => {
             notSelectedLabel={selectedMunicipality?.municipalityTitle ?? ""}
             onClick={() => setSelectedMunicipalityCities([])}
           />
-
           {streets.length && !showStreets ? (
             <Button
               size="s"
