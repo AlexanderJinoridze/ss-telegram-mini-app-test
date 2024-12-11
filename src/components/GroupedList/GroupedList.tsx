@@ -15,77 +15,32 @@ export const GroupedList: FC<GroupedListProps> = ({
   isChecked,
   groupChangeHandler,
   changeHandler,
-}) => {
-  // !!find(
-  //   selectedSubDistricts,
-  //   (a: any) => a.subDistrictId === item.subDistrictId
-  // )
-
-  //   (value, checked) => {
-  //     setSelectedSubDistricts(
-  //       checked
-  //         ? union(selectedSubDistricts, item.subDistricts)
-  //         : selectedSubDistricts.filter(
-  //             (item) =>
-  //               !value.split(",").includes(String(item?.subDistrictId))
-  //           )
-  //     );
-  //     setStreets(
-  //       checked
-  //         ? union(
-  //             streets,
-  //             item.subDistricts.map((item) => item.streets).flat()
-  //           )
-  //         : difference(
-  //             streets,
-  //             item.subDistricts.map((item) => item.streets).flat()
-  //           )
-  //     );
-  //   }
-
-  //   (value, checked) => {
-  //     setSelectedSubDistricts(
-  //       checked
-  //         ? [...selectedSubDistricts, item]
-  //         : filter(
-  //             selectedSubDistricts,
-  //             (item) => item?.subDistrictId !== Number(value)
-  //           )
-  //     );
-  //     setStreets(
-  //       checked
-  //         ? [...streets, ...item.streets]
-  //         : difference(streets, item.streets)
-  //     );
-  //   }
-
-  return (
-    <>
-      {list.map((item) => (
-        <Fragment key={item.districtId}>
+}) => (
+  <>
+    {list.map((item) => (
+      <Fragment key={item.districtId}>
+        <ModalCell
+          value={item.subDistricts.map((item) => String(item.subDistrictId))}
+          isChecked={item.subDistricts.every((item) => isChecked(item))}
+          changeHandler={(value, checked) =>
+            groupChangeHandler(item, value, checked)
+          }
+        >
+          <Subheadline weight="1">{item.districtTitle}</Subheadline>
+        </ModalCell>
+        {item.subDistricts.map((item) => (
           <ModalCell
-            value={item.subDistricts.map((item) => String(item.subDistrictId))}
-            isChecked={item.subDistricts.every((item) => isChecked(item))}
+            key={item.subDistrictId}
+            value={item.subDistrictId}
+            isChecked={isChecked(item)}
             changeHandler={(value, checked) =>
-              groupChangeHandler(item, value, checked)
+              changeHandler(item, value, checked)
             }
           >
-            <Subheadline weight="1">{item.districtTitle}</Subheadline>
+            {item.subDistrictTitle}
           </ModalCell>
-          {item.subDistricts.map((item) => (
-            <ModalCell
-              key={item.subDistrictId}
-              value={item.subDistrictId}
-              isChecked={isChecked(item)}
-              changeHandler={(value, checked) =>
-                changeHandler(item, value, checked)
-              }
-            >
-              {item.subDistrictTitle}
-            </ModalCell>
-          ))}
-        </Fragment>
-      ))}
-    </>
-  );
-};
+        ))}
+      </Fragment>
+    ))}
+  </>
+);

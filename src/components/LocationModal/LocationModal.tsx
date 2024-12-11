@@ -24,6 +24,7 @@ import {
   SubDistrict,
 } from "@/types";
 import GroupedList from "../GroupedList";
+import BreadcrumbItem from "../BreadcrumbItem";
 
 export const LocationModal: FC = () => {
   const [selectedMunicipality, setSelectedMunicipality] =
@@ -63,21 +64,21 @@ export const LocationModal: FC = () => {
     <>
       <div className="sticky top-0 z-10 bg-[--tgui--bg_color]">
         {/* {municipalityCities || cityDistricts ? (
-        <button
-          onClick={() => {
-            setSelectedFavCity(undefined);
-            setSelectedMunicipality(undefined);
-            setMunicipalityCities(undefined);
-            setCityDistricts(undefined);
-            setSelectedSubDistricts([]);
-            setStreets([]);
-            setSelectedStreets([]);
-            setShowStreets(false);
-          }}
-        >
-          BACK
-        </button>
-      ) : null} */}
+          <button
+            onClick={() => {
+              setSelectedFavCity(undefined);
+              setSelectedMunicipality(undefined);
+              setMunicipalityCities(undefined);
+              setCityDistricts(undefined);
+              setSelectedSubDistricts([]);
+              setStreets([]);
+              setSelectedStreets([]);
+              setShowStreets(false);
+            }}
+          >
+            BACK
+          </button>
+        ) : null} */}
         <div className="modal-input">
           <Input
             before={<span className="material-symbols-outlined">search</span>}
@@ -117,55 +118,48 @@ export const LocationModal: FC = () => {
             </IconButton>
           ) : null}
 
-          {showStreets ? (
-            <>
-              {selectedStreets.length ? (
-                <Button
-                  size="s"
-                  onClick={() => {
-                    setSelectedStreets([]);
-                  }}
-                  after={
-                    <span className="material-symbols-outlined">close</span>
-                  }
-                >
-                  {selectedStreets.map((item) => item.streetTitle).join(", ")}
-                </Button>
-              ) : (
-                <Text weight="1" className="truncate">
-                  {selectedSubDistricts
-                    .map((item) => item.subDistrictTitle)
-                    .join(", ")}
-                </Text>
-              )}
-            </>
-          ) : selectedSubDistricts.length ? (
-            <Button
-              size="s"
-              onClick={() => {
-                setSelectedSubDistricts([]);
-                setStreets([]);
-              }}
-              after={<span className="material-symbols-outlined">close</span>}
-            >
-              {selectedSubDistricts
-                .map((item) => item.subDistrictTitle)
-                .join(", ")}
-            </Button>
-          ) : selectedFavCity && selectedFavCity.districts.length ? (
-            <Text weight="1" className="truncate">
-              {selectedFavCity.cityTitle}
-            </Text>
-          ) : null}
+          <BreadcrumbItem
+            isSelected={showStreets && !!selectedStreets.length}
+            isNotSelected={showStreets}
+            selectedLabel={selectedStreets
+              .map((item) => item.streetTitle)
+              .join(", ")}
+            notSelectedLabel={selectedSubDistricts
+              .map((item) => item.subDistrictTitle)
+              .join(", ")}
+            onClick={() => setSelectedStreets([])}
+          />
+          <BreadcrumbItem
+            isSelected={!showStreets && !!selectedSubDistricts.length}
+            isNotSelected={
+              !showStreets &&
+              !!selectedFavCity?.districts.length
+            }
+            selectedLabel={selectedSubDistricts
+              .map((item) => item.subDistrictTitle)
+              .join(", ")}
+            notSelectedLabel={selectedFavCity?.cityTitle ?? ""}
+            onClick={() => {
+              setSelectedSubDistricts([]);
+              setStreets([]);
+            }}
+          />
+          <BreadcrumbItem
+            isSelected={!!selectedMunicipalityCities.length}
+            isNotSelected={!!selectedMunicipality}
+            selectedLabel={selectedMunicipalityCities
+              .map((item) => item.title)
+              .join(", ")}
+            notSelectedLabel={selectedMunicipality?.municipalityTitle ?? ""}
+            onClick={() => setSelectedMunicipalityCities([])}
+          />
 
           {streets.length && !showStreets ? (
             <Button
               size="s"
               mode="bezeled"
               className="shrink-0 pr-[3px] ml-auto"
-              onClick={() => {
-                setShowStreets(true);
-              }}
+              onClick={() => setShowStreets(true)}
               before={
                 <span className="material-symbols-outlined">location_on</span>
               }
@@ -175,22 +169,6 @@ export const LocationModal: FC = () => {
                 {streets.length}
               </Badge>
             </Button>
-          ) : null}
-
-          {selectedMunicipalityCities.length ? (
-            <Button
-              size="s"
-              onClick={() => {
-                setSelectedMunicipalityCities([]);
-              }}
-              after={<span className="material-symbols-outlined">close</span>}
-            >
-              {selectedMunicipalityCities.map((item) => item.title).join(", ")}
-            </Button>
-          ) : selectedMunicipality ? (
-            <Text weight="1" className="truncate">
-              {selectedMunicipality.municipalityTitle}
-            </Text>
           ) : null}
         </div>
         <Divider />

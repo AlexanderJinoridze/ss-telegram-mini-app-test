@@ -8,7 +8,6 @@ import {
   FixedLayout,
   Button,
   Divider,
-  Text,
   Placeholder,
   Radio,
   Caption,
@@ -36,6 +35,7 @@ import {
   roomsMap,
 } from "./_assets/constants";
 import { RangeInput } from "@/components/RangeInput/RangeInput";
+import ModalTrigger from "@/components/ModalTrigger";
 
 export default function Home() {
   const [dealType, setDealType] = useState<(typeof dealTypeMap)[number]>();
@@ -107,20 +107,13 @@ export default function Home() {
                 />
               }
               trigger={
-                <Cell
-                  onClick={() => hapticFeedback.impactOccurred("soft")}
-                  after={
-                    <span className="material-symbols-outlined">
-                      keyboard_arrow_down
-                    </span>
-                  }
-                >
-                  {dealType === undefined ? (
-                    <Text>გარიგების ტიპი</Text>
-                  ) : (
-                    <Text weight="2">{dealType.label}</Text>
-                  )}
-                </Cell>
+                <div className="contents">
+                  <ModalTrigger
+                    label="გარიგების ტიპი"
+                    isSelected={dealType !== undefined}
+                    selectedLabel={dealType?.label}
+                  />
+                </div>
               }
               onOpenChange={(open) => {
                 setIsOpen(open);
@@ -153,20 +146,13 @@ export default function Home() {
                 />
               }
               trigger={
-                <Cell
-                  onClick={() => hapticFeedback.impactOccurred("soft")}
-                  after={
-                    <span className="material-symbols-outlined">
-                      keyboard_arrow_down
-                    </span>
-                  }
-                >
-                  {propertyType === undefined ? (
-                    <Text>ქონების ტიპი</Text>
-                  ) : (
-                    <Text weight="2">{propertyType.label}</Text>
-                  )}
-                </Cell>
+                <div className="contents">
+                  <ModalTrigger
+                    label="ქონების ტიპი"
+                    isSelected={propertyType !== undefined}
+                    selectedLabel={propertyType?.label}
+                  />
+                </div>
               }
               onOpenChange={(open) => {
                 setIsOpen(open);
@@ -217,22 +203,15 @@ export default function Home() {
                   />
                 }
                 trigger={
-                  <Cell
-                    onClick={() => hapticFeedback.impactOccurred("soft")}
-                    after={
-                      <span className="material-symbols-outlined">
-                        keyboard_arrow_down
-                      </span>
-                    }
-                  >
-                    {statuses.length ? (
-                      <Text weight="2">
-                        {statuses.map((status) => status.label).join(", ")}
-                      </Text>
-                    ) : (
-                      <Text>სტატუსი</Text>
-                    )}
-                  </Cell>
+                  <div className="contents">
+                    <ModalTrigger
+                      label="სტატუსი"
+                      isSelected={!!statuses.length}
+                      selectedLabel={statuses
+                        .map((item) => item.label)
+                        .join(", ")}
+                    />
+                  </div>
                 }
                 onOpenChange={(open) => {
                   setIsOpen(open);
@@ -263,18 +242,7 @@ export default function Home() {
                 <ModalFooter onClick={() => setStatuses(statusesShadow)} />
               </Modal>
             ) : (
-              <Cell
-                disabled
-                hovered={false}
-                onClick={() => hapticFeedback.impactOccurred("light")}
-                after={
-                  <span className="material-symbols-outlined">
-                    keyboard_arrow_down
-                  </span>
-                }
-              >
-                <Text>სტატუსი</Text>
-              </Cell>
+              <ModalTrigger label="სტატუსი" isDisabled />
             )}
           </Section>
           <Section>
@@ -286,16 +254,9 @@ export default function Home() {
                 />
               }
               trigger={
-                <Cell
-                  onClick={() => hapticFeedback.impactOccurred("soft")}
-                  after={
-                    <span className="material-symbols-outlined">
-                      keyboard_arrow_down
-                    </span>
-                  }
-                >
-                  <Text>მდებარეობა</Text>
-                </Cell>
+                <div className="contents">
+                  <ModalTrigger label="მდებარეობა" />
+                </div>
               }
               onOpenChange={(open) => {
                 setIsOpen(open);
@@ -312,7 +273,7 @@ export default function Home() {
             <RangeInput
               inputNames={["areaFrom", "areaTo"]}
               hookForm={hookForm}
-              after={<span className="w-6 text-center">მ²</span>}
+              after="მ²"
             />
           </Section>
           <Section>
@@ -324,22 +285,13 @@ export default function Home() {
                 />
               }
               trigger={
-                <Cell
-                  onClick={() => hapticFeedback.impactOccurred("soft")}
-                  after={
-                    <span className="material-symbols-outlined">
-                      keyboard_arrow_down
-                    </span>
-                  }
-                >
-                  {rooms.length ? (
-                    <Text weight="2">
-                      {rooms.map((room) => room.label).join(", ")}
-                    </Text>
-                  ) : (
-                    <Text>ოთახების რაოდენობა</Text>
-                  )}
-                </Cell>
+                <div className="contents">
+                  <ModalTrigger
+                    label="ოთახების რაოდენობა"
+                    isSelected={!!rooms.length}
+                    selectedLabel={rooms.map((room) => room.label).join(", ")}
+                  />
+                </div>
               }
               onOpenChange={(open) => {
                 setIsOpen(open);
@@ -415,11 +367,7 @@ export default function Home() {
             <RangeInput
               inputNames={["priceFrom", "priceTo"]}
               hookForm={hookForm}
-              after={
-                <span className="w-6 text-center">
-                  {selectedCurrency === 1 ? "₾" : "$"}
-                </span>
-              }
+              after={selectedCurrency === 1 ? "₾" : "$"}
             />
           </Section>
           <SectionFooter className="flex flex-col items-center mt-8">

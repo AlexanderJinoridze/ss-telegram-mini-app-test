@@ -6,7 +6,7 @@ import { useHapticFeedback } from "@telegram-apps/sdk-react";
 import { numberPattern } from "@/app/_assets/constants";
 
 export interface RangeInputProps {
-  after: ReactNode;
+  after: string;
   inputNames: string[];
   hookForm: UseFormReturn<FieldValues, any, undefined>;
 }
@@ -48,7 +48,7 @@ export const RangeInput: FC<RangeInputProps> = ({
             key={inputName}
             placeholder={isFrom ? "-დან" : "-მდე"}
             inputMode="numeric"
-            after={after}
+            after={<span className="w-6 text-center">{after}</span>}
             status={hookForm.formState.errors[inputName] ? "error" : "default"}
             className={invalidInputClass(inputName)}
             onClick={() => hapticFeedback.selectionChanged()}
