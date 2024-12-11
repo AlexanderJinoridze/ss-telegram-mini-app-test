@@ -45,6 +45,7 @@ export const RangeInput: FC<RangeInputProps> = ({
         const secondaryInputName = arr[isFrom ? 1 : 0];
         return (
           <Input
+            key={inputName}
             placeholder={isFrom ? "-დან" : "-მდე"}
             inputMode="numeric"
             after={after}
