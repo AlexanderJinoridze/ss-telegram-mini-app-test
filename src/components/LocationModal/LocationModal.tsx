@@ -62,7 +62,7 @@ export const LocationModal: FC = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-10 bg-[--tgui--bg_color]">
+      <div>
         {/* {municipalityCities || cityDistricts ? (
           <button
             onClick={() => {
@@ -131,10 +131,7 @@ export const LocationModal: FC = () => {
           />
           <BreadcrumbItem
             isSelected={!showStreets && !!selectedSubDistricts.length}
-            isNotSelected={
-              !showStreets &&
-              !!selectedFavCity?.districts.length
-            }
+            isNotSelected={!showStreets && !!selectedFavCity?.districts.length}
             selectedLabel={selectedSubDistricts
               .map((item) => item.subDistrictTitle)
               .join(", ")}

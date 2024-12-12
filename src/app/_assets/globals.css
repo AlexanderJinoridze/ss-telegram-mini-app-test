@@ -37,3 +37,9 @@ label {
     }
   }
 }
+
+.location-modal .vaul-scrollable {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

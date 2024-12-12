@@ -33,9 +33,7 @@ export const FavLocations: FC<FavLocationsProps> = ({
                 keyboard_arrow_right
               </span>
             ) : (
-              <div className="size-6 flex items-center justify-center">
-                <Radio name="favCity" onChange={() => changeHandler(item)} />
-              </div>
+              <Radio name="favCity" onChange={() => changeHandler(item)} />
             )
           }
           onClick={isWithInner ? () => clickHandler(item) : undefined}
