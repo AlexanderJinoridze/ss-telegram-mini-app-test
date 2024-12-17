@@ -1,13 +1,13 @@
 import { useHapticFeedback } from "@telegram-apps/sdk-react";
 import { FC } from "react";
 
-export interface SvgLogoProps {
+export interface OwnerLogoProps {
   link: string;
   w: number;
   d: string;
 }
 
-export const SvgLogo: FC<SvgLogoProps> = ({ link, w, d }) => {
+export const OwnerLogo: FC<OwnerLogoProps> = ({ link, w, d }) => {
   const hapticFeedback = useHapticFeedback();
 
   return (

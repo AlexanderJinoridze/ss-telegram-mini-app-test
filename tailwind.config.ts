@@ -10,9 +10,18 @@ const config: Config = {
     extend: {
       borderRadius: {
         inherit: "inherit",
+        input: "14px",
+      },
+      padding: {
+        input_border_width: "2px",
+      },
+      margin: {
+        input_border_width: "2px",
       },
       boxShadow: {
         invalid_input: "0 0 0 2px var(--tgui--destructive_text_color) inset",
+        input_border: "0 0 0 2px var(--tgui--outline)",
+        input_border_focused: "0 0 0 2px var(--tgui--link_color)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

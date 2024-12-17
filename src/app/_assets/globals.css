@@ -22,22 +22,6 @@ label {
   font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
 }
 
-.modal-input {
-  & > div {
-    margin: 0 2px;
-    padding: 2px 1.5rem calc(1rem + 2px);
-
-    & > label {
-      border-radius: 14px;
-      box-shadow: 0 0 0 2px var(--tgui--outline);
-
-      &:has(input:focus) {
-        box-shadow: 0 0 0 2px var(--tgui--link_color);
-      }
-    }
-  }
-}
-
 .location-modal .vaul-scrollable {
   height: 100%;
   display: flex;

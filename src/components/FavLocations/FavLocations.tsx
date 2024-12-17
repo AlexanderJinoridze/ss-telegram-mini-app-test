@@ -7,6 +7,7 @@ export interface FavLocationsProps {
   innserSectionField: string;
   clickHandler: (item: any) => void;
   changeHandler: (item: any) => void;
+  isChecked?: (item: any) => boolean;
 }
 
 export const FavLocations: FC<FavLocationsProps> = ({
@@ -15,6 +16,7 @@ export const FavLocations: FC<FavLocationsProps> = ({
   innserSectionField,
   clickHandler,
   changeHandler,
+  isChecked,
 }) => (
   <>
     {list.map((item) => {
@@ -33,7 +35,11 @@ export const FavLocations: FC<FavLocationsProps> = ({
                 keyboard_arrow_right
               </span>
             ) : (
-              <Radio name="favCity" onChange={() => changeHandler(item)} />
+              <Radio
+                name="favoriteCity"
+                onChange={() => changeHandler(item)}
+                checked={isChecked?.(item)}
+              />
             )
           }
           onClick={isWithInner ? () => clickHandler(item) : undefined}

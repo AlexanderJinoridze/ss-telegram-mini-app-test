@@ -4,9 +4,8 @@ import {
   Divider,
   IconButton,
   Input,
-  Text,
 } from "@telegram-apps/telegram-ui";
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import ModalSection from "../ModalSection";
 import locationChain from "../../app/_assets/locationChain.json";
 import union from "lodash.union";
@@ -26,89 +25,111 @@ import {
 import GroupedList from "../GroupedList";
 import BreadcrumbItem from "../BreadcrumbItem";
 
-export const LocationModal: FC = () => {
-  const [selectedMunicipality, setSelectedMunicipality] =
-    useState<Municipality>();
-  const [selectedMunicipalityCities, setSelectedMunicipalityCities] = useState<
-    MunicipalityCity[]
-  >([]);
-  const [selectedFavCity, setSelectedFavCity] = useState<City>();
-  const [selectedSubDistricts, setSelectedSubDistricts] = useState<
-    SubDistrict[]
-  >([]);
-  const [selectedStreets, setSelectedStreets] = useState<Street[]>([]);
+export interface LocationModalProps {
+  municipalityShadow?: Municipality;
+  setMunicipalityShadow: Dispatch<
+    SetStateAction<LocationModalProps["municipalityShadow"]>
+  >;
+  municipalityCitiesShadow: MunicipalityCity[];
+  setMunicipalityCitiesShadow: Dispatch<
+    SetStateAction<LocationModalProps["municipalityCitiesShadow"]>
+  >;
+  favoriteCityShadow?: City;
+  setFavoriteCityShadow: Dispatch<
+    SetStateAction<LocationModalProps["favoriteCityShadow"]>
+  >;
+  subDistrictsShadow: SubDistrict[];
+  setSubDistrictsShadow: Dispatch<
+    SetStateAction<LocationModalProps["subDistrictsShadow"]>
+  >;
+  streetsShadow: Street[];
+  setStreetsShadow: Dispatch<
+    SetStateAction<LocationModalProps["streetsShadow"]>
+  >;
+  cityDistrictsList: District[];
+  setCityDistrictsList: Dispatch<
+    SetStateAction<LocationModalProps["cityDistrictsList"]>
+  >;
+  municipalityCitiesList: MunicipalityCity[];
+  setMunicipalityCitiesList: Dispatch<
+    SetStateAction<LocationModalProps["municipalityCitiesList"]>
+  >;
+  streetsList: Street[];
+  setStreetsList: Dispatch<SetStateAction<LocationModalProps["streetsList"]>>;
+  showStreetPage: boolean;
+  setShowStreetPage: Dispatch<
+    SetStateAction<LocationModalProps["showStreetPage"]>
+  >;
+}
 
-  const [showStreets, setShowStreets] = useState<boolean>(false);
+export const LocationModal: FC<LocationModalProps> = ({
+  municipalityShadow,
+  setMunicipalityShadow,
+  municipalityCitiesShadow,
+  setMunicipalityCitiesShadow,
+  favoriteCityShadow,
+  setFavoriteCityShadow,
+  subDistrictsShadow,
+  setSubDistrictsShadow,
+  streetsShadow,
+  setStreetsShadow,
 
-  const [cityDistricts, setCityDistricts] = useState<District[]>([]);
-  const [municipalityCities, setMunicipalityCities] = useState<
-    MunicipalityCity[]
-  >([]);
-  const [streets, setStreets] = useState<Street[]>([]);
-
+  cityDistrictsList,
+  setCityDistrictsList,
+  municipalityCitiesList,
+  setMunicipalityCitiesList,
+  streetsList,
+  setStreetsList,
+  showStreetPage,
+  setShowStreetPage,
+}) => {
   useEffect(() => {
-    console.log("selectedFavCity", selectedFavCity);
-    console.log("selectedMunicipality", selectedMunicipality);
-    console.log("selectedMunicipalityCities", selectedMunicipalityCities);
-    console.log("selectedSubDistricts", selectedSubDistricts);
-    console.log("selectedStreets", selectedStreets);
+    console.log("municipalityShadow", municipalityShadow);
+    console.log("municipalityCitiesShadow", municipalityCitiesShadow);
+    console.log("favoriteCityShadow", favoriteCityShadow);
+    console.log("subDistrictsShadow", subDistrictsShadow);
+    console.log("streetsShadow", streetsShadow);
   }, [
-    selectedFavCity,
-    selectedMunicipality,
-    selectedMunicipalityCities,
-    selectedSubDistricts,
-    selectedStreets,
+    municipalityShadow,
+    municipalityCitiesShadow,
+    favoriteCityShadow,
+    subDistrictsShadow,
+    streetsShadow,
   ]);
 
   return (
     <>
       <div>
-        {/* {municipalityCities || cityDistricts ? (
-          <button
-            onClick={() => {
-              setSelectedFavCity(undefined);
-              setSelectedMunicipality(undefined);
-              setMunicipalityCities(undefined);
-              setCityDistricts(undefined);
-              setSelectedSubDistricts([]);
-              setStreets([]);
-              setSelectedStreets([]);
-              setShowStreets(false);
-            }}
-          >
-            BACK
-          </button>
-        ) : null} */}
-        <div className="modal-input">
+        <div className="[&>label]:shadow-input_border [&>label]:focus:shadow-input_border_focused mb-4 [&>div]:mx-input_border_width [&>div]:py-input_border_width [&>div]:px-6 [&>label]:rounded-input">
           <Input
             before={<span className="material-symbols-outlined">search</span>}
             placeholder="ჩაწერე რაიონი, ქალაქი, უბანი ან ქუჩა"
           />
         </div>
         <div className="flex [&:empty]:hidden gap-2 flex-shrink-0 items-center h-9 box-content px-6 pb-4">
-          {(selectedSubDistricts &&
-            selectedFavCity &&
-            selectedFavCity.districts.length) ||
-          selectedMunicipality ? (
+          {(subDistrictsShadow &&
+            favoriteCityShadow &&
+            favoriteCityShadow.districts.length) ||
+          municipalityShadow ? (
             <IconButton
               size="s"
               mode="bezeled"
               onClick={() => {
-                if (selectedMunicipality) {
-                  setMunicipalityCities([]);
-                  setSelectedMunicipality(undefined);
-                  setSelectedMunicipalityCities([]);
-                } else if (showStreets) {
-                  setSelectedSubDistricts([]);
-                  setShowStreets(false);
-                  setSelectedStreets([]);
-                  setStreets([]);
+                if (municipalityShadow) {
+                  setMunicipalityCitiesList([]);
+                  setMunicipalityShadow(undefined);
+                  setMunicipalityCitiesShadow([]);
+                } else if (showStreetPage) {
+                  setSubDistrictsShadow([]);
+                  setShowStreetPage(false);
+                  setStreetsShadow([]);
+                  setStreetsList([]);
                 } else {
-                  setSelectedFavCity(undefined);
-                  setSelectedSubDistricts([]);
-                  setCityDistricts([]);
-                  setShowStreets(false);
-                  setStreets([]);
+                  setFavoriteCityShadow(undefined);
+                  setSubDistrictsShadow([]);
+                  setCityDistrictsList([]);
+                  setShowStreetPage(false);
+                  setStreetsList([]);
                 }
               }}
             >
@@ -117,52 +138,53 @@ export const LocationModal: FC = () => {
               </span>
             </IconButton>
           ) : null}
-
           <BreadcrumbItem
-            isSelected={showStreets && !!selectedStreets.length}
-            isNotSelected={showStreets}
-            selectedLabel={selectedStreets
+            isSelected={showStreetPage && !!streetsShadow.length}
+            isNotSelected={showStreetPage}
+            selectedLabel={streetsShadow
               .map((item) => item.streetTitle)
               .join(", ")}
-            notSelectedLabel={selectedSubDistricts
+            notSelectedLabel={subDistrictsShadow
               .map((item) => item.subDistrictTitle)
               .join(", ")}
-            onClick={() => setSelectedStreets([])}
+            onClick={() => setStreetsShadow([])}
           />
           <BreadcrumbItem
-            isSelected={!showStreets && !!selectedSubDistricts.length}
-            isNotSelected={!showStreets && !!selectedFavCity?.districts.length}
-            selectedLabel={selectedSubDistricts
+            isSelected={!showStreetPage && !!subDistrictsShadow.length}
+            isNotSelected={
+              !showStreetPage && !!favoriteCityShadow?.districts.length
+            }
+            selectedLabel={subDistrictsShadow
               .map((item) => item.subDistrictTitle)
               .join(", ")}
-            notSelectedLabel={selectedFavCity?.cityTitle ?? ""}
+            notSelectedLabel={favoriteCityShadow?.cityTitle ?? ""}
             onClick={() => {
-              setSelectedSubDistricts([]);
-              setStreets([]);
+              setSubDistrictsShadow([]);
+              setStreetsList([]);
             }}
           />
           <BreadcrumbItem
-            isSelected={!!selectedMunicipalityCities.length}
-            isNotSelected={!!selectedMunicipality}
-            selectedLabel={selectedMunicipalityCities
+            isSelected={!!municipalityCitiesShadow.length}
+            isNotSelected={!!municipalityShadow}
+            selectedLabel={municipalityCitiesShadow
               .map((item) => item.title)
               .join(", ")}
-            notSelectedLabel={selectedMunicipality?.municipalityTitle ?? ""}
-            onClick={() => setSelectedMunicipalityCities([])}
+            notSelectedLabel={municipalityShadow?.municipalityTitle ?? ""}
+            onClick={() => setMunicipalityCitiesShadow([])}
           />
-          {streets.length && !showStreets ? (
+          {streetsList.length && !showStreetPage ? (
             <Button
               size="s"
               mode="bezeled"
               className="shrink-0 pr-[3px] ml-auto"
-              onClick={() => setShowStreets(true)}
+              onClick={() => setShowStreetPage(true)}
               before={
                 <span className="material-symbols-outlined">location_on</span>
               }
             >
               ქუჩები
               <Badge type="number" className="bg-amber-400 text-zinc-950">
-                {streets.length}
+                {streetsList.length}
               </Badge>
             </Button>
           ) : null}
@@ -170,90 +192,87 @@ export const LocationModal: FC = () => {
         <Divider />
       </div>
       <div className="flex flex-col justify-between items-center overflow-auto">
-        {showStreets ? (
+        {showStreetPage ? (
           <ModalSection>
             <AlphabeticalList
-              list={streets}
+              list={streetsList}
               idField="streetId"
               titleField="streetTitle"
               isChecked={(item) =>
-                !!find(
-                  selectedStreets,
-                  (a: any) => a.streetId === item.streetId
-                )
+                !!find(streetsShadow, (a: any) => a.streetId === item.streetId)
               }
               changeHandler={(item, value, isChecked) => {
-                setSelectedStreets(
+                setStreetsShadow(
                   isChecked
-                    ? [...selectedStreets, item]
+                    ? [...streetsShadow, item]
                     : filter(
-                        selectedStreets,
+                        streetsShadow,
                         (item) => item?.streetId !== Number(value)
                       )
                 );
               }}
             />
           </ModalSection>
-        ) : cityDistricts.length ? (
+        ) : cityDistrictsList.length ? (
           <ModalSection>
             <GroupedList
-              list={cityDistricts}
+              list={cityDistrictsList}
               isChecked={(item) =>
                 !!find(
-                  selectedSubDistricts,
+                  subDistrictsShadow,
                   (a: any) => a.subDistrictId === item.subDistrictId
                 )
               }
               changeHandler={(item, value, checked) => {
-                setSelectedSubDistricts(
+                setSubDistrictsShadow(
                   checked
-                    ? [...selectedSubDistricts, item]
+                    ? [...subDistrictsShadow, item]
                     : filter(
-                        selectedSubDistricts,
+                        subDistrictsShadow,
                         (item) => item?.subDistrictId !== Number(value)
                       )
                 );
-                setStreets(
+                setStreetsList(
                   checked
-                    ? [...streets, ...item.streets]
-                    : difference(streets, item.streets)
+                    ? [...streetsList, ...item.streets]
+                    : difference(streetsList, item.streets)
                 );
               }}
               groupChangeHandler={(item, value, checked) => {
                 const normalizeDistrictsList = item.subDistricts
                   .map((item) => item.streets)
                   .flat();
-                setSelectedSubDistricts(
+                setSubDistrictsShadow(
                   checked
-                    ? union(selectedSubDistricts, item.subDistricts)
-                    : selectedSubDistricts.filter(
+                    ? union(subDistrictsShadow, item.subDistricts)
+                    : subDistrictsShadow.filter(
                         (item) =>
                           !value
                             .split(",")
                             .includes(String(item?.subDistrictId))
                       )
                 );
-                setStreets(
+                setStreetsList(
                   checked
-                    ? union(streets, normalizeDistrictsList)
-                    : difference(streets, normalizeDistrictsList)
+                    ? union(streetsList, normalizeDistrictsList)
+                    : difference(streetsList, normalizeDistrictsList)
                 );
               }}
             />
           </ModalSection>
-        ) : municipalityCities.length ? (
+        ) : municipalityCitiesList.length ? (
           <ModalSection>
             <AlphabeticalList
-              list={municipalityCities}
+              list={municipalityCitiesList}
               isChecked={(item) =>
-                !!find(selectedMunicipalityCities, (a: any) => a.id === item.id)
+                !!find(municipalityCitiesShadow, (a: any) => a.id === item.id)
               }
               changeHandler={(item, value, isChecked) => {
-                setSelectedMunicipalityCities(
+                setMunicipalityCitiesShadow(
                   isChecked
-                    ? [...selectedMunicipalityCities, item]
+                    ? [...municipalityCitiesShadow, item]
                     : filter(
-                        selectedMunicipalityCities,
+                        municipalityCitiesShadow,
                         (item) => item?.id !== Number(value)
                       )
                 );
@@ -264,12 +283,13 @@ export const LocationModal: FC = () => {
           <>
             <ModalSection title="პოპულარული ქალაქები">
               <PopularLocations
+                favoriteCityShadow={favoriteCityShadow}
                 popularCities={locationChain.visibleCities}
                 popularMunicipalities={locationChain.visibleMunicipalitetyChain}
-                setCityDistricts={setCityDistricts}
-                setMunicipalityCities={setMunicipalityCities}
-                setSelectedFavCity={setSelectedFavCity}
-                setSelectedMunicipality={setSelectedMunicipality}
+                setCityDistrictsList={setCityDistrictsList}
+                setMunicipalityCitiesList={setMunicipalityCitiesList}
+                setFavoriteCityShadow={setFavoriteCityShadow}
+                setMunicipalityShadow={setMunicipalityShadow}
               />
             </ModalSection>
             <ModalSection title="მუნიციპალიტეტები">
@@ -278,8 +298,8 @@ export const LocationModal: FC = () => {
                 idField="municipalityId"
                 titleField="municipalityTitle"
                 clickHandler={(item) => {
-                  setSelectedMunicipality(item as Municipality);
-                  setMunicipalityCities(item.cities as MunicipalityCity[]);
+                  setMunicipalityShadow(item as Municipality);
+                  setMunicipalityCitiesList(item.cities as MunicipalityCity[]);
                 }}
               />
             </ModalSection>
