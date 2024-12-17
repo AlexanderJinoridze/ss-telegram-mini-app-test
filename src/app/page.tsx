@@ -454,7 +454,7 @@ export default function Home() {
           <SectionFooter className="flex flex-col items-center mt-8">
             <div className="flex gap-6 mt-4 mb-6 justify-center">
               {ownerLogosMap.map(({ link, w, d }) => (
-                <OwnerLogo link={link} w={w} d={d} />
+                <OwnerLogo key={link} link={link} w={w} d={d} />
               ))}
             </div>
             <Caption className="text-[--tg-theme-hint-color]">
