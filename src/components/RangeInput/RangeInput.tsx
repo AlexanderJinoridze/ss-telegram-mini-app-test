@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Input } from "@telegram-apps/telegram-ui";
+import { Divider, Input } from "@telegram-apps/telegram-ui";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useHapticFeedback } from "@telegram-apps/sdk-react";
@@ -45,29 +45,34 @@ export const RangeInput: FC<RangeInputProps> = ({
         const isFrom = index === 0;
         const secondaryInputName = arr[isFrom ? 1 : 0];
         return (
-          <Input
-            key={inputName}
-            placeholder={isFrom ? "-დან" : "-მდე"}
-            inputMode="numeric"
-            after={<span className="w-6 text-center">{after}</span>}
-            status={hookForm.formState.errors[inputName] ? "error" : "default"}
-            className={invalidInputClass(inputName)}
-            onClick={() => hapticFeedback.selectionChanged()}
-            {...hookForm.register(inputName, {
-              pattern: numberPattern,
-              validate: (value) =>
-                (isFrom ? validateFrom : validateTo)(
-                  value,
-                  hookForm.getValues()[secondaryInputName]
-                ),
-              onChange: () =>
-                compareRange(
-                  secondaryInputName,
-                  hookForm.getValues()[arr[0]],
-                  hookForm.getValues()[arr[1]]
-                ),
-            })}
-          />
+          <>
+            <Input
+              key={inputName}
+              placeholder={isFrom ? "-დან" : "-მდე"}
+              inputMode="numeric"
+              after={<span className="w-6 text-center">{after}</span>}
+              status={
+                hookForm.formState.errors[inputName] ? "error" : "default"
+              }
+              className={invalidInputClass(inputName)}
+              onClick={() => hapticFeedback.selectionChanged()}
+              {...hookForm.register(inputName, {
+                pattern: numberPattern,
+                validate: (value) =>
+                  (isFrom ? validateFrom : validateTo)(
+                    value,
+                    hookForm.getValues()[secondaryInputName]
+                  ),
+                onChange: () =>
+                  compareRange(
+                    secondaryInputName,
+                    hookForm.getValues()[arr[0]],
+                    hookForm.getValues()[arr[1]]
+                  ),
+              })}
+            />
+            {index !== arr.length - 1 ? <Divider /> : null}
+          </>
         );
       })}
     </>
