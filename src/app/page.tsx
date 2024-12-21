@@ -4,7 +4,6 @@ import {
   Section,
   Cell,
   List,
-  Modal,
   FixedLayout,
   Button,
   Divider,
@@ -12,14 +11,15 @@ import {
   Caption,
   TabsList,
   Subheadline,
+  Input,
+  IconButton,
+  Badge,
 } from "@telegram-apps/telegram-ui";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import Script from "next/script";
 import { SDKProvider, useHapticFeedback } from "@telegram-apps/sdk-react";
-import ModalFooter from "@/components/ModalFooter";
-import ModalHeader from "@/components/ModalHeader";
-import LocationModal from "@/components/LocationModal";
+import locationChain from "./_assets/locationChain.json";
 import { SectionFooter } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionFooter/SectionFooter";
 import { TabsItem } from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
 import { useForm } from "react-hook-form";
@@ -46,6 +46,16 @@ import { RangeInput } from "@/components/RangeInput/RangeInput";
 import ModalTrigger from "@/components/ModalTrigger";
 import OwnerLogo from "@/components/OwnerLogo";
 import FormHeader from "@/components/FormHeader";
+import BreadcrumbItem from "@/components/BreadcrumbItem";
+import ModalSection from "@/components/ModalSection";
+import AlphabeticalList from "@/components/AlphabeticalList";
+import find from "lodash.find";
+import filter from "lodash.filter";
+import GroupedList from "@/components/GroupedList";
+import difference from "lodash.difference";
+import union from "lodash.union";
+import PopularLocations from "@/components/PopularLocations";
+import Modal from "@/components/Modal";
 
 export default function Home() {
   const [dealType, setDealType] = useState<(typeof dealTypeMap)[number]>();
@@ -62,7 +72,6 @@ export default function Home() {
   const [favoriteCity, setFavoriteCity] = useState<City>();
   const [subDistricts, setSubDistricts] = useState<SubDistrict[]>([]);
   const [streets, setStreets] = useState<Street[]>([]);
-
   const [dealTypeShadow, setDealTypeShadow] = useState<typeof dealType>();
   const [propertyTypeShadow, setPropertyTypeShadow] =
     useState<typeof propertyType>();
@@ -79,26 +88,17 @@ export default function Home() {
     typeof subDistricts
   >([]);
   const [streetsShadow, setStreetsShadow] = useState<typeof streets>([]);
-
   const [cityDistrictsList, setCityDistrictsList] = useState<District[]>([]);
   const [municipalityCitiesList, setMunicipalityCitiesList] = useState<
     MunicipalityCity[]
   >([]);
   const [streetsList, setStreetsList] = useState<Street[]>([]);
   const [showStreetPage, setShowStreetPage] = useState<boolean>(false);
-
   const [selectedPriceType, setSelectedPriceType] = useState<number>(1);
   const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const hapticFeedback = useHapticFeedback();
   const hookForm = useForm();
-
-  useEffect(() => {
-    if (!isOpen) {
-      hapticFeedback.impactOccurred("medium");
-    }
-  }, [isOpen]);
 
   return (
     <SDKProvider>
@@ -111,25 +111,12 @@ export default function Home() {
           <FormHeader />
           <Section>
             <Modal
-              header={
-                <ModalHeader
-                  title="გარიგების ტიპი"
-                  onClear={() => setDealTypeShadow(undefined)}
-                />
-              }
-              trigger={
-                <div className="contents">
-                  <ModalTrigger
-                    label="გარიგების ტიპი"
-                    isSelected={dealType !== undefined}
-                    selectedLabel={dealType?.label}
-                  />
-                </div>
-              }
-              onOpenChange={(open) => {
-                setIsOpen(open);
-                setDealTypeShadow(dealType);
-              }}
+              title="გარიგების ტიპი"
+              onClear={() => setDealTypeShadow(undefined)}
+              isSelected={dealType !== undefined}
+              selectedLabel={dealType?.label}
+              onOpenChange={() => setDealTypeShadow(dealType)}
+              onSelect={() => setDealType(dealTypeShadow)}
             >
               {dealTypeMap.map((item) => (
                 <ModalCell
@@ -142,32 +129,21 @@ export default function Home() {
                   {item.label}
                 </ModalCell>
               ))}
-              <ModalFooter onClick={() => setDealType(dealTypeShadow)} />
             </Modal>
           </Section>
           <Section footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
             <Modal
-              header={
-                <ModalHeader
-                  title="ქონების ტიპი"
-                  onClear={() => {
-                    setStatusesShadow([]);
-                    setPropertyTypeShadow(undefined);
-                  }}
-                />
-              }
-              trigger={
-                <div className="contents">
-                  <ModalTrigger
-                    label="ქონების ტიპი"
-                    isSelected={propertyType !== undefined}
-                    selectedLabel={propertyType?.label}
-                  />
-                </div>
-              }
-              onOpenChange={(open) => {
-                setIsOpen(open);
-                setPropertyTypeShadow(propertyType);
+              title="ქონების ტიპი"
+              onClear={() => {
+                setStatusesShadow([]);
+                setPropertyTypeShadow(undefined);
+              }}
+              isSelected={propertyType !== undefined}
+              selectedLabel={propertyType?.label}
+              onOpenChange={() => setPropertyTypeShadow(propertyType)}
+              onSelect={() => {
+                setStatuses([]);
+                setPropertyType(propertyTypeShadow);
               }}
             >
               {propertyTypeMap.map((item) => (
@@ -197,37 +173,15 @@ export default function Home() {
                   {item.label}
                 </ModalCell>
               ))}
-              <ModalFooter
-                onClick={() => {
-                  setStatuses([]);
-                  setPropertyType(propertyTypeShadow);
-                }}
-              />
             </Modal>
-            {propertyType !== undefined &&
-            propertyTypeStatusMap[propertyType.id] !== undefined ? (
+            {propertyType && propertyTypeStatusMap[propertyType.id] ? (
               <Modal
-                header={
-                  <ModalHeader
-                    title="სტატუსი"
-                    onClear={() => setStatusesShadow([])}
-                  />
-                }
-                trigger={
-                  <div className="contents">
-                    <ModalTrigger
-                      label="სტატუსი"
-                      isSelected={!!statuses.length}
-                      selectedLabel={statuses
-                        .map((item) => item.label)
-                        .join(", ")}
-                    />
-                  </div>
-                }
-                onOpenChange={(open) => {
-                  setIsOpen(open);
-                  setStatusesShadow([...statuses]);
-                }}
+                title="სტატუსი"
+                onClear={() => setStatusesShadow([])}
+                isSelected={!!statuses.length}
+                selectedLabel={statuses.map((item) => item.label).join(", ")}
+                onOpenChange={() => setStatusesShadow([...statuses])}
+                onSelect={() => setStatuses(statusesShadow)}
               >
                 {propertyTypeStatusMap[propertyType.id].map(({ id, label }) => {
                   const statusIds = statusesShadow.map((status) => status.id);
@@ -250,7 +204,6 @@ export default function Home() {
                     </ModalCell>
                   );
                 })}
-                <ModalFooter onClick={() => setStatuses(statusesShadow)} />
               </Modal>
             ) : (
               <ModalTrigger label="სტატუსი" isDisabled />
@@ -258,97 +211,286 @@ export default function Home() {
           </Section>
           <Section>
             <Modal
-              header={
-                <ModalHeader
-                  title="მდებარეობა"
-                  onClear={() => {
-                    setFavoriteCityShadow(undefined);
-                    setMunicipalityShadow(undefined);
-                    setMunicipalityCitiesShadow([]);
-                    setSubDistrictsShadow([]);
-                    setStreetsShadow([]);
-
-                    setCityDistrictsList([]);
-                    setStreetsList([]);
-                    setShowStreetPage(false);
-                  }}
-                />
+              title="მდებარეობა"
+              onClear={() => {
+                setFavoriteCityShadow(undefined);
+                setMunicipalityShadow(undefined);
+                setMunicipalityCitiesShadow([]);
+                setSubDistrictsShadow([]);
+                setStreetsShadow([]);
+                setCityDistrictsList([]);
+                setStreetsList([]);
+                setShowStreetPage(false);
+              }}
+              isSelected={
+                !!(
+                  municipality ||
+                  municipalityCities.length ||
+                  favoriteCity ||
+                  subDistricts.length ||
+                  streets.length
+                )
               }
-              trigger={
-                <div className="contents">
-                  <ModalTrigger
-                    label="მდებარეობა"
-                    isSelected={
-                      !!(
-                        municipality ||
-                        municipalityCities.length ||
-                        favoriteCity ||
-                        subDistricts.length ||
-                        streets.length
-                      )
-                    }
-                    selectedLabel={[
-                      municipality?.municipalityTitle,
-                      municipalityCities.length
-                        ? municipalityCities
-                            .map((item) => item.title)
-                            .join(", ")
-                        : null,
-                      favoriteCity?.cityTitle,
-                      subDistricts.length
-                        ? subDistricts
-                            .map((item) => item.subDistrictTitle)
-                            .join(", ")
-                        : null,
-                      streets.length
-                        ? streets.map((item) => item.streetTitle).join(", ")
-                        : null,
-                    ]
-                      .filter((item) => item)
-                      .join(" - ")}
-                  />
-                </div>
-              }
-              onOpenChange={(open) => {
-                setIsOpen(open);
-
+              selectedLabel={[
+                municipality?.municipalityTitle,
+                municipalityCities.length
+                  ? municipalityCities.map((item) => item.title).join(", ")
+                  : null,
+                favoriteCity?.cityTitle,
+                subDistricts.length
+                  ? subDistricts.map((item) => item.subDistrictTitle).join(", ")
+                  : null,
+                streets.length
+                  ? streets.map((item) => item.streetTitle).join(", ")
+                  : null,
+              ]
+                .filter((item) => item)
+                .join(" - ")}
+              onOpenChange={() => {
                 setMunicipalityShadow(municipality);
                 setMunicipalityCitiesShadow(municipalityCities);
                 setFavoriteCityShadow(favoriteCity);
                 setSubDistrictsShadow(subDistricts);
                 setStreetsShadow(streets);
               }}
-              className="location-modal h-full"
+              onSelect={() => {
+                setMunicipality(municipalityShadow);
+                setMunicipalityCities(municipalityCitiesShadow);
+                setFavoriteCity(favoriteCityShadow);
+                setSubDistricts(subDistrictsShadow);
+                setStreets(streetsShadow);
+              }}
+              header={
+                <>
+                  <div className="[&>label]:shadow-input_border [&>label]:focus:shadow-input_border_focused mb-4 [&>div]:mx-input_border_width [&>div]:py-input_border_width [&>div]:px-6 [&>label]:rounded-input">
+                    <Input
+                      before={
+                        <span className="material-symbols-outlined">
+                          search
+                        </span>
+                      }
+                      placeholder="ჩაწერე რაიონი, ქალაქი, უბანი ან ქუჩა"
+                    />
+                  </div>
+                  <div className="flex [&:empty]:hidden gap-2 flex-shrink-0 items-center h-9 box-content px-6 pb-4">
+                    {(subDistrictsShadow &&
+                      favoriteCityShadow &&
+                      favoriteCityShadow.districts.length) ||
+                    municipalityShadow ? (
+                      <IconButton
+                        size="s"
+                        mode="bezeled"
+                        onClick={() => {
+                          if (municipalityShadow) {
+                            setMunicipalityCitiesList([]);
+                            setMunicipalityShadow(undefined);
+                            setMunicipalityCitiesShadow([]);
+                          } else if (showStreetPage) {
+                            setSubDistrictsShadow([]);
+                            setShowStreetPage(false);
+                            setStreetsShadow([]);
+                            setStreetsList([]);
+                          } else {
+                            setFavoriteCityShadow(undefined);
+                            setSubDistrictsShadow([]);
+                            setCityDistrictsList([]);
+                            setShowStreetPage(false);
+                            setStreetsList([]);
+                          }
+                        }}
+                      >
+                        <span className="material-symbols-outlined">
+                          keyboard_arrow_left
+                        </span>
+                      </IconButton>
+                    ) : null}
+                    <BreadcrumbItem
+                      isSelected={showStreetPage && !!streetsShadow.length}
+                      isNotSelected={showStreetPage}
+                      selectedLabel={streetsShadow
+                        .map((item) => item.streetTitle)
+                        .join(", ")}
+                      notSelectedLabel={subDistrictsShadow
+                        .map((item) => item.subDistrictTitle)
+                        .join(", ")}
+                      onClick={() => setStreetsShadow([])}
+                    />
+                    <BreadcrumbItem
+                      isSelected={
+                        !showStreetPage && !!subDistrictsShadow.length
+                      }
+                      isNotSelected={
+                        !showStreetPage &&
+                        !!favoriteCityShadow?.districts.length
+                      }
+                      selectedLabel={subDistrictsShadow
+                        .map((item) => item.subDistrictTitle)
+                        .join(", ")}
+                      notSelectedLabel={favoriteCityShadow?.cityTitle ?? ""}
+                      onClick={() => {
+                        setSubDistrictsShadow([]);
+                        setStreetsList([]);
+                      }}
+                    />
+                    <BreadcrumbItem
+                      isSelected={!!municipalityCitiesShadow.length}
+                      isNotSelected={!!municipalityShadow}
+                      selectedLabel={municipalityCitiesShadow
+                        .map((item) => item.title)
+                        .join(", ")}
+                      notSelectedLabel={
+                        municipalityShadow?.municipalityTitle ?? ""
+                      }
+                      onClick={() => setMunicipalityCitiesShadow([])}
+                    />
+                    {streetsList.length && !showStreetPage ? (
+                      <Button
+                        size="s"
+                        mode="bezeled"
+                        className="shrink-0 pr-[3px] ml-auto"
+                        onClick={() => setShowStreetPage(true)}
+                        before={
+                          <span className="material-symbols-outlined">
+                            location_on
+                          </span>
+                        }
+                      >
+                        ქუჩები
+                        <Badge
+                          type="number"
+                          className="bg-amber-400 text-zinc-950"
+                        >
+                          {streetsList.length}
+                        </Badge>
+                      </Button>
+                    ) : null}
+                  </div>
+                </>
+              }
             >
-              <LocationModal
-                municipalityShadow={municipalityShadow}
-                setMunicipalityShadow={setMunicipalityShadow}
-                municipalityCitiesShadow={municipalityCitiesShadow}
-                setMunicipalityCitiesShadow={setMunicipalityCitiesShadow}
-                favoriteCityShadow={favoriteCityShadow}
-                setFavoriteCityShadow={setFavoriteCityShadow}
-                subDistrictsShadow={subDistrictsShadow}
-                setSubDistrictsShadow={setSubDistrictsShadow}
-                streetsShadow={streetsShadow}
-                setStreetsShadow={setStreetsShadow}
-                cityDistrictsList={cityDistrictsList}
-                setCityDistrictsList={setCityDistrictsList}
-                municipalityCitiesList={municipalityCitiesList}
-                setMunicipalityCitiesList={setMunicipalityCitiesList}
-                streetsList={streetsList}
-                setStreetsList={setStreetsList}
-                showStreetPage={showStreetPage}
-                setShowStreetPage={setShowStreetPage}
-              />
-              <ModalFooter
-                onClick={() => {
-                  setMunicipality(municipalityShadow);
-                  setMunicipalityCities(municipalityCitiesShadow);
-                  setFavoriteCity(favoriteCityShadow);
-                  setSubDistricts(subDistrictsShadow);
-                  setStreets(streetsShadow);
-                }}
-              />
+              {showStreetPage ? (
+                <ModalSection>
+                  <AlphabeticalList
+                    list={streetsList}
+                    idField="streetId"
+                    titleField="streetTitle"
+                    isChecked={(item) =>
+                      !!find(
+                        streetsShadow,
+                        (a) => a.streetId === item.streetId
+                      )
+                    }
+                    changeHandler={(item, value, isChecked) => {
+                      setStreetsShadow(
+                        isChecked
+                          ? [...streetsShadow, item]
+                          : filter(
+                              streetsShadow,
+                              (item) => item?.streetId !== Number(value)
+                            )
+                      );
+                    }}
+                  />
+                </ModalSection>
+              ) : cityDistrictsList.length ? (
+                <ModalSection>
+                  <GroupedList
+                    list={cityDistrictsList}
+                    isChecked={(item) =>
+                      !!find(
+                        subDistrictsShadow,
+                        (a) => a.subDistrictId === item.subDistrictId
+                      )
+                    }
+                    changeHandler={(item, value, checked) => {
+                      setSubDistrictsShadow(
+                        checked
+                          ? [...subDistrictsShadow, item]
+                          : filter(
+                              subDistrictsShadow,
+                              (item) => item?.subDistrictId !== Number(value)
+                            )
+                      );
+                      setStreetsList(
+                        checked
+                          ? [...streetsList, ...item.streets]
+                          : difference(streetsList, item.streets)
+                      );
+                    }}
+                    groupChangeHandler={(item, value, checked) => {
+                      const normalizeDistrictsList = item.subDistricts
+                        .map((item) => item.streets)
+                        .flat();
+                      setSubDistrictsShadow(
+                        checked
+                          ? union(subDistrictsShadow, item.subDistricts)
+                          : subDistrictsShadow.filter(
+                              (item) =>
+                                !value
+                                  .split(",")
+                                  .includes(String(item?.subDistrictId))
+                            )
+                      );
+                      setStreetsList(
+                        checked
+                          ? union(streetsList, normalizeDistrictsList)
+                          : difference(streetsList, normalizeDistrictsList)
+                      );
+                    }}
+                  />
+                </ModalSection>
+              ) : municipalityCitiesList.length ? (
+                <ModalSection>
+                  <AlphabeticalList
+                    list={municipalityCitiesList}
+                    isChecked={(item) =>
+                      !!find(
+                        municipalityCitiesShadow,
+                        (a) => a.id === item.id
+                      )
+                    }
+                    changeHandler={(item, value, isChecked) => {
+                      setMunicipalityCitiesShadow(
+                        isChecked
+                          ? [...municipalityCitiesShadow, item]
+                          : filter(
+                              municipalityCitiesShadow,
+                              (item) => item?.id !== Number(value)
+                            )
+                      );
+                    }}
+                  />
+                </ModalSection>
+              ) : (
+                <>
+                  <ModalSection title="პოპულარული ქალაქები">
+                    <PopularLocations
+                      favoriteCityShadow={favoriteCityShadow}
+                      popularCities={locationChain.visibleCities}
+                      popularMunicipalities={
+                        locationChain.visibleMunicipalitetyChain
+                      }
+                      setCityDistrictsList={setCityDistrictsList}
+                      setMunicipalityCitiesList={setMunicipalityCitiesList}
+                      setFavoriteCityShadow={setFavoriteCityShadow}
+                      setMunicipalityShadow={setMunicipalityShadow}
+                    />
+                  </ModalSection>
+                  <ModalSection title="მუნიციპალიტეტები">
+                    <AlphabeticalList
+                      list={locationChain.municipalityChain}
+                      idField="municipalityId"
+                      titleField="municipalityTitle"
+                      clickHandler={(item) => {
+                        setMunicipalityShadow(item as Municipality);
+                        setMunicipalityCitiesList(
+                          item.cities as MunicipalityCity[]
+                        );
+                      }}
+                    />
+                  </ModalSection>
+                </>
+              )}
             </Modal>
           </Section>
           <SectionHeader>ფართი</SectionHeader>
@@ -361,25 +503,12 @@ export default function Home() {
           </Section>
           <Section>
             <Modal
-              header={
-                <ModalHeader
-                  title="ოთახების რაოდენობა"
-                  onClear={() => setRoomsShadow([])}
-                />
-              }
-              trigger={
-                <div className="contents">
-                  <ModalTrigger
-                    label="ოთახების რაოდენობა"
-                    isSelected={!!rooms.length}
-                    selectedLabel={rooms.map((room) => room.label).join(", ")}
-                  />
-                </div>
-              }
-              onOpenChange={(open) => {
-                setIsOpen(open);
-                setRoomsShadow([...rooms]);
-              }}
+              title="ოთახების რაოდენობა"
+              onClear={() => setRoomsShadow([])}
+              isSelected={!!rooms.length}
+              selectedLabel={rooms.map((room) => room.label).join(", ")}
+              onOpenChange={() => setRoomsShadow([...rooms])}
+              onSelect={() => setRooms(roomsShadow)}
             >
               {roomsMap.map(({ id, label }) => {
                 const roomIds = roomsShadow.map((room) => room.id);
@@ -401,7 +530,6 @@ export default function Home() {
                   </ModalCell>
                 );
               })}
-              <ModalFooter onClick={() => setRooms(roomsShadow)} />
             </Modal>
           </Section>
           <SectionHeader>ფასი</SectionHeader>
@@ -469,7 +597,6 @@ export default function Home() {
             onClick={() => hapticFeedback.impactOccurred("soft")}
             className="m-5"
             size="l"
-            stretched
           >
             გაგზავნა
           </Button>

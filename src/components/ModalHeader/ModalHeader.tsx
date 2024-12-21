@@ -14,7 +14,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({ title, onClear }) => {
   return (
     <>
       <ModalCap />
-      <div className="flex sticky bg-[--tgui--bg_color] top-0 z-10 justify-between items-center px-6 pb-4">
+      <div className="flex sticky bg-[--tgui--bg_color] top-0 z-10 justify-between items-center px-6 pb-4 [&+div]:flex [&+div]:flex-col">
         <Headline plain weight="2" className="flex justify-between">
           {title}
         </Headline>
