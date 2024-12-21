@@ -88,12 +88,25 @@ export default function Home() {
     typeof subDistricts
   >([]);
   const [streetsShadow, setStreetsShadow] = useState<typeof streets>([]);
+
   const [cityDistrictsList, setCityDistrictsList] = useState<District[]>([]);
   const [municipalityCitiesList, setMunicipalityCitiesList] = useState<
     MunicipalityCity[]
   >([]);
   const [streetsList, setStreetsList] = useState<Street[]>([]);
   const [showStreetPage, setShowStreetPage] = useState<boolean>(false);
+
+  const [cityDistrictsListShadow, setCityDistrictsListShadow] = useState<
+    typeof cityDistrictsList
+  >([]);
+  const [municipalityCitiesListShadow, setMunicipalityCitiesListShadow] =
+    useState<typeof municipalityCitiesList>([]);
+  const [streetsListShadow, setStreetsListShadow] = useState<
+    typeof streetsList
+  >([]);
+  const [showStreetPageShadow, setShowStreetPageShadow] =
+    useState<typeof showStreetPage>(false);
+
   const [selectedPriceType, setSelectedPriceType] = useState<number>(1);
   const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
 
@@ -212,16 +225,6 @@ export default function Home() {
           <Section>
             <Modal
               title="მდებარეობა"
-              onClear={() => {
-                setFavoriteCityShadow(undefined);
-                setMunicipalityShadow(undefined);
-                setMunicipalityCitiesShadow([]);
-                setSubDistrictsShadow([]);
-                setStreetsShadow([]);
-                setCityDistrictsList([]);
-                setStreetsList([]);
-                setShowStreetPage(false);
-              }}
               isSelected={
                 !!(
                   municipality ||
@@ -246,12 +249,27 @@ export default function Home() {
               ]
                 .filter((item) => item)
                 .join(" - ")}
+              onClear={() => {
+                setFavoriteCityShadow(undefined);
+                setMunicipalityShadow(undefined);
+                setMunicipalityCitiesShadow([]);
+                setSubDistrictsShadow([]);
+                setStreetsShadow([]);
+                setCityDistrictsListShadow([]);
+                setMunicipalityCitiesListShadow([]);
+                setStreetsListShadow([]);
+                setShowStreetPageShadow(false);
+              }}
               onOpenChange={() => {
                 setMunicipalityShadow(municipality);
                 setMunicipalityCitiesShadow(municipalityCities);
                 setFavoriteCityShadow(favoriteCity);
                 setSubDistrictsShadow(subDistricts);
                 setStreetsShadow(streets);
+                setCityDistrictsListShadow(cityDistrictsList);
+                setMunicipalityCitiesListShadow(municipalityCitiesList);
+                setStreetsListShadow(streetsList);
+                setShowStreetPageShadow(showStreetPage);
               }}
               onSelect={() => {
                 setMunicipality(municipalityShadow);
@@ -259,6 +277,10 @@ export default function Home() {
                 setFavoriteCity(favoriteCityShadow);
                 setSubDistricts(subDistrictsShadow);
                 setStreets(streetsShadow);
+                setCityDistrictsList(cityDistrictsListShadow);
+                setMunicipalityCitiesList(municipalityCitiesListShadow);
+                setStreetsList(streetsListShadow);
+                setShowStreetPage(showStreetPageShadow);
               }}
               header={
                 <>
@@ -282,20 +304,21 @@ export default function Home() {
                         mode="bezeled"
                         onClick={() => {
                           if (municipalityShadow) {
-                            setMunicipalityCitiesList([]);
+                            setMunicipalityCitiesListShadow([]);
                             setMunicipalityShadow(undefined);
                             setMunicipalityCitiesShadow([]);
-                          } else if (showStreetPage) {
+                          } else if (showStreetPageShadow) {
                             setSubDistrictsShadow([]);
-                            setShowStreetPage(false);
+                            setShowStreetPageShadow(false);
                             setStreetsShadow([]);
-                            setStreetsList([]);
+                            setStreetsListShadow([]);
                           } else {
                             setFavoriteCityShadow(undefined);
                             setSubDistrictsShadow([]);
-                            setCityDistrictsList([]);
-                            setShowStreetPage(false);
-                            setStreetsList([]);
+
+                            setCityDistrictsListShadow([]);
+                            setStreetsListShadow([]);
+                            setShowStreetPageShadow(false);
                           }
                         }}
                       >
@@ -305,8 +328,10 @@ export default function Home() {
                       </IconButton>
                     ) : null}
                     <BreadcrumbItem
-                      isSelected={showStreetPage && !!streetsShadow.length}
-                      isNotSelected={showStreetPage}
+                      isSelected={
+                        showStreetPageShadow && !!streetsShadow.length
+                      }
+                      isNotSelected={showStreetPageShadow}
                       selectedLabel={streetsShadow
                         .map((item) => item.streetTitle)
                         .join(", ")}
@@ -317,10 +342,10 @@ export default function Home() {
                     />
                     <BreadcrumbItem
                       isSelected={
-                        !showStreetPage && !!subDistrictsShadow.length
+                        !showStreetPageShadow && !!subDistrictsShadow.length
                       }
                       isNotSelected={
-                        !showStreetPage &&
+                        !showStreetPageShadow &&
                         !!favoriteCityShadow?.districts.length
                       }
                       selectedLabel={subDistrictsShadow
@@ -329,7 +354,7 @@ export default function Home() {
                       notSelectedLabel={favoriteCityShadow?.cityTitle ?? ""}
                       onClick={() => {
                         setSubDistrictsShadow([]);
-                        setStreetsList([]);
+                        setStreetsListShadow([]);
                       }}
                     />
                     <BreadcrumbItem
@@ -343,12 +368,12 @@ export default function Home() {
                       }
                       onClick={() => setMunicipalityCitiesShadow([])}
                     />
-                    {streetsList.length && !showStreetPage ? (
+                    {streetsListShadow.length && !showStreetPageShadow ? (
                       <Button
                         size="s"
                         mode="bezeled"
                         className="shrink-0 pr-[3px] ml-auto"
-                        onClick={() => setShowStreetPage(true)}
+                        onClick={() => setShowStreetPageShadow(true)}
                         before={
                           <span className="material-symbols-outlined">
                             location_on
@@ -360,7 +385,7 @@ export default function Home() {
                           type="number"
                           className="bg-amber-400 text-zinc-950"
                         >
-                          {streetsList.length}
+                          {streetsListShadow.length}
                         </Badge>
                       </Button>
                     ) : null}
@@ -368,17 +393,14 @@ export default function Home() {
                 </>
               }
             >
-              {showStreetPage ? (
+              {showStreetPageShadow ? (
                 <ModalSection>
                   <AlphabeticalList
-                    list={streetsList}
+                    list={streetsListShadow}
                     idField="streetId"
                     titleField="streetTitle"
                     isChecked={(item) =>
-                      !!find(
-                        streetsShadow,
-                        (a) => a.streetId === item.streetId
-                      )
+                      !!find(streetsShadow, (a) => a.streetId === item.streetId)
                     }
                     changeHandler={(item, value, isChecked) => {
                       setStreetsShadow(
@@ -392,10 +414,10 @@ export default function Home() {
                     }}
                   />
                 </ModalSection>
-              ) : cityDistrictsList.length ? (
+              ) : cityDistrictsListShadow.length ? (
                 <ModalSection>
                   <GroupedList
-                    list={cityDistrictsList}
+                    list={cityDistrictsListShadow}
                     isChecked={(item) =>
                       !!find(
                         subDistrictsShadow,
@@ -411,10 +433,10 @@ export default function Home() {
                               (item) => item?.subDistrictId !== Number(value)
                             )
                       );
-                      setStreetsList(
+                      setStreetsListShadow(
                         checked
-                          ? [...streetsList, ...item.streets]
-                          : difference(streetsList, item.streets)
+                          ? [...streetsListShadow, ...item.streets]
+                          : difference(streetsListShadow, item.streets)
                       );
                     }}
                     groupChangeHandler={(item, value, checked) => {
@@ -431,23 +453,23 @@ export default function Home() {
                                   .includes(String(item?.subDistrictId))
                             )
                       );
-                      setStreetsList(
+                      setStreetsListShadow(
                         checked
-                          ? union(streetsList, normalizeDistrictsList)
-                          : difference(streetsList, normalizeDistrictsList)
+                          ? union(streetsListShadow, normalizeDistrictsList)
+                          : difference(
+                              streetsListShadow,
+                              normalizeDistrictsList
+                            )
                       );
                     }}
                   />
                 </ModalSection>
-              ) : municipalityCitiesList.length ? (
+              ) : municipalityCitiesListShadow.length ? (
                 <ModalSection>
                   <AlphabeticalList
-                    list={municipalityCitiesList}
+                    list={municipalityCitiesListShadow}
                     isChecked={(item) =>
-                      !!find(
-                        municipalityCitiesShadow,
-                        (a) => a.id === item.id
-                      )
+                      !!find(municipalityCitiesShadow, (a) => a.id === item.id)
                     }
                     changeHandler={(item, value, isChecked) => {
                       setMunicipalityCitiesShadow(
@@ -470,8 +492,10 @@ export default function Home() {
                       popularMunicipalities={
                         locationChain.visibleMunicipalitetyChain
                       }
-                      setCityDistrictsList={setCityDistrictsList}
-                      setMunicipalityCitiesList={setMunicipalityCitiesList}
+                      setCityDistrictsList={setCityDistrictsListShadow}
+                      setMunicipalityCitiesList={
+                        setMunicipalityCitiesListShadow
+                      }
                       setFavoriteCityShadow={setFavoriteCityShadow}
                       setMunicipalityShadow={setMunicipalityShadow}
                     />
@@ -483,7 +507,7 @@ export default function Home() {
                       titleField="municipalityTitle"
                       clickHandler={(item) => {
                         setMunicipalityShadow(item as Municipality);
-                        setMunicipalityCitiesList(
+                        setMunicipalityCitiesListShadow(
                           item.cities as MunicipalityCity[]
                         );
                       }}
