@@ -12,14 +12,14 @@ export const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
   children,
   onSelect,
 }) => (
-  <div className="min-h-0 h-full flex flex-col flex-grow-1">
+  <div className="min-h-0 h-full flex flex-col flex-grow-[1]">
     {header ? (
       <>
         {header}
         <Divider />
       </>
     ) : null}
-    <div className="flex flex-col overflow-auto flex-grow-1">{children}</div>
+    <div className="flex flex-col overflow-auto flex-grow-[1]">{children}</div>
     <ModalFooter onClick={onSelect} />
   </div>
 );
