@@ -19,7 +19,12 @@ export const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
         <Divider />
       </>
     ) : null}
-    <div className="flex flex-col overflow-auto flex-grow-[1]">{children}</div>
+    <div
+      className="flex flex-col overflow-auto flex-grow-[1]"
+      onPointerMove={(e) => e.stopPropagation()}
+    >
+      {children}
+    </div>
     <ModalFooter onClick={onSelect} />
   </div>
 );
