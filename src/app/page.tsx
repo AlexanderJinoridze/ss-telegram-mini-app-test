@@ -107,6 +107,10 @@ export default function Home() {
   const [showStreetPageShadow, setShowStreetPageShadow] =
     useState<typeof showStreetPage>(false);
 
+  const [showStreetPageButton, setShowStreetPageButton] = useState(false);
+  const [showStreetPageButtonShadow, setShowStreetPageButtonShadow] =
+    useState<typeof showStreetPageButton>(false);
+
   const [selectedPriceType, setSelectedPriceType] = useState<number>(1);
   const [selectedCurrency, setSelectedCurrency] = useState<number>(1);
 
@@ -224,6 +228,7 @@ export default function Home() {
           </Section>
           <Section>
             <Modal
+              fullHeight
               title="მდებარეობა"
               isSelected={
                 !!(
@@ -258,6 +263,7 @@ export default function Home() {
                 setCityDistrictsListShadow([]);
                 setMunicipalityCitiesListShadow([]);
                 setStreetsListShadow([]);
+                setShowStreetPageButtonShadow(false);
                 setShowStreetPageShadow(false);
               }}
               onOpenChange={() => {
@@ -269,6 +275,7 @@ export default function Home() {
                 setCityDistrictsListShadow(cityDistrictsList);
                 setMunicipalityCitiesListShadow(municipalityCitiesList);
                 setStreetsListShadow(streetsList);
+                setShowStreetPageButtonShadow(showStreetPageButton);
                 setShowStreetPageShadow(showStreetPage);
               }}
               onSelect={() => {
@@ -280,11 +287,12 @@ export default function Home() {
                 setCityDistrictsList(cityDistrictsListShadow);
                 setMunicipalityCitiesList(municipalityCitiesListShadow);
                 setStreetsList(streetsListShadow);
+                setShowStreetPageButton(showStreetPageButtonShadow);
                 setShowStreetPage(showStreetPageShadow);
               }}
               header={
                 <>
-                  <div className="[&>label]:shadow-input_border [&>label]:focus:shadow-input_border_focused mb-4 [&>div]:mx-input_border_width [&>div]:py-input_border_width [&>div]:px-6 [&>label]:rounded-input">
+                  <div className="[&_label]:shadow-input_border [&_label:has(input:focus)]:shadow-input_border_focused mb-4 [&>div]:mx-input_border_width [&>div]:py-input_border_width [&>div]:px-6 [&_label]:rounded-input">
                     <Input
                       before={
                         <span className="material-symbols-outlined">
@@ -309,9 +317,10 @@ export default function Home() {
                             setMunicipalityCitiesShadow([]);
                           } else if (showStreetPageShadow) {
                             setSubDistrictsShadow([]);
+                            setStreetsListShadow([]);
                             setShowStreetPageShadow(false);
                             setStreetsShadow([]);
-                            setStreetsListShadow([]);
+                            setShowStreetPageButtonShadow(false);
                           } else {
                             setFavoriteCityShadow(undefined);
                             setSubDistrictsShadow([]);
@@ -319,6 +328,7 @@ export default function Home() {
                             setCityDistrictsListShadow([]);
                             setStreetsListShadow([]);
                             setShowStreetPageShadow(false);
+                            setShowStreetPageButtonShadow(false);
                           }
                         }}
                       >
@@ -355,6 +365,7 @@ export default function Home() {
                       onClick={() => {
                         setSubDistrictsShadow([]);
                         setStreetsListShadow([]);
+                        setShowStreetPageButtonShadow(false);
                       }}
                     />
                     <BreadcrumbItem
@@ -368,12 +379,15 @@ export default function Home() {
                       }
                       onClick={() => setMunicipalityCitiesShadow([])}
                     />
-                    {streetsListShadow.length && !showStreetPageShadow ? (
+                    {showStreetPageButtonShadow ? (
                       <Button
                         size="s"
                         mode="bezeled"
                         className="shrink-0 pr-[3px] ml-auto"
-                        onClick={() => setShowStreetPageShadow(true)}
+                        onClick={() => {
+                          setShowStreetPageButtonShadow(false);
+                          setShowStreetPageShadow(true);
+                        }}
                         before={
                           <span className="material-symbols-outlined">
                             location_on
@@ -425,6 +439,9 @@ export default function Home() {
                       )
                     }
                     changeHandler={(item, value, checked) => {
+                      const streetsList = checked
+                        ? [...streetsListShadow, ...item.streets]
+                        : difference(streetsListShadow, item.streets);
                       setSubDistrictsShadow(
                         checked
                           ? [...subDistrictsShadow, item]
@@ -433,16 +450,16 @@ export default function Home() {
                               (item) => item?.subDistrictId !== Number(value)
                             )
                       );
-                      setStreetsListShadow(
-                        checked
-                          ? [...streetsListShadow, ...item.streets]
-                          : difference(streetsListShadow, item.streets)
-                      );
+                      setStreetsListShadow(streetsList);
+                      setShowStreetPageButtonShadow(!!streetsList.length);
                     }}
                     groupChangeHandler={(item, value, checked) => {
                       const normalizeDistrictsList = item.subDistricts
                         .map((item) => item.streets)
                         .flat();
+                      const streetsList = checked
+                        ? union(streetsListShadow, normalizeDistrictsList)
+                        : difference(streetsListShadow, normalizeDistrictsList);
                       setSubDistrictsShadow(
                         checked
                           ? union(subDistrictsShadow, item.subDistricts)
@@ -453,14 +470,8 @@ export default function Home() {
                                   .includes(String(item?.subDistrictId))
                             )
                       );
-                      setStreetsListShadow(
-                        checked
-                          ? union(streetsListShadow, normalizeDistrictsList)
-                          : difference(
-                              streetsListShadow,
-                              normalizeDistrictsList
-                            )
-                      );
+                      setStreetsListShadow(streetsList);
+                      setShowStreetPageButtonShadow(!!streetsList.length);
                     }}
                   />
                 </ModalSection>

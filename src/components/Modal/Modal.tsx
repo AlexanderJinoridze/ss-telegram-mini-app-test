@@ -9,6 +9,7 @@ import ModalContent from "../ModalContent";
 import { useHapticFeedback } from "@telegram-apps/sdk-react";
 
 export interface ModalProps {
+  fullHeight?: boolean;
   title: string;
   isSelected: boolean;
   selectedLabel?: string;
@@ -20,6 +21,7 @@ export interface ModalProps {
 
 export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   children,
+  fullHeight,
   title,
   isSelected,
   selectedLabel,
@@ -54,6 +56,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
         setIsOpen(open);
         onOpenChange?.(open);
       }}
+      className={fullHeight ? "h-full" : undefined}
     >
       <ModalContent header={header} onSelect={onSelect}>
         {children}
