@@ -56,6 +56,7 @@ import difference from "lodash.difference";
 import union from "lodash.union";
 import PopularLocations from "@/components/PopularLocations";
 import Modal from "@/components/Modal";
+import ModalPage from "@/components/ModalPage";
 
 export default function Home() {
   const [dealType, setDealType] = useState<(typeof dealTypeMap)[number]>();
@@ -324,7 +325,6 @@ export default function Home() {
                           } else {
                             setFavoriteCityShadow(undefined);
                             setSubDistrictsShadow([]);
-
                             setCityDistrictsListShadow([]);
                             setStreetsListShadow([]);
                             setShowStreetPageShadow(false);
@@ -408,7 +408,7 @@ export default function Home() {
               }
             >
               {showStreetPageShadow ? (
-                <ModalSection>
+                <ModalPage key="streets-page">
                   <AlphabeticalList
                     list={streetsListShadow}
                     idField="streetId"
@@ -427,9 +427,9 @@ export default function Home() {
                       );
                     }}
                   />
-                </ModalSection>
+                </ModalPage>
               ) : cityDistrictsListShadow.length ? (
-                <ModalSection>
+                <ModalPage key="city-districts-page">
                   <GroupedList
                     list={cityDistrictsListShadow}
                     isChecked={(item) =>
@@ -474,9 +474,9 @@ export default function Home() {
                       setShowStreetPageButtonShadow(!!streetsList.length);
                     }}
                   />
-                </ModalSection>
+                </ModalPage>
               ) : municipalityCitiesListShadow.length ? (
-                <ModalSection>
+                <ModalPage key="municipality-cities-page">
                   <AlphabeticalList
                     list={municipalityCitiesListShadow}
                     isChecked={(item) =>
@@ -493,9 +493,9 @@ export default function Home() {
                       );
                     }}
                   />
-                </ModalSection>
+                </ModalPage>
               ) : (
-                <>
+                <ModalPage key="location-main-page">
                   <ModalSection title="პოპულარული ქალაქები">
                     <PopularLocations
                       favoriteCityShadow={favoriteCityShadow}
@@ -524,7 +524,7 @@ export default function Home() {
                       }}
                     />
                   </ModalSection>
-                </>
+                </ModalPage>
               )}
             </Modal>
           </Section>

@@ -21,7 +21,6 @@ export const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
     ) : null}
     <div
       className="flex flex-col overflow-auto flex-grow-[1]"
-      onPointerMove={(e) => e.stopPropagation()}
     >
       {children}
     </div>
