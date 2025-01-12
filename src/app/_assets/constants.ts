@@ -1,6 +1,9 @@
 import { PropertyTypeStatusMap } from "@/types";
 
-export const numberPattern = /^\d+$/;
+export const numberPattern = /^\s*(?:\d|\s)+(?:(?:\.|,)\d+)?\s*$/;
+
+export const normalizeNumeral = (value: string) =>
+  value === "" ? NaN : Number(value.trim().replace(" ", "").replace(",", "."));
 
 export const dealTypeMap = [
   { id: 1, label: "ქირავდება" },

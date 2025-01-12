@@ -1,9 +1,9 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { Divider, Input } from "@telegram-apps/telegram-ui";
 import { FieldValues, UseFormReturn } from "react-hook-form";
 import { usePlatform } from "@/hooks/usePlatform";
 import { useHapticFeedback } from "@telegram-apps/sdk-react";
-import { numberPattern } from "@/app/_assets/constants";
+import { normalizeNumeral, numberPattern } from "@/app/_assets/constants";
 
 export interface RangeInputProps {
   after: string;
@@ -18,60 +18,48 @@ export const RangeInput: FC<RangeInputProps> = ({
 }) => {
   const hapticFeedback = useHapticFeedback();
   const platform = usePlatform();
-  const invalidInputClass = (fieldName: string) =>
-    platform === "ios" && hookForm.formState.errors[fieldName]
-      ? "!rounded-inherit !shadow-invalid_input"
-      : undefined;
-  const validateTo = (to: any, from: any) =>
-    !from || !to || Number(from) <= Number(to);
-  const validateFrom = (from: any, to: any) =>
-    !from || !to || Number(from) <= Number(to);
-  const compareRange = (priceType: string, from: any, to: any) => {
-    if (
-      numberPattern.test(hookForm.getValues()[priceType]) &&
-      hookForm.formState.isSubmitted
-    ) {
-      if (!from || !to || Number(from) <= Number(to)) {
-        hookForm.clearErrors(priceType);
-      } else {
-        hookForm.setError(priceType, { type: "manual" });
-      }
-    }
-  };
 
   return (
     <>
-      {inputNames.map((inputName, index, arr) => {
+      {inputNames.map((inputName, index, inputNames) => {
         const isFrom = index === 0;
-        const secondaryInputName = arr[isFrom ? 1 : 0];
+        const secondaryInputName = inputNames[isFrom ? 1 : 0];
+
         return (
           <>
             <Input
               key={inputName}
               placeholder={isFrom ? "-დან" : "-მდე"}
-              inputMode="numeric"
+              inputMode="decimal"
               after={<span className="w-6 text-center">{after}</span>}
               status={
                 hookForm.formState.errors[inputName] ? "error" : "default"
               }
-              className={invalidInputClass(inputName)}
+              className={
+                platform === "ios" && hookForm.formState.errors[inputName]
+                  ? "!rounded-inherit !shadow-invalid_input"
+                  : undefined
+              }
               onClick={() => hapticFeedback.selectionChanged()}
               {...hookForm.register(inputName, {
-                pattern: numberPattern,
-                validate: (value) =>
-                  (isFrom ? validateFrom : validateTo)(
-                    value,
-                    hookForm.getValues()[secondaryInputName]
-                  ),
-                onChange: () =>
-                  compareRange(
-                    secondaryInputName,
-                    hookForm.getValues()[arr[0]],
-                    hookForm.getValues()[arr[1]]
-                  ),
+                deps: secondaryInputName,
+                validate: (value) => {
+                  const primary = value;
+                  const secondary = hookForm.getValues()[secondaryInputName];
+                  const normalizedPrimary = normalizeNumeral(primary);
+                  const normalizedSecondary = normalizeNumeral(secondary);
+
+                  return !numberPattern.test(secondary) &&
+                    numberPattern.test(primary)
+                    ? true
+                    : primary === "" ||
+                        (isFrom
+                          ? normalizedPrimary <= normalizedSecondary
+                          : normalizedPrimary >= normalizedSecondary);
+                },
               })}
             />
-            {index !== arr.length - 1 ? <Divider /> : null}
+            {index !== inputNames.length - 1 ? <Divider /> : null}
           </>
         );
       })}
