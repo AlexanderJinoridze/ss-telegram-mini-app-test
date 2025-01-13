@@ -1,22 +1,56 @@
-import { Placeholder } from "@telegram-apps/telegram-ui";
+import { Chip, Placeholder, Radio } from "@telegram-apps/telegram-ui";
 import { FC } from "react";
 import { SectionHeader } from "@telegram-apps/telegram-ui/dist/components/Blocks/Section/components/SectionHeader/SectionHeader";
 import { useHapticFeedback } from "@telegram-apps/sdk-react";
+import { usePlatform } from "@/hooks/usePlatform";
 
 export const FormHeader: FC = () => {
   const hapticFeedback = useHapticFeedback();
+  const platform = usePlatform();
 
   return (
-    <SectionHeader>
-      <Placeholder>
+    <SectionHeader
+      className={platform === "ios" ? "px-0 pt-[8px] !mb-0 pb-9" : "p-4 !mb-4"}
+    >
+      <div
+        className={`${
+          platform === "ios" ? "mb-9" : "mb-8"
+        } gap-2 flex justify-end`}
+      >
+        <Chip
+          mode="elevated"
+          className="!bg-[--tgui--section_bg_color]"
+          Component="label"
+          before={<Radio checked name="lang" />}
+        >
+          ქარ.
+        </Chip>
+        <Chip
+          mode="elevated"
+          className="!bg-[--tgui--section_bg_color]"
+          Component="label"
+          before={<Radio name="lang" />}
+        >
+          Eng.
+        </Chip>
+        <Chip
+          mode="elevated"
+          className="!bg-[--tgui--section_bg_color]"
+          Component="label"
+          before={<Radio name="lang" />}
+        >
+          Рус.
+        </Chip>
+      </div>
+      <Placeholder className="py-16">
         <a
           href="https://ss.ge"
           target="_blank"
           onClick={() => hapticFeedback.impactOccurred("soft")}
         >
           <svg
-            width="132"
-            height="44"
+            width="150"
+            height="50"
             viewBox="0 0 132 44"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

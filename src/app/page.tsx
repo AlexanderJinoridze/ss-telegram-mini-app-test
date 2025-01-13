@@ -57,8 +57,10 @@ import union from "lodash.union";
 import PopularLocations from "@/components/PopularLocations";
 import Modal from "@/components/Modal";
 import ModalPage from "@/components/ModalPage";
+import { usePlatform } from "@/hooks/usePlatform";
 
 export default function Home() {
+  const platform = usePlatform();
   const [dealType, setDealType] = useState<(typeof dealTypeMap)[number]>();
   const [propertyType, setPropertyType] =
     useState<(typeof propertyTypeMap)[number]>();
@@ -149,7 +151,7 @@ export default function Home() {
               ))}
             </Modal>
           </Section>
-          <Section footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
+          <Section className={platform === "ios" ? "!mb-9" : undefined} footer="სტატუსი ხელმისაწვდომია კერძო სახლის, ბინის, კომერციული ფართის და აგარაკის ქონების ტიპებისთვის">
             <Modal
               title="ქონების ტიპი"
               onClear={() => {

@@ -54,8 +54,8 @@ export const RangeInput: FC<RangeInputProps> = ({
                     ? true
                     : primary === "" ||
                         (isFrom
-                          ? normalizedPrimary <= normalizedSecondary
-                          : normalizedPrimary >= normalizedSecondary);
+                          ? normalizedPrimary < normalizedSecondary
+                          : normalizedPrimary > normalizedSecondary);
                 },
               })}
             />
